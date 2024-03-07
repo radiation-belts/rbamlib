@@ -9,5 +9,7 @@ Please see README.md for more information.
 
 from rbamlib import (
     conv,
+    models,
+    vf,
     constants
 )
