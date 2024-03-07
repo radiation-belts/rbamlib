@@ -7,7 +7,7 @@ There are several ways you can contribute to this project.
 
 - **Developing New Features:** If you're interested in adding new functionality to rbamlib, you're encouraged to fork the repository, develop your feature, and submit a pull request. Your proposed features can range from new capabilities within the library to enhancements of existing functions. We welcome all ideas and appreciate your effort to expand rbamlib's features.
 
-# Report bugs using Github's issues
+## Report bugs using Github's issues
 
 We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/radiation-belts/rbamlib/issues/new)!
 
@@ -16,7 +16,7 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 - Steps to reproduce (give sample code if you can).
 - What you expected would happen and what actually happens
 
-# How to contribute in development 
+## How to contribute in development 
 
 1. **Fork the Repository:** Begin by forking the rbamlib repository to your GitHub account. This creates your own copy of the project where you can make changes.
 
@@ -30,7 +30,7 @@ We use GitHub issues to track public bugs. Report a bug by [opening a new issue]
 
 6. **Submit a Pull Request:** Finally, go to the original rbamlib repository on GitHub and create a new pull request. Provide a detailed description of your changes and how they improve the project.
 
-## PyHC Coding Standards
+### PyHC Coding Standards
 
 Please ensure all code submissions and contributions adhere to the [PyHC Coding Standards](https://github.com/heliophysicsPy/standards/blob/v1.0/standards.md) and follow best practices for open scientific research.
 

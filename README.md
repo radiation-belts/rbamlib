@@ -4,7 +4,8 @@
 
 `rbamlib` is a lightweight, open-source Python library for the analysis and modeling of radiation belts. 
 
-The library aims to support the scientific community by providing essential functionalities for radiation belt studies. This includes system properties calculations, empirical model collections, and modeling support.
+The library aims to support the scientific community by providing essential functionalities for radiation belt studies.
+This includes system properties calculations, empirical model collections, and modeling support.
 
 The library is at stage of active development.
 
@@ -14,9 +15,24 @@ The library is at stage of active development.
 - **Empirical Models Collection**: Radial diffusion coefficients, lifetimes, local diffusion coefficients scaling, plasma densities, and more.
 - **Modeling Support**: Conversion between simulation grids, boundary and initial condition characteristics, adiabatic transformation of boundary scaling factors.
 
+## Architecture
+The library is architected into Python packages, acting as modules containing multiple functions organized in separate files. 
+This design allows for direct function imports from the package, streamlining usage without the need to reference specific files.
+
+For example, `pc2en` function from `conv` package is located in `conv/pc2en.py` file. To use it simply import it as follows:
+
+```python
+import rmamlib.conv.pc2en
+```
+
+The primary function that users should utilize is named after the file itself, ensuring intuitive access. If this main
+function relies on any helper functions, they are located within the same file to maintain coherence. These helper
+functions are kept distinct to facilitate targeted testing and validation.
+
 ## Development and Contribution
 
-The library is being developed in compliance with the Heliophysics Community (PyHC) Standards and HP Data Policy. It will be documented, tested with a planned release on Python Package Index (PyPI).
+The library is being developed in compliance with the Heliophysics Community (PyHC) Standards and HP Data Policy. It
+will be documented, tested with a planned release on Python Package Index (PyPI).
 
 ### How to Contribute
 
