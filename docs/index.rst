@@ -13,6 +13,8 @@ Welcome to rbamlib's documentation!
    :caption: Modules
 
    conv
+   models
+   vf
    constants
 
 .. toctree::
