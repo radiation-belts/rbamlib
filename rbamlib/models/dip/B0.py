@@ -23,6 +23,10 @@ def B0(r, planet='Earth'):
 
     if planet == 'Earth':
         B0 = rbamlib.constants.B0_Earth
+    elif planet == 'Jupiter':
+        B0 = rbamlib.constants.B0_Jupiter
+    elif planet == 'Saturn':
+        B0 = rbamlib.constants.B0_Saturn
     else:  # Default is Earth
         B0 = rbamlib.constants.B0_Earth
 

@@ -28,6 +28,8 @@ class TestDip(unittest.TestCase):
         np.testing.assert_almost_equal(result, expected_output, decimal=4,
                                        err_msg="B0 did not return expected values.")
 
+    # TODO: Add tests for other planet
+    # TODO: Add tests for B0 == constant. at r == 1
 
     def test_T_values(self):
         """Test the T. Based on table 1 from Schulz & Lanzerotti (1974)"""
