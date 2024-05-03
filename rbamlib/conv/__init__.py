@@ -10,4 +10,6 @@ Main Features:
 """
 from .en2pc import en2pc
 from .pc2en import pc2en
+from .Jc2K import Jc2K
+from .K2Jc import K2Jc
 
