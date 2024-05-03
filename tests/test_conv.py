@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from rbamlib.conv import en2pc, pc2en, Jc2K, K2Jc
+from rbamlib.conv import en2pc, pc2en, Jcmu2K, Kmu2Jc
 
 
 class TestConv(unittest.TestCase):
@@ -110,30 +110,30 @@ class TestConv(unittest.TestCase):
         self.assertRoundTrip(en2pc, pc2en, self.in_float)
 
     # Tests for Jc2K
-    def test_Jc2K_single_values(self):
-        self.assertTwoSingleValues(Jc2K, self.in_float, self.in_float_2, self.res_K_float)
+    def test_Jcmu2K_single_values(self):
+        self.assertTwoSingleValues(Jcmu2K, self.in_float, self.in_float_2, self.res_K_float)
 
-    def test_Jc2K_1D_arrays(self):
-        self.assertTwo1DArrays(Jc2K, self.in_1d, self.in_1d_2, self.res_K_1d)
+    def test_Jcmu2K_1D_arrays(self):
+        self.assertTwo1DArrays(Jcmu2K, self.in_1d, self.in_1d_2, self.res_K_1d)
 
-    def test_Jc2K_2D_arrays(self):
-        self.assertTwo2DArrays(Jc2K, self.in_2d, self.in_2d_2, self.res_K_2d)
+    def test_Jcmu2K_2D_arrays(self):
+        self.assertTwo2DArrays(Jcmu2K, self.in_2d, self.in_2d_2, self.res_K_2d)
 
     # Tests for K2Jc
-    def test_K2Jc_single_values(self):
-        self.assertTwoSingleValues(K2Jc, self.in_float, self.in_float_2, self.res_Jc_float)
+    def test_Kmu2Jc_single_values(self):
+        self.assertTwoSingleValues(Kmu2Jc, self.in_float, self.in_float_2, self.res_Jc_float)
 
-    def test_K2Jc_1D_arrays(self):
-        self.assertTwo1DArrays(K2Jc, self.in_1d, self.in_1d_2, self.res_Jc_1d)
+    def test_Kmu2Jc_1D_arrays(self):
+        self.assertTwo1DArrays(Kmu2Jc, self.in_1d, self.in_1d_2, self.res_Jc_1d)
 
-    def test_K2Jc_2D_arrays(self):
-        self.assertTwo2DArrays(K2Jc, self.in_2d, self.in_2d_2, self.res_Jc_2d)
+    def test_Kmu2Jc_2D_arrays(self):
+        self.assertTwo2DArrays(Kmu2Jc, self.in_2d, self.in_2d_2, self.res_Jc_2d)
 
-    def test_round_trip_Jc2K_K2Jc(self):
-        self.assertRoundTrip2(Jc2K, K2Jc, self.in_float, self.in_float_2)
+    def test_round_trip_Jcmu2K_Kmu2Jc(self):
+        self.assertRoundTrip2(Jcmu2K, Kmu2Jc, self.in_float, self.in_float_2)
 
-    def test_round_trip_K2Jc_Jc2K(self):
-        self.assertRoundTrip2(K2Jc, Jc2K, self.in_float, self.in_float_2)
+    def test_round_trip_Kmu2Jc_Jcmu2K(self):
+        self.assertRoundTrip2(Kmu2Jc, Jcmu2K, self.in_float, self.in_float_2)
 
 
 if __name__ == '__main__':

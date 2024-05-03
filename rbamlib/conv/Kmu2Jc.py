@@ -2,7 +2,7 @@ import numpy as np
 import rbamlib.constants
 
 
-def K2Jc(K, mu):
+def Kmu2Jc(K, mu):
     r"""
     Calculates adiabatic invariant Jc = J*c
 

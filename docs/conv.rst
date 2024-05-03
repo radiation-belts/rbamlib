@@ -12,6 +12,6 @@ Functions
 
 .. autofunction:: pc2en
 
-.. autofunction:: Jc2K
+.. autofunction:: Jcmu2K
 
-.. autofunction:: K2Jc
+.. autofunction:: Kmu2Jc
