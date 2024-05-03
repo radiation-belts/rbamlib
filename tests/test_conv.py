@@ -36,7 +36,7 @@ class TestConv(unittest.TestCase):
         self.res_Jc_2d = np.array([[0.0639, 2.0219], [63.9375, 180.8425]]) - 0.0001
 
         # Note, code in MATLAB returns different values due to B_Dip. For testing the values were changed to 0.32
-        self.res_mu_float = 0.7059
+        self.res_mu_float = 0.7058505
         self.res_mu_1d = np.array([5.6468, 2.2321, 2.6454])
         self.res_mu_2d = np.array([[1.7857, 0.7059], [1.8706, 1.4894]])
         self.res_mu_float_2 = 7.0703
