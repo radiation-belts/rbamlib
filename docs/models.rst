@@ -8,4 +8,5 @@ Models
    :maxdepth: 1
    :caption: Models
 
+   models/dip
    models/lpp
