@@ -13,19 +13,19 @@ def Jcmu2K(Jc, mu):
     ----------
     Jc : float or ndarray
         The second adiabatic invariant times the speed of light, Jc = J*c,
-        where J is the second adiabatic and c is the speed of light. Units are MeV/Gauss.
+        where J is the second adiabatic and c is the speed of light. Units are MeV/G.
     mu : float or ndarray
         The first adiabatic invariant mu, in MeV/Gauss
 
     Returns
     -------
     float or ndarray
-        The adiabatic invariant K, in units of Gauss^0.5 * Re
+        The adiabatic invariant K, in units of G^0.5 * R
 
     Notes
     -----
     .. math::
-        K = \\frac{Jc}{\\sqrt{8 \\cdot mc^2 \\cdot \\mu}}
+        K = \frac{Jc}{\sqrt{8 \cdot mc^2 \cdot \mu}}
 
     where :math:`mc^2` (the rest mass energy of an electron) is 0.511 MeV.
     """

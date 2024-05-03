@@ -24,6 +24,8 @@ Welcome to rbamlib's documentation!
    README.md <README>
    CONTRIBUTING.md <CONTRIBUTING>
 
+   symbols
+
 Indices and tables
 ==================
 

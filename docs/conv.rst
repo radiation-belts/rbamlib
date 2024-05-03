@@ -15,3 +15,11 @@ Functions
 .. autofunction:: Jcmu2K
 
 .. autofunction:: Kmu2Jc
+
+.. autofunction:: mural2pc
+
+.. autofunction:: pcral2mu
+
+.. autofunction:: mu2pc
+
+.. autofunction:: pc2mu
