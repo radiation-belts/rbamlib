@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from rbamlib.conv import en2pc, pc2en, Jcmu2K, Kmu2Jc, mural2pc, mu2pc, pcral2mu, pc2mu
+from rbamlib.conv import en2pc, pc2en, Jcmu2K, Kmu2Jc, mural2pc, mu2pc, pcral2mu, pc2mu, mural2en, mu2en, enral2mu, en2mu
 
 
 class TestConv(unittest.TestCase):
@@ -35,16 +35,26 @@ class TestConv(unittest.TestCase):
         self.res_Jc_1d = np.array([2.0219, 63.9375, 180.8425]) - 0.0001
         self.res_Jc_2d = np.array([[0.0639, 2.0219], [63.9375, 180.8425]]) - 0.0001
 
-        # Note, code in MATLAB returns different values due to B_Dip. For testing the values were changed to 0.32
-        self.res_mu_float = 0.7058505
-        self.res_mu_1d = np.array([5.6468, 2.2321, 2.6454])
-        self.res_mu_2d = np.array([[1.7857, 0.7059], [1.8706, 1.4894]])
-        self.res_mu_float_2 = 7.0703
+        # # Note, code in MATLAB returns different values due to B_Dip. For testing the values were changed to 0.32
+        self.res_pc_float_2 = 0.7058505
+        self.res_pc_1d_2 = np.array([5.6468, 2.2321, 2.6454])
+        self.res_pc_2d_2 = np.array([[1.7857, 0.7059], [1.8706, 1.4894]])
+        self.res_pc_float_3 = 7.0703
 
-        self.res_pc_float_2 = 2.0071
-        self.res_pc_1d_2 = np.array([0.031361, 200.7125, 1.1431e+03])
-        self.res_pc_2d_2 = np.array([[0.031361, 2.0071], [285.7801, 3.6065e+03]])
-        self.res_pc_float_3 = 0.0200
+        self.res_mu_float = 2.0071
+        self.res_mu_1d_2 = np.array([0.031361, 200.7125, 1.1431e+03])
+        self.res_mu_2d_2 = np.array([[0.031361, 2.0071], [285.7801, 3.6065e+03]])
+        self.res_mu_float_2 = 0.0200
+
+        self.res_en_float_2 = 0.36040
+        self.res_en_1d_2 = np.array([5.15887, 1.77884, 2.18334])
+        self.res_en_2d_2 = np.array([[1.3464,  0.3604], [1.4282, 1.0636]])
+        self.res_en_float_3 = 6.5777
+
+        self.res_mu_float_3 = 22.5199
+        self.res_mu_1d_3 = np.array([0.3519, 405.8407, 1.7273e+03])
+        self.res_mu_2d_3 = np.array([[0.0324, 22.5199], [577.8475, 5.4494e+03]])
+        self.res_mu_float_4 = 0.2244
 
     def assertSingleValue(self, function, input, expected):
         """Assert function works for single float values"""
@@ -157,42 +167,81 @@ class TestConv(unittest.TestCase):
 
     # Tests for mural2pc and alias mu2pc
     def test_mural2pc_single_value(self):
-        self.assertTwoSingleValues(mural2pc, self.in_float_2, self.in_float_3, self.res_mu_float)
+        self.assertTwoSingleValues(mural2pc, self.in_float_2, self.in_float_3, self.res_pc_float_2)
 
     def test_mu2pc_single_value(self):
         """ Testing alias"""
-        self.assertTwoSingleValues(mu2pc, self.in_float_2, self.in_float_3, self.res_mu_float)
+        self.assertTwoSingleValues(mu2pc, self.in_float_2, self.in_float_3, self.res_pc_float_2)
 
     def test_mural2pc_1D_arrays(self):
-        self.assertTwo1DArrays(mural2pc, self.in_1d_2, self.in_1d_3, self.res_mu_1d)
+        self.assertTwo1DArrays(mural2pc, self.in_1d_2, self.in_1d_3, self.res_pc_1d_2)
 
     def test_mural2pc_2D_arrays(self):
-        self.assertTwo2DArrays(mural2pc, self.in_2d_2, self.in_2d_3, self.res_mu_2d)
+        self.assertTwo2DArrays(mural2pc, self.in_2d_2, self.in_2d_3, self.res_pc_2d_2)
 
     def test_mural2pc_al_single_value(self):
         """ Testing non-default alpha"""
-        self.assertThreeSingleValues(mural2pc, self.in_float_2, self.in_float_3, self.in_float, self.res_mu_float_2)
+        self.assertThreeSingleValues(mural2pc, self.in_float_2, self.in_float_3, self.in_float, self.res_pc_float_3)
 
     # Tests for pcral2mu and alias pc2mu
     def test_pcral2mu_single_value(self):
-        self.assertTwoSingleValues(pcral2mu, self.in_float, self.in_float_3, self.res_pc_float_2)
+        self.assertTwoSingleValues(pcral2mu, self.in_float, self.in_float_3, self.res_mu_float)
 
     def test_pc2mu_single_value(self):
         """ Testing alias"""
-        self.assertTwoSingleValues(pc2mu, self.in_float, self.in_float_3, self.res_pc_float_2)
+        self.assertTwoSingleValues(pc2mu, self.in_float, self.in_float_3, self.res_mu_float)
 
     def test_pcral2mu_1D_arrays(self):
         """ Testing results large number, hence changed to decimal=1 precision"""
-        self.assertTwo1DArrays(pcral2mu, self.in_1d, self.in_1d_3, self.res_pc_1d_2, decimal=1)
+        self.assertTwo1DArrays(pcral2mu, self.in_1d, self.in_1d_3, self.res_mu_1d_2, decimal=1)
 
     def test_pcral2mu_2D_arrays(self):
         """ Testing results large number, hence changed to decimal=1 precision"""
-        self.assertTwo2DArrays(pcral2mu, self.in_2d, self.in_2d_3, self.res_pc_2d_2, decimal=1)
+        self.assertTwo2DArrays(pcral2mu, self.in_2d, self.in_2d_3, self.res_mu_2d_2, decimal=1)
 
     def test_pcral2mu_al_single_value(self):
         """ Testing non-default alpha"""
-        self.assertThreeSingleValues(pcral2mu, self.in_float, self.in_float_3, self.in_float, self.res_pc_float_3)
+        self.assertThreeSingleValues(pcral2mu, self.in_float, self.in_float_3, self.in_float, self.res_mu_float_2)
 
+    # Tests for mural2en and alias mu2en
+    def test_mural2en_single_value(self):
+        self.assertTwoSingleValues(mural2en, self.in_float_2, self.in_float_3, self.res_en_float_2)
+
+    def test_mu2en_single_value(self):
+        """ Testing alias"""
+        self.assertTwoSingleValues(mu2en, self.in_float_2, self.in_float_3, self.res_en_float_2)
+
+    def test_mural2en_1D_arrays(self):
+        self.assertTwo1DArrays(mural2en, self.in_1d_2, self.in_1d_3, self.res_en_1d_2)
+
+    def test_mural2en_2D_arrays(self):
+        self.assertTwo2DArrays(mural2en, self.in_2d_2, self.in_2d_3, self.res_en_2d_2)
+
+    def test_mural2en_al_single_value(self):
+        """ Testing non-default alpha"""
+        self.assertThreeSingleValues(mural2en, self.in_float_2, self.in_float_3, self.in_float, self.res_en_float_3)
+
+    # Tests for enral2mu and alias en2mu
+    def test_enral2mu_single_value(self):
+        self.assertTwoSingleValues(enral2mu, self.in_float, self.in_float_3, self.res_mu_float_3)
+
+    def test_en2mu_single_value(self):
+        """ Testing alias"""
+        self.assertTwoSingleValues(en2mu, self.in_float, self.in_float_3, self.res_mu_float_3)
+
+    def test_enral2mu_1D_arrays(self):
+        """ Testing results large number, hence changed to decimal=1 precision"""
+        self.assertTwo1DArrays(enral2mu, self.in_1d, self.in_1d_3, self.res_mu_1d_3, decimal=1)
+
+    def test_enral2mu_2D_arrays(self):
+        """ Testing results large number, hence changed to decimal=1 precision"""
+        self.assertTwo2DArrays(enral2mu, self.in_2d, self.in_2d_3, self.res_mu_2d_3, decimal=1)
+
+    def test_enral2mu_al_single_value(self):
+        """ Testing non-default alpha"""
+        self.assertThreeSingleValues(enral2mu, self.in_float, self.in_float_3, self.in_float, self.res_mu_float_4)
+
+    # TODO: Add roundtrip tests for mu2pc/pc2mu mu2en/en2mu
 
 if __name__ == '__main__':
     unittest.main()
