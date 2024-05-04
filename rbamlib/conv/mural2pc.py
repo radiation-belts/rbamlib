@@ -37,6 +37,7 @@ def mural2pc(mu, r, al=np.pi / 2, B0=rbamlib.models.dip.B0):
     See Also
     --------
     mu2pc : Alias to the `mural2pc` function.
+    rbamlib.models.dip.B0 : Dipole magnetic field
     """
     mc2 = rbamlib.constants.MC2
     b = B0(r)
@@ -45,11 +46,13 @@ def mural2pc(mu, r, al=np.pi / 2, B0=rbamlib.models.dip.B0):
 
 
 # Alias
-def mu2pc(mu, r, al=np.pi / 2, B0=rbamlib.models.dip.B0):
+def mu2pc(mu, r, al=np.pi / 2, *B0):
     r"""
     Calculate the momentum times the speed of light (pc), in MeV.
-    
-    Alias of the `mural2pc` function.
+
+    See Also
+    --------
+    mural2pc: Alias of the `mural2pc` function.
     """
 
-    return mural2pc(mu, r, al, B0)
+    return mural2pc(mu, r, al, *B0)

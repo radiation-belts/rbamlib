@@ -37,6 +37,7 @@ def pcral2mu(pc, r, al=np.pi / 2, B0=rbamlib.models.dip.B0):
     See Also
     --------
     pc2mu : Alias to the `pcral2mu` function.
+    rbamlib.models.dip.B0 : Dipole magnetic field
     """
     mc2 = rbamlib.constants.MC2
     b = B0(r)
@@ -45,11 +46,13 @@ def pcral2mu(pc, r, al=np.pi / 2, B0=rbamlib.models.dip.B0):
 
 
 # Alias
-def pc2mu(pc, r, al=np.pi / 2, B0=rbamlib.models.dip.B0):
+def pc2mu(pc, r, al=np.pi / 2, *B0):
     r"""
     Calculate first adiabatic invariant mu from pc (momentum times the speed of light).
 
-    Alias of the `pcral2mu` function.
+    See Also
+    --------
+    pcral2mu: Alias of the `pcral2mu` function.
     """
 
-    return pcral2mu(pc, r, al, B0)
+    return pcral2mu(pc, r, al, *B0)
