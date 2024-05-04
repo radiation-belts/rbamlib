@@ -20,3 +20,9 @@ from .mural2pc import mu2pc
 
 from .pcral2mu import pcral2mu
 from .pcral2mu import pc2mu
+
+from .mural2en import mural2en
+from .mural2en import mu2en
+
+from .enral2mu import enral2mu
+from .enral2mu import en2mu
