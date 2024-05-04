@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 from rbamlib.conv import en2pc, pc2en, Jcmu2K, Kmu2Jc, mural2pc, mu2pc, pcral2mu, pc2mu, mural2en, mu2en, enral2mu, en2mu
-from rbamlib.conv import Lal2K
+from rbamlib.conv import Lal2K, LK2al
 
 
 class TestConv(unittest.TestCase):
@@ -63,6 +63,11 @@ class TestConv(unittest.TestCase):
         self.res_K_float_2 = 0.1898
         self.res_K_1d_2 = np.array([0.1338, 0.1898, 0.4706])
         self.res_K_2d_2 = np.array([[0.1338, 0.1898], [0.4706, 0.3885]])
+
+        self.res_al_float = 0.9527
+        self.res_al_1d = np.array([1.1094, 0.3570, 0.2171])
+        self.res_al_2d = np.array([[1.4164, 0.9527], [0.3444, 0.1889]])
+
 
     def assertSingleValue(self, function, input, expected):
         """Assert function works for single float values"""
@@ -267,6 +272,22 @@ class TestConv(unittest.TestCase):
     def test_Lal2K_al_2D_arrays(self):
         self.assertTwo2DArrays(Lal2K, self.in_2d_3, self.in_2d_4, self.res_K_2d_2)
 
+    # Tests for LK2al
+    def test_LK2al_single_value(self):
+        self.assertSingleValue(LK2al, self.in_float_3, np.pi/2)
+
+    def test_LK2al_K_single_value(self):
+        self.assertTwoSingleValues(LK2al, self.in_float_3, self.in_float, self.res_al_float)
+
+    def test_LK2al_K_1D_arrays(self):
+        self.assertTwo1DArrays(LK2al, self.in_1d_3, self.in_1d, self.res_al_1d)
+
+    def test_LK2al_K_2D_arrays(self):
+        self.assertTwo2DArrays(LK2al, self.in_2d_3, self.in_2d, self.res_al_2d)
+
+    # TODO: Add roundtrip tests for Lal2K/LK2al
+
+    # TODO: Add tests for coverage cases of LK2al
 
 if __name__ == '__main__':
     unittest.main()
