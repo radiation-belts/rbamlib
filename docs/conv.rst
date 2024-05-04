@@ -24,6 +24,10 @@ Functions
 
 .. autofunction:: enral2mu
 
+.. autofunction:: Lal2K
+
+.. autofunction:: LK2al
+
 
 Aliases
 =======

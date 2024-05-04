@@ -27,10 +27,10 @@ def Lal2K(L, al=np.pi/2, B0=rbamlib.models.dip.B0):
         K = \frac{Y(\alpha)}{\sin(\alpha)} \cdot L \cdot \sqrt{B_0(L)}
 
     where:
-    - :math:`\alpha` is the pitch-angle in radians
-    - :math:`L` is the L-shell
-    - :math:`Y(\alpha)` is a Y-function
-    - :math:`B_0(L)` is the magnetic field strength at L-shell L.
+        - :math:`\alpha` is the pitch-angle in radians
+        - :math:`L` is the L-shell
+        - :math:`Y(\alpha)` is a Y-function
+        - :math:`B_0(L)` is the magnetic field strength at L-shell L.
 
     See Also
     --------
