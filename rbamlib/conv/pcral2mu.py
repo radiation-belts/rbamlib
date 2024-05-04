@@ -3,7 +3,7 @@ import rbamlib.constants
 import rbamlib.models.dip
 
 
-def pcral2mu(pc, r, al=np.pi / 2, B0=rbamlib.models.dip.B0):
+def pcral2mu(pc, r, al=np.pi/2, B0=rbamlib.models.dip.B0):
     r"""
     Calculate first adiabatic invariant mu from pc (momentum times the speed of light).
 
@@ -46,7 +46,7 @@ def pcral2mu(pc, r, al=np.pi / 2, B0=rbamlib.models.dip.B0):
 
 
 # Alias
-def pc2mu(pc, r, al=np.pi / 2, *B0):
+def pc2mu(pc, r, al=np.pi/2, *B0):
     r"""
     Calculate first adiabatic invariant mu from pc (momentum times the speed of light).
 

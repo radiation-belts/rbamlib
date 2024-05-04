@@ -2,7 +2,7 @@ import numpy as np
 from rbamlib.conv import mural2pc, pc2en
 
 
-def mural2en(mu, r, al=np.pi / 2, *B0):
+def mural2en(mu, r, al=np.pi/2, *B0):
     r"""
     Convert first adiabatic invariant, mu, to energy in MeV
 
@@ -39,7 +39,7 @@ def mural2en(mu, r, al=np.pi / 2, *B0):
 
 
 # Alias
-def mu2en(mu, r, al=np.pi / 2, *B0):
+def mu2en(mu, r, al=np.pi/2, *B0):
     r"""
     Convert first adiabatic invariant, mu, to energy in MeV
 

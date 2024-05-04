@@ -3,7 +3,7 @@ import rbamlib.constants
 import rbamlib.models.dip
 
 
-def mural2pc(mu, r, al=np.pi / 2, B0=rbamlib.models.dip.B0):
+def mural2pc(mu, r, al=np.pi/2, B0=rbamlib.models.dip.B0):
     r"""
     Calculate the momentum times the speed of light (pc), in MeV.
 
@@ -46,7 +46,7 @@ def mural2pc(mu, r, al=np.pi / 2, B0=rbamlib.models.dip.B0):
 
 
 # Alias
-def mu2pc(mu, r, al=np.pi / 2, *B0):
+def mu2pc(mu, r, al=np.pi/2, *B0):
     r"""
     Calculate the momentum times the speed of light (pc), in MeV.
 

@@ -2,7 +2,7 @@ import numpy as np
 from rbamlib.conv import pcral2mu, en2pc
 
 
-def enral2mu(en, r, al=np.pi / 2, *B0):
+def enral2mu(en, r, al=np.pi/2, *B0):
     r"""
     Convert energy in MeV to first adiabatic invariant, mu, in MeV/G.
 
@@ -39,7 +39,7 @@ def enral2mu(en, r, al=np.pi / 2, *B0):
 
 
 # Alias
-def en2mu(en, r, al=np.pi / 2, *B0):
+def en2mu(en, r, al=np.pi/2, *B0):
     r"""
     Convert energy in MeV to first adiabatic invariant, mu, in MeV/G.
 
