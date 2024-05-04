@@ -1,6 +1,7 @@
 import unittest
 import numpy as np
 from rbamlib.conv import en2pc, pc2en, Jcmu2K, Kmu2Jc, mural2pc, mu2pc, pcral2mu, pc2mu, mural2en, mu2en, enral2mu, en2mu
+from rbamlib.conv import Lal2K
 
 
 class TestConv(unittest.TestCase):
@@ -10,12 +11,15 @@ class TestConv(unittest.TestCase):
         self.in_float = 0.1
         self.in_float_2 = 100.
         self.in_float_3 = 4.
+        self.in_float_4 = np.pi/4
         self.in_1d = np.array([0.1, 1., 2.])
         self.in_1d_2 = np.array([100., 1000., 2000.])
         self.in_1d_3 = np.array([1., 4., 4.5])
+        self.in_1d_4 = np.array([np.pi/3, np.pi/4, np.pi/6])
         self.in_2d = np.array([[0.01, 0.1], [1., 2.]])
         self.in_2d_2 = np.array([[10., 100.], [1000., 2000.]])
         self.in_2d_3 = np.array([[1., 4.], [4.5, 6.6]])
+        self.in_2d_4 = np.array([[np.pi/3, np.pi/4], [np.pi/6, np.pi/6]])
 
         # Expected values
         self.res_pc_float = 0.3350
@@ -55,6 +59,10 @@ class TestConv(unittest.TestCase):
         self.res_mu_1d_3 = np.array([0.3519, 405.8407, 1.7273e+03])
         self.res_mu_2d_3 = np.array([[0.0324, 22.5199], [577.8475, 5.4494e+03]])
         self.res_mu_float_4 = 0.2244
+
+        self.res_K_float_2 = 0.1898
+        self.res_K_1d_2 = np.array([0.1338, 0.1898, 0.4706])
+        self.res_K_2d_2 = np.array([[0.1338, 0.1898], [0.4706, 0.3885]])
 
     def assertSingleValue(self, function, input, expected):
         """Assert function works for single float values"""
@@ -242,6 +250,23 @@ class TestConv(unittest.TestCase):
         self.assertThreeSingleValues(enral2mu, self.in_float, self.in_float_3, self.in_float, self.res_mu_float_4)
 
     # TODO: Add roundtrip tests for mu2pc/pc2mu mu2en/en2mu
+
+    # Tests for Lal2K
+    def test_Lal2K_single_value(self):
+        self.assertSingleValue(Lal2K, self.in_float_3, 0)
+
+    def test_Lal2K_1D_arrays(self):
+        self.assert1DArray(Lal2K, self.in_1d_3, np.array([0, 0, 0]))
+
+    def test_Lal2K_al_single_value(self):
+        self.assertTwoSingleValues(Lal2K, self.in_float_3, self.in_float_4, self.res_K_float_2)
+
+    def test_Lal2K_al_1D_arrays(self):
+        self.assertTwo1DArrays(Lal2K, self.in_1d_3, self.in_1d_4, self.res_K_1d_2)
+
+    def test_Lal2K_al_2D_arrays(self):
+        self.assertTwo2DArrays(Lal2K, self.in_2d_3, self.in_2d_4, self.res_K_2d_2)
+
 
 if __name__ == '__main__':
     unittest.main()
