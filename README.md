@@ -49,6 +49,11 @@ At this moment, you can to install library you can clone the repository:
 git clone https://github.com/radiation-belts/rbamlib.git
 ```
 
+Recently, the package become available to install using PyPI.
+```bash
+pip install rbamlib
+```
+
 ## License
 
 `rbamlib` is released under the BSD-License (3-clause version). See the LICENSE file for details.
