@@ -44,33 +44,41 @@ def OBM2003(time, index, index_type):
     # Convert the index type to lowercase
     index_type = index_type.lower()
 
-    # Set coefficients and time limits based on the index type
+    # Define coefficients and time limits for each index type
     if index_type == 'kp':
         a, b = -0.43, 5.9
-        t1, t2 = -36, -2
+        t1, t2 = -36 / 24, -2 / 24  # Convert hours to days
     elif index_type == 'ae':
         a, b = -2.86, 12.4
-        t1, t2 = -36, 0
+        t1, t2 = -36 / 24, 0  # AE uses the last 36 hours
     elif index_type == 'dst':
         a, b = -1.57, 6.3
-        t1, t2 = -24, 0
+        t1, t2 = -24 / 24, 0  # Dst uses the last 24 hours
     else:
         raise ValueError('Unknown index type')
 
-    # Initialize the lpp array with zeros
-    lpp = np.zeros(len(time))
+    # Ensure time and index arrays are floats
+    time = time.astype(float)
+    index = index.astype(float)
 
-    for it in range(len(time)):
+    # Initialize the lpp array with zeros
+    lpp = np.zeros_like(time)
+
+
+    for it, current_time in enumerate(time):
         # Define time window based on t1 and t2
-        tidx = (time > (time[it] + t1 / 24)) & (time <= (time[it] + t2 / 24))
+        tidx = (time > (current_time + t1)) & (time <= (current_time + t2))
 
         # Calculate Q based on the index type
-        if index_type == 'kp':
-            Q = np.max(index[tidx]) if np.any(tidx) else None
-        elif index_type == 'ae':
-            Q = np.log10(np.max(index[tidx])) if np.any(tidx) else None
-        elif index_type == 'dst':
-            Q = np.log10(np.abs(np.min(index[tidx]))) if np.any(tidx) else None
+        if np.any(tidx):
+            if index_type == 'kp':
+                Q = np.max(index[tidx])
+            elif index_type == 'ae':
+                Q = np.log10(np.max(index[tidx]))
+            elif index_type == 'dst':
+                Q = np.log10(np.abs(np.min(index[tidx])))
+        else:
+            Q = None  # If no valid data within the time window
 
         # Compute Lpp if Q is available
         if Q is not None:

@@ -31,12 +31,16 @@ def M2002(time, kp):
     [1] Moldwin, M. B., et al. (2002). A new model of the location of the plasmapause: CRRES results,
     Journal of Geophysical Research, 107(A11), 1339, doi: 10.1029/2001JA009211.
     """
-    # Initialize output array for lpp
-    lpp = np.zeros(len(time))
+    # Ensure time and index arrays are floats
+    time = time.astype(float)
+    kp = kp.astype(float)
 
-    for it in range(len(time)):
+    # Initialize output array for lpp
+    lpp = np.zeros_like(time)
+
+    for it, current_time in enumerate(time):
         # Get indices where time is within the last 12 hours (1/2 day)
-        tidx = (time > (time[it] - 1 / 2)) & (time <= time[it])
+        tidx = (time > (current_time - 1 / 2)) & (time <= current_time)
 
         # Get the maximum Kp value in the last 12 hours
         Kp12 = np.max(kp[tidx]) if np.any(tidx) else 0  # Handle empty index case

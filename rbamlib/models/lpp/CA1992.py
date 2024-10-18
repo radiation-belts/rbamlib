@@ -32,15 +32,21 @@ def CA1992(time, kp):
     magnetosphere. Journal of Geophysical Research, [Space Physics], 97(A2), 1097–1108.
     https://doi.org/10.1029/91JA01548
     """
+
+    # Ensure time and index arrays are floats
+    time = time.astype(float)
+    kp = kp.astype(float)
+
     left_index = 0
-    lpp = np.zeros(len(time))
-    for it in range(len(time)):
+    lpp = np.zeros_like(time)
+    for it, current_time in enumerate(time):
         # Faster search of the last 24 hours time
-        if time[it] - 1 > time[left_index]:
+        if current_time - 1 > time[left_index]:
             search_index = np.arange(left_index, it + 1)
             search_time = time[left_index:it + 1]
-            i = np.argmin(np.abs(search_time - (time[it] - 1)))
+            i = np.argmin(np.abs(search_time - (current_time - 1)))
             left_index = search_index[i]
+
         Kp24 = np.max(kp[left_index:it + 1])
         lpp[it] = 5.6 - 0.46 * Kp24
 
