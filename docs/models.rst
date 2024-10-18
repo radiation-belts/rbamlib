@@ -10,3 +10,4 @@ Models
 
    models/dip
    models/lpp
+   models/mp
