@@ -7,3 +7,5 @@ Plasmapause location
 Functions
 =========
 .. autofunction:: CA1992
+.. autofunction:: OBM2003
+.. autofunction:: M2002
