@@ -2,6 +2,7 @@ import unittest
 import numpy as np
 from rbamlib.models.lpp import CA1992
 from rbamlib.models.lpp import OBM2003
+from rbamlib.models.lpp import M2002
 
 
 class TestModelsLpp(unittest.TestCase):
@@ -50,6 +51,22 @@ class TestModelsLpp(unittest.TestCase):
         result_dst = OBM2003(time, dst, 'dst')
         np.testing.assert_almost_equal(result_dst, expected_output_dst, decimal=2,
                                        err_msg="OBM2003 did not return expected values for Dst index.")
+
+    def test_M2002_values(self):
+        """Test the M2002 function with known values."""
+
+        # Test case for time and kp
+        time = np.array([0, 1, 2])  # Example time in days
+        kp = np.array([1, 2, 3])  # Example Kp-index values
+
+        expected_output = np.array([5.0080, 4.6260, 4.2440])  # Expected lpp values based on the formula
+
+        # Call the M2002 function
+        result = M2002(time, kp)
+
+        # Assert that the result is as expected
+        np.testing.assert_almost_equal(result, expected_output, decimal=3,
+                                       err_msg="M2002 did not return expected values for the test case.")
 
 
 if __name__ == '__main__':
