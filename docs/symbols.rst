@@ -16,4 +16,7 @@ L       L-shell
 en      Energy [MeV]
 pc      Momentum times speed of light [MeV]
 Jc      2nd adiabatic invariant K times speed of light [MeV/G]
+Kp      Kp-index
+Bz      IMF Bz, [nT]
+Pdyn    Dynamic pressure, [nPa]
 ======  ===========
