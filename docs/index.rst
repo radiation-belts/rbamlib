@@ -13,16 +13,19 @@ Welcome to rbamlib's documentation!
    :caption: Modules
 
    conv
+   motion
    models
+   sim
    vf
    constants
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 3
    :caption: See also
 
    README.md <README>
    CONTRIBUTING.md <CONTRIBUTING>
+   DEVELOPERS_GUIDE.md <DEVELOPERS_GUIDE>
 
    symbols
 

@@ -69,7 +69,7 @@ When introducing a new empirical model, typically based on a specific research p
 The **NumPy/SciPy** docstring style should be used. This format ensures automated documentation generation using Sphinx.
 
 **Docstring Style:**
-- **Docstrings**: Use triple double-quoted strings for module, class, and function docstrings.
+- **Docstrings**: Use triple double-quoted strings for module, class, and function docstrings. Use `r` strings (denoted by a prefix `r` before the string: `r"""`) to avoid conflicts with backslashes in equations. 
 - **Summary**: A brief description of the function's purpose.
 - **Parameters**: A list of input parameters with their types, descriptions and units.
 - **Returns**: Details of the output, including type, description and units.
@@ -80,7 +80,7 @@ The **NumPy/SciPy** docstring style should be used. This format ensures automate
 **Example:**
 ```python
 def T(al):
-    """
+    r"""
     Approximation of the integral function T related to the bounce period, derived in the dipole approximation.
 
     Parameters
@@ -95,21 +95,21 @@ def T(al):
 
     Notes
     -----
-    See Schulz & Lanzerotti (1974).
+    See Schulz & Lanzerotti (1974) [#]_.
 
     .. math::
         T( \\alpha ) \\approx T_0 - \\frac{1}{2}(T_0 - T_1) \\cdot \\left( \\sin( \\alpha ) + \\sin( \\alpha)^1/2 \\right)
         
     Reference
     ---------
-    Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts (Vol. 7). Springer-Verlag Berlin Heidelberg. Retrieved from http://www.springer.com/physics/book/978-3-642-65677-4
+    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts (Vol. 7). Springer-Verlag Berlin Heidelberg. Retrieved from http://www.springer.com/physics/book/978-3-642-65677-4
     """
 ```
 
 **Guidelines:**
-- **Input and output**: Use commonly defined physical variables names. Refer to [`symbols.rst`](docs/symbols.rst). Always define units when applicable. 
+- **Input and output**: Use commonly defined physical variables names and units. Refer to [`symbols.rst`](docs/symbols.rst). Always define units when applicable. 
 - **Mathematical Expressions**: Use LaTeX syntax within the `.. math::` directive to render equations properly in Sphinx-generated documentation in the **Notes** section.
-- **References**: When implementing functions based on specific research papers, include a citation in the **Reference** section, providing full bibliographic details.
+- **References**: When implementing functions based on specific research papers, include a citation in the **Reference** section, providing full bibliographic details. Use Sphinx directive ` [#]_ ` to define the reference number and `.. [#] ` directive to place the reference. Note, you can use multiple reference in the description of the function. 
 - **Aliases**: For aliases, use only a one line summary (see example in Naming Conventions section). Add See Also section with the original function.  
 - **`__init__.py`**: When describing the package or a sub-package, start with the name of the pacakge using `'`, explanation of its name and what it provides. Add the description and list of the **Main Features**. In the sub-package, include list of models using a short reference to the papers.   
 **Examples**
