@@ -6,3 +6,7 @@ Electron density models
 
 Functions
 =========
+
+.. # Added by generate_rst_files
+
+.. autofunction:: rbamlib.models.ne.D2012

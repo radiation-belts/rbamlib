@@ -139,6 +139,8 @@ def process_package(root_path, source_dir, target_dir, dirs, files, root_package
         # If the RST file exists, check for missing functions
         logging.info(f"{rst_filename} exists. Checking for missing functions.")
         existing_functions = extract_documented_functions(rst_filename)
+        logging.info(f"Documented: {existing_functions}.")
+        logging.info(f"Imported: {imported_functions}.")
         missing_functions = [f for f in imported_functions if f not in existing_functions]
         if missing_functions:
             logging.info(f"Adding missing functions to {rst_filename}: {', '.join(missing_functions)}")
@@ -161,6 +163,9 @@ def get_imported_functions(root_path):
 
     """
     init_file = root_path / '__init__.py'
+
+    logging.info(f"Pacakge file: {init_file}")
+
     if not init_file.exists():
         return []
     with init_file.open('r', encoding='utf-8') as f:
@@ -170,8 +175,8 @@ def get_imported_functions(root_path):
         tree = ast.parse(source)
         for node in ast.iter_child_nodes(tree):
             if isinstance(node, ast.ImportFrom):
-                # Only consider relative imports from the same package
-                if node.module == '.' or node.module is None:
+                # Consider only relative imports (level > 0)
+                if node.level > 0:
                     for alias in node.names:
                         imported_functions.append(alias.name)
     except SyntaxError as e:

@@ -6,3 +6,7 @@ Isotropic boundary models
 
 Functions
 =========
+
+.. # Added by generate_rst_files
+
+.. autofunction:: rbamlib.models.ib.W2024
