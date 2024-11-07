@@ -1,7 +1,7 @@
 .. currentmodule:: rbamlib.models.tau.chorus
 
-rbamlib.models.tau.chorus
--------------------------
+Lifetime models due to chorus waves
+-----------------------------------
 .. automodule:: rbamlib.models.tau.chorus
 
 Functions

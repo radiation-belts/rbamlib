@@ -1,4 +1,6 @@
 .. currentmodule:: rbamlib.sim
-rbamlib.sim
------------
+
+Simulation support
+------------------
 .. automodule:: rbamlib.sim
+

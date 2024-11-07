@@ -1,3 +1,5 @@
+.. _symbols:
+
 List of used symbols
 ====================
 

@@ -1,4 +1,6 @@
 .. currentmodule:: rbamlib.motion
-rbamlib.motion
---------------
+
+Particle motion
+---------------
 .. automodule:: rbamlib.motion
+
