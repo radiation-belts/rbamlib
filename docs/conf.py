@@ -55,7 +55,7 @@ source_suffix = {
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+# html_static_path = ['_static'] # Disable _static for now.
 
 ## -- Generate rts files from new python files --
 
@@ -295,5 +295,5 @@ def get_module_docstring(root_path):
         logging.warning(f"Syntax error when parsing {init_file}: {e}")
     return None
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 generate_rst_files(source_dir, target_dir)
