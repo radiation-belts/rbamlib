@@ -86,33 +86,30 @@ def T(al):
     Parameters
     ----------
     al : float or ndarray
-        Equatorial pitch angle, in radians.
+         Equatorial pitch angle, in radians.
 
     Returns
     -------
     float or ndarray
-        Value of T.
+         Value of T
 
     Notes
     -----
-    See Schulz, M., & Lanzerotti, L. J. (1974). *Particle Diffusion in the Radiation Belts* (Vol. 7). Springer-Verlag Berlin Heidelberg. Retrieved from http://www.springer.com/physics/book/978-3-642-65677-4
+    See Schulz & Lanzerotti (1974).
 
     .. math::
-        T( \\alpha ) \\approx T_0 - \\frac{1}{2}(T_0 - T_1) \\cdot \\left( \\sin( \\alpha ) + \\sin( \\alpha)^{1/2} \\right)
+        T( \\alpha ) \\approx T_0 - \\frac{1}{2}(T_0 - T_1) \\cdot \\left( \\sin( \\alpha ) + \\sin( \\alpha)^1/2 \\right)
+        
+    Reference
+    ---------
+    Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts (Vol. 7). Springer-Verlag Berlin Heidelberg. Retrieved from http://www.springer.com/physics/book/978-3-642-65677-4
     """
-    T0 = rbamlib.constants.T0
-    T1 = rbamlib.constants.T1
-
-    y = np.sin(al)
-
-    T = T0 - 0.5 * (T0 - T1) * (y + np.sqrt(y))
-    return T
 ```
 
 **Guidelines:**
 - **Input and output**: Use commonly defined physical variables names. Refer to [`symbols.rst`](docs/symbols.rst). Always define units when applicable. 
-- **References**: When implementing functions based on specific research papers, include a citation in the **Notes** section, providing full bibliographic details.
-- **Mathematical Expressions**: Use LaTeX syntax within the `.. math::` directive to render equations properly in Sphinx-generated documentation.
+- **Mathematical Expressions**: Use LaTeX syntax within the `.. math::` directive to render equations properly in Sphinx-generated documentation in the **Notes** section.
+- **References**: When implementing functions based on specific research papers, include a citation in the **Reference** section, providing full bibliographic details.
 - **Aliases**: For aliases, use only a one line summary (see example in Naming Conventions section). Add See Also section with the original function.  
 - **`__init__.py`**: When describing the package or a sub-package, start with the name of the pacakge using `'`, explanation of its name and what it provides. Add the description and list of the **Main Features**. In the sub-package, include list of models using a short reference to the papers.   
 **Examples**
@@ -210,7 +207,7 @@ We utilize Python's built-in `unittest` framework for writing and executing test
 **Writing Tests:**
 
 - **Naming Conventions**:
-  - **Test Files**: Name test files starting with `test_` followed by the package name (e.g., `test_conv.py`).
+  - **Test Files**: Name test files starting with `test_` followed by the package name (e.g., `test_conv.py`). The test should be located in the corresponding test sub-package mirroring the structure or the library (e.g., `tests/models/test_lpp.py`). 
   - **Test Classes**: Name test classes with `Test` followed by the package name but using CamelCase (e.g., `TestConv`).
   - **Test Methods**: Prefix test method names with `test_` (e.g., `test_en2pc_single_value`).
 - **Content**:
