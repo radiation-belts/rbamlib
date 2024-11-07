@@ -141,6 +141,34 @@ Models:
 """
 ```
 
+Typical template for a function:
+```Python
+import numpy as np
+
+def D2017():
+    r"""
+    Calculates the EMIC wave trigger following Drozdov et al. (2017) [#]_ model.
+
+    Parameters
+    ----------
+
+    Returns
+    -------
+
+    Notes
+    -----
+    .. math::
+
+    References
+    ----------
+    .. [#] Drozdov, A. Y., Shprits, Y. Y., Usanova, M. E., Aseev, N. A., Kellerman, A. C., & Zhu, H. (2017). EMIC wave parameterization in the long-term VERB code simulation. Journal of Geophysical Research, [Space Physics], 122(8), 2017JA024389. https://doi.org/10.1002/2017JA024389
+    """
+    
+    # Function code
+    
+    return
+```
+
 ### Sphynx documentation
 We utilize [Sphinx](https://www.sphinx-doc.org/) to generate documentation. This allows the automatic inclusion of docstrings from the code and synchronize documentation with the source code.
 
