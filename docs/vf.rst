@@ -1,7 +1,7 @@
 .. currentmodule:: rbamlib.vf
 
-Varios functions
-----------------
+Various functions
+-----------------
 .. automodule:: rbamlib.vf
 
 Functions

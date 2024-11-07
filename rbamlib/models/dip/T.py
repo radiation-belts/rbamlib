@@ -18,14 +18,14 @@ def T(al):
 
     Notes
     -----
-    See Schulz & Lanzerotti (1974).
+    See Schulz & Lanzerotti (1974) [#]_.
 
     .. math::
         T( \\alpha ) \\approx T_0 - \\frac{1}{2}(T_0 - T_1) \\cdot \\left( \\sin( \\alpha ) + \\sin( \\alpha)^1/2 \\right)
 
     Reference
     ---------
-    Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts (Vol. 7). Springer-Verlag Berlin Heidelberg. Retrieved from http://www.springer.com/physics/book/978-3-642-65677-4
+    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts (Vol. 7). Springer-Verlag Berlin Heidelberg. Retrieved from http://www.springer.com/physics/book/978-3-642-65677-4
     """
     T0 = rbamlib.constants.T0
     T1 = rbamlib.constants.T1

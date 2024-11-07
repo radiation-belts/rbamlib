@@ -1,4 +1,8 @@
 .. currentmodule:: rbamlib.models.ne
-rbamlib.models.ne
------------------
+
+Electron density models
+-----------------------
 .. automodule:: rbamlib.models.ne
+
+Functions
+=========

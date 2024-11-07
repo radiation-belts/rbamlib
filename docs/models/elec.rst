@@ -1,4 +1,8 @@
 .. currentmodule:: rbamlib.models.elec
-rbamlib.models.elec
--------------------
+
+Electric field model functions
+------------------------------
 .. automodule:: rbamlib.models.elec
+
+Functions
+=========
