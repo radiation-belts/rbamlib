@@ -2,7 +2,7 @@ import numpy as np
 
 
 def M2002(time, kp):
-    """
+    r"""
     Calculates plasmapause location (lpp) following Moldwin et al. (2002) [#]_ eq. (2).
 
     Parameters
