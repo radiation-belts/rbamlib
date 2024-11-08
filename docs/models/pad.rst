@@ -6,3 +6,7 @@ Pitch-angle distribution models
 
 Functions
 =========
+
+.. # Added by generate_rst_files
+
+.. autofunction:: rbamlib.models.pad.S2022

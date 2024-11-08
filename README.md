@@ -2,12 +2,17 @@
 
 ## Overview
 
-`rbamlib` is a lightweight, open-source Python library for the analysis and modeling of radiation belts. 
+`rbamlib` is a lightweight, open-source Python library for the analysis and modeling of radiation belts.
 
-The library aims to support the scientific community by providing essential functionalities for radiation belt studies.
+The library aims to support the scientific community by providing essential functionalities for radiation belt studies, with detailed [documentation](https://rbamlib.readthedocs.io/).
 This includes system properties calculations, empirical model collections, and modeling support.
 
-The library is at stage of active development.
+> [!IMPORTANT]
+> **This library is currently in active development.** 
+> 
+> Some functions are placeholders and may not yet have full implementations. Expect ongoing updates and new features as the library evolves.
+
+[![Documentation Status](https://readthedocs.org/projects/rbamlib/badge/?version=latest)](https://rbamlib.readthedocs.io/latest/?badge=latest)
 
 ## Planned Key Features
 
@@ -53,6 +58,11 @@ Recently, the package become available to install using PyPI.
 ```bash
 pip install rbamlib
 ```
+
+## Documentation
+For more information, please see our documentation at: 
+
+https://pyspedas.readthedocs.io/
 
 ## License
 

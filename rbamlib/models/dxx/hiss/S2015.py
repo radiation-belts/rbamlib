@@ -4,6 +4,9 @@ def S2015():
     r"""
     Calculates scaling for hiss waves following Spasojevic et al. (2015) [#]_ model.
 
+    .. warning::
+       This function is currently empty. Implementation will be added soon.
+
     Parameters
     ----------
 

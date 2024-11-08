@@ -4,6 +4,9 @@ def O2014():
     r"""
     Calculate radial diffusion coefficient following Ozeke et al. (2014) [#]_ model.
 
+    .. warning::
+       This function is currently empty. Implementation will be added soon.
+
     Parameters
     ----------
 

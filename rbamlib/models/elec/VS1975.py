@@ -5,6 +5,9 @@ def VS1975():
     r"""
     Calculates electric field following Volland (1973) [#]_ and Stern (1975) [#]_ model.
 
+    .. warning::
+       This function is currently empty. Implementation will be added soon.
+
     Parameters
     ----------
 

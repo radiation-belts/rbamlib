@@ -6,3 +6,7 @@ Electric field model functions
 
 Functions
 =========
+
+.. # Added by generate_rst_files
+
+.. autofunction:: rbamlib.models.elec.VS1975

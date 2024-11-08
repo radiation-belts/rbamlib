@@ -5,6 +5,9 @@ def S2011():
     r"""
     Return scaling for lightning generated whistlers waves following Subbotin et al. (2011) [#]_ model.
 
+    .. warning::
+       This function is currently empty. Implementation will be added soon.
+
     Parameters
     ----------
 

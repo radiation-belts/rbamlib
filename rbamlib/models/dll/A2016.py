@@ -4,6 +4,9 @@ def A2016():
     r"""
     Calculate radial diffusion coefficient following Ali et al. (2016) [#]_ model.
 
+    .. warning::
+       This function is currently empty. Implementation will be added soon.
+
     Parameters
     ----------
 

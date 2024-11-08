@@ -4,6 +4,9 @@ def S2011():
     r"""
     Calculate scaling for chorus waves following Subbotin et al. (2011) [#]_ model.
 
+    .. warning::
+       This function is currently empty. Implementation will be added soon.
+
     Parameters
     ----------
 
