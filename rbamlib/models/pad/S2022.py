@@ -5,6 +5,9 @@ def S2022():
     r"""
     Calculates pitch angle distribution following Smirnov et al. (2022) [#]_ model.
 
+    .. warning::
+       This function is currently empty. Implementation will be added soon.
+
     Parameters
     ----------
 

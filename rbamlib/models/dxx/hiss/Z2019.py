@@ -4,6 +4,9 @@ def Z2019():
     r"""
     Calculate scaling for hiss waves following Zhu et al. (2019) [#]_ model.
 
+    .. warning::
+       This function is currently empty. Implementation will be added soon.
+
     Parameters
     ----------
 

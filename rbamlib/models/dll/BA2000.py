@@ -4,6 +4,9 @@ def BA2000():
     r"""
     Calculate radial diffusion coefficient following Brautigam & Albert (2000) [#]_ model.
 
+    .. warning::
+       This function is currently empty. Implementation will be added soon.
+
     Parameters
     ----------
 
