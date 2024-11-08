@@ -13,6 +13,8 @@ import ast
 import logging
 from pathlib import Path
 
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+
 sys.path.insert(0, os.path.abspath(".."))
 sys.path.insert(0, os.path.abspath("."))
 
@@ -26,8 +28,6 @@ author = 'Alexander Drozdov'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
-
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tests']
 
@@ -35,14 +35,29 @@ extensions = [
     'sphinx.ext.autodoc',
     "sphinx.ext.mathjax",
     "sphinx.ext.napoleon",
-    'myst_parser'
+    "myst_parser",
+    "md_alert_to_admonition",
+    "md_link_adjust"
 ]
+
+# List of documents where the md_alert_to_admonition should apply
+md_alert_to_admonition_affected_docs = ["README"]
+
+# List of documents where the LinkAdjustTransform should apply
+# This plugin work only with "broken links", node type sphinx.addnodes.pending_xref
+md_link_adjust_affected_docs = ['DEVELOPERS_GUIDE']  # Adjust these as needed
+
+# List of link replacement rules for md_link_adjust
+md_link_adjust_rule = [
+    (r'^/docs/symbols\.rst$', 'symbols.html'),  # Replace `/docs/symbols.rst` with `symbols.html`. This allows link to work in both .md on GitHub and in documentation
+    # Add other rules as needed
+]
+
 
 # myst_enable_extensions = [
 #     "colon_fence",  # Fenced code blocks with ::
 #     "dollarmath",   # Optional: allow inline math with $...$
 # ]
-# myst_heading_anchors = 3
 
 myst_url_schemes = ["http", "https", ""]
 
@@ -139,8 +154,8 @@ def process_package(root_path, source_dir, target_dir, dirs, files, root_package
         # If the RST file exists, check for missing functions
         logging.info(f"{rst_filename} exists. Checking for missing functions.")
         existing_functions = extract_documented_functions(rst_filename)
-        logging.info(f"Documented: {existing_functions}.")
-        logging.info(f"Imported: {imported_functions}.")
+        logging.debug(f"Documented: {existing_functions}.")
+        logging.debug(f"Imported: {imported_functions}.")
         missing_functions = [f for f in imported_functions if f not in existing_functions]
         if missing_functions:
             logging.info(f"Adding missing functions to {rst_filename}: {', '.join(missing_functions)}")
@@ -164,7 +179,7 @@ def get_imported_functions(root_path):
     """
     init_file = root_path / '__init__.py'
 
-    logging.info(f"Pacakge file: {init_file}")
+    logging.debug(f"Pacakge file: {init_file}")
 
     if not init_file.exists():
         return []
@@ -300,5 +315,4 @@ def get_module_docstring(root_path):
         logging.warning(f"Syntax error when parsing {init_file}: {e}")
     return None
 
-logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 generate_rst_files(source_dir, target_dir)
