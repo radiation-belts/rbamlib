@@ -11,8 +11,11 @@ Constants:
 """
 
 MC2 = 0.51099895  # rest mass energy of an electron in MeV
-B0_Earth = 0.312  # mean value of the Earth's surface magnetic field
-B0_Saturn = 0.215  # mean value of the Saturn's surface magnetic field
-B0_Jupiter = 4.28  # mean value of the Jupiter's surface magnetic field
+B0_Earth = 0.312  # mean value of the Earth's surface magnetic field in Gauss
+B0_Saturn = 0.215  # mean value of the Saturn's surface magnetic field in Gauss
+B0_Jupiter = 4.28  # mean value of the Jupiter's surface magnetic field in Gauss
 T0 = 1.3802  # Approximate value of T(0)
 T1 = 0.7405  # Approximate value of T(1)
+R_Earth = 6.356e8  # Earth radius in cm
+c = 2.99792458e10  # Speed of light in cm/s
+q = 4.803e-10  # charge of electron in CGS
