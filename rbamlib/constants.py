@@ -2,16 +2,16 @@
 Physical constants for use in `rbamlib` calculations. Most of the constants are defined in CGS system with a few exceptions.
 
 Constants:
-    - MC2 ≈ 0.511 : Rest mass energy of an electron in MeV.
+    - MC2 ≈ 0.511 : rest mass energy of an electron in MeV.
     - B0_Earth ≈ 0.31 : mean value of the magnetic field at the magnetic equator on the Earth's surface in G.
     - B0_Saturn ≈ 0.21 : mean value of the magnetic field at the magnetic equator on the Saturn's surface in G.
     - B0_Jupiter ≈ 4.28 : mean value of the magnetic field at the magnetic equator on the Jupiter's surface in G.
-    - T0 ≈ 1.3802 : Approximate value of T(0)
-    - T1 ≈ 0.7405 : Approximate value of T(1)
-    - R_Earth ≈ 637,800,000 : Radius of Earth in cm
-    - R_Saturn ≈ 6,026,800,000 : Radius of Earth in cm
-    - R_Jupiter ≈ 7,149,200,000 : Radius of Earth in cm
-    - c ≈ 2.9e10 : Speed of light in cm/s
+    - T0 ≈ 1.3802 : approximate value of T(0)
+    - T1 ≈ 0.7405 : approximate value of T(1)
+    - R_Earth ≈ 637,800,000 : radius of Earth in cm
+    - R_Saturn ≈ 6,026,800,000 : radius of Earth in cm
+    - R_Jupiter ≈ 7,149,200,000 : radius of Earth in cm
+    - c ≈ 2.9e10 : speed of light in cm/s
     - q ≈ 4.8e-10 : electron charge in CGS
 
 CGS:

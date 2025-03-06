@@ -26,7 +26,7 @@ def L2016(L, kp, mu, dll_type='E'):
     The electric radial diffusion coefficient is calculated as:
 
     .. math::
-        D^{E}_{LL}[THEMIS] = 1.115 \times 10^{-6} \cdot 10^{0.281 \cdot Kp} \cdot L^{8.184} \cdot \mu^{-0.608}
+        D^{E}_{LL} = 1.115 \times 10^{-6} \cdot 10^{0.281 \cdot Kp} \cdot L^{8.184} \cdot \mu^{-0.608}
 
     References
     ----------
