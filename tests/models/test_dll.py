@@ -64,7 +64,26 @@ class TestDll(unittest.TestCase, TestHelpers):
         self.AssertBlank(L2016)
 
     def test_A2016(self):
-        self.AssertBlank(A2016)
+        """Test A2016 values for all diffusion coefficient types."""
+
+        # Test electromagnetic diffusion coefficient
+        dllm = A2016(self.L, self.kp, dll_type='M')
+        expected_dllm = np.array([0.028631587258395, 0.121815859719923, 0.518277367768120]) * 1.0e-03  # From matlab
+        np.testing.assert_almost_equal(dllm, expected_dllm, decimal=3,
+                                       err_msg="Magnetic diffusion coefficients are incorrect.")
+
+        # Test electrostatic diffusion coefficient
+        dlle = A2016(self.L, self.kp, dll_type='E')
+        expected_dlle = np.array([0.000513120421795, 0.005348174453228, 0.055743191592555])  # From matlab
+        np.testing.assert_almost_equal(dlle, expected_dlle, decimal=3,
+                                       err_msg="Electric diffusion coefficients are incorrect.")
+
+        # Test both diffusion coefficients
+        dllm_both, dlle_both = A2016(self.L, self.kp, dll_type='ME')
+        np.testing.assert_almost_equal(dllm_both, expected_dllm, decimal=3,
+                                       err_msg="Magnetic coefficients from 'ME' type are incorrect.")
+        np.testing.assert_almost_equal(dlle_both, expected_dlle, decimal=3,
+                                       err_msg="Electric coefficients from 'ME' type are incorrect.")
 
 
 if __name__ == '__main__':
