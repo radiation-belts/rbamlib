@@ -61,7 +61,14 @@ class TestDll(unittest.TestCase, TestHelpers):
 
 
     def test_L2016(self):
-        self.AssertBlank(L2016)
+        def test_L2016(self):
+            """Test L2016 values for electric diffusion coefficient."""
+
+            # Test electrostatic diffusion coefficient
+            dlle = L2016(self.L, self.kp, self.mu, dll_type='E')
+            expected_dlle = np.array([0.007862489414963, 0.048828301802163, 0.217115554389266])  # From matlab
+            np.testing.assert_almost_equal(dlle, expected_dlle, decimal=3,
+                                           err_msg="Electric diffusion coefficients are incorrect.")
 
     def test_A2016(self):
         """Test A2016 values for all diffusion coefficient types."""
