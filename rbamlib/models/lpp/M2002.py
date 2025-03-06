@@ -24,7 +24,7 @@ def M2002(time, kp):
     .. math::
         L_{pp} = 5.39 - 0.382 \cdot Kp_{12}
 
-    where \(Kp_{12}\) is the maximum Kp-index value in the last 12 hours.
+    where :math:`Kp_{24}` is the maximum Kp-index value in the last 12 hours.
 
     Notes
     -----

@@ -13,12 +13,12 @@ def BA2000(L, kp, mu=None, dll_type='M'):
         Array of L values, representing the radial distance in Earth radii where magnetic field lines cross the magnetic equator.
     mu : ndarray, default=None
         Array of mu values, vector of corresponding first adiabatic invariants required for calculation electrostatic radial diffusion coefficient, in MeV/G.
-        mu is not used in calculation of electromagnetic radial diffusion coefficient.
+        `mu` is not used in calculation of electromagnetic radial diffusion coefficient.
     dll_type : str, default='M'
         A string, indicating which diffusion coefficient to calculate.
         'M' stands for electromagnetic radial diffusion coefficient (eq. 6).
         'E' stands for electrostatic diffusion coefficient (eq. 4, 5).
-        'ME', 'both', or '' computes both coefficients and returns a tuple (dllm, dlle).
+        'ME', 'both', or '' computes both coefficients and returns a tuple (`dllm`, `dlle`).
 
     Returns
     -------
@@ -44,7 +44,7 @@ def BA2000(L, kp, mu=None, dll_type='M'):
     where:
 
     .. math::
-        \omega_D = \frac{3 \mu c}{e L^2 R_E^2} \left(1 + \frac{2 \mu B_}{E_0}\right)^{-1/2}
+        \omega_D = \frac{3 \mu c}{e L^2 R_E^2} \left(1 + \frac{2 \mu B}{E_0}\right)^{-1/2}
 
     .. math::
         E_{ms} = 0.26 (Kp - 1) + 0.1

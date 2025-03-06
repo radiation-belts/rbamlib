@@ -24,7 +24,7 @@ def CA1992(time, kp):
     .. math::
         L_{pp} = 5.6 - 0.46 \cdot Kp_{24}
 
-    where \(Kp_{24}\) is the maximum Kp-index value in the last 24 hours.
+    where :math:`Kp_{24}` is the maximum Kp-index value in the last 24 hours.
 
     References
     ----------
