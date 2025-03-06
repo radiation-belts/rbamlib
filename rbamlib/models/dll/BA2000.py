@@ -83,13 +83,10 @@ def BA2000(L, kp, mu=None, dll_type='M'):
         mu_cgs = mu * 1.602e-6  # MeV to erg conversion factor
 
         # Calculate omega_D (relativistic drift frequency in rad/s)
-        # omega_D = (3 * mu_cgs * c) / (e * L ** 2 * RE ** 2) * (1 + 2 * mu_cgs * B / E0) ** -0.5
-        #omega_D = ((3 * mu_cgs * c) / (e * L ** 2 * RE ** 2)) / ((1 + 2 * mu_cgs * B / E0) ** 0.5)
         omega_D = ((3 * mu_cgs * c) / (e * L ** 2 * RE ** 2)) / ((1 + 2 * mu * B / E0) ** 0.5)
 
 
         # Calculate DllE (electrostatic radial diffusion coefficient in cm^2/s)
-        # dlle = (1 / 4) * (Ems_cgs / B0) ** 2 * (T / (1 + (omega_D * T / 2) ** 2)) * L ** 6
         dlle = (1 / 4) * (T * Ems ** 2 * 1e6 / B0 ** 2) / (1 + (omega_D * T / 2) ** 2) * L ** 6
 
         # Convert DllE from cm^2/s to 1/day
