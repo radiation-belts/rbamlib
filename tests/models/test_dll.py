@@ -24,7 +24,7 @@ class TestDll(unittest.TestCase, TestHelpers):
         dlle = BA2000(self.L, self.kp, mu=self.mu, dll_type='E')
         expected_dlle = np.array([8.4195e-03, 4.3609e-02, 1.7471e-01]) # From matlab
         np.testing.assert_almost_equal(dlle, expected_dlle, decimal=3,
-                                       err_msg="Electromagnetic diffusion coefficients are incorrect.")
+                                       err_msg="Electrostatic diffusion coefficients are incorrect.")
 
         # Test both diffusion coefficients
         dllm_both, dlle_both = BA2000(self.L, self.kp, mu=self.mu, dll_type='ME')
@@ -38,7 +38,27 @@ class TestDll(unittest.TestCase, TestHelpers):
             BA2000(self.L, self.kp, dll_type='E')
 
     def test_O2014(self):
-        self.AssertBlank(O2014)
+        """Test O2014 values for all diffusion coefficient types."""
+
+        # Test electromagnetic diffusion coefficient
+        dllb = O2014(self.L, self.kp, dll_type='B')
+        expected_dllb = np.array([0.000037062773886,   0.000473061957052,   0.003746864541156])  # From matlab
+        np.testing.assert_almost_equal(dllb, expected_dllb, decimal=3,
+                                       err_msg="Magnetic diffusion coefficients are incorrect.")
+
+        # Test electrostatic diffusion coefficient
+        dlle = O2014(self.L, self.kp, dll_type='E')
+        expected_dlle = np.array([0.005455237955669,  0.034298393384386,  0.168795651219601])  # From matlab
+        np.testing.assert_almost_equal(dlle, expected_dlle, decimal=3,
+                                       err_msg="Electric diffusion coefficients are incorrect.")
+
+        # Test both diffusion coefficients
+        dllb_both, dlle_both = O2014(self.L, self.kp,  dll_type='BE')
+        np.testing.assert_almost_equal(dllb_both, expected_dllb, decimal=3,
+                                       err_msg="Magnetic coefficients from 'BE' type are incorrect.")
+        np.testing.assert_almost_equal(dlle_both, expected_dlle, decimal=3,
+                                       err_msg="Electric coefficients from 'BE' type are incorrect.")
+
 
     def test_L2016(self):
         self.AssertBlank(L2016)
