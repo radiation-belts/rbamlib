@@ -16,7 +16,7 @@ Welcome to rbamlib's documentation!
    motion
    models
    sim
-   vf
+   utils
    constants
 
 .. toctree::
