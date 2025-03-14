@@ -10,14 +10,14 @@ data_mapping = {
     "IMF_Fine": 6,          # Fine Scale Points in IMF Averages
     "Plasma_Fine": 7,       # Fine Scale Points in Plasma Averages
     "IMF_Mag": 8,           # IMF Magnitude Average, nT
-    "IMF_Vr": 9,            # Magnitude, Average IMF Vr, nT
-    "IMF_Lat": 10,          # Latitude of Average IMF, degrees
-    "IMF_Lon": 11,          # Longitude of Average IMF, degrees
-    "Bx_GSE": 12,           # Bx, GSE/GSM, nT
-    "By_GSE": 13,           # By, GSE, nT
-    "Bz_GSE": 14,           # Bz, GSE, nT
-    "By_GSM": 15,           # By, GSM, nT
-    "Bz_GSM": 16,           # Bz, GSM, nT
+    "IMF_Vr": 9,            # Magnitude, Avg IMF Vr, nT
+    "IMF_Lat": 10,          # Latitude of Avg. IMF, degrees
+    "IMF_Lon": 11,          # Longitude of Avg. IMF, degrees
+    "Bx_GSE": 12,           # Bx component, GSE/GSM, nT
+    "By_GSE": 13,           # By component, GSE, nT
+    "Bz_GSE": 14,           # Bz component, GSE, nT
+    "By_GSM": 15,           # By component, GSM, nT
+    "Bz_GSM": 16,           # Bz component, GSM, nT
     "Sigma_IMF_Mag": 17,    # Sigma in IMF Magnitude Average
     "Sigma_IMF_Vec": 18,    # Sigma in IMF Vector Average
     "Sigma_Bx": 19,         # Sigma Bx, nT
@@ -36,13 +36,19 @@ data_mapping = {
     "Sigma_Flow_Lon": 32,   # Sigma-Flow-Longitude
     "Sigma_Flow_Lat": 33,   # Sigma-Flow-Latitude
     "Sigma_Alpha": 34,      # Sigma-Alpha/Proton Ratio
-    "Ey": 35,               # Ey - Electric Field, mV/m
+    "Ey": 35,               # Electric Field, mV/m
     "Plasma_Beta": 36,      # Plasma Beta
     "Alfven": 37,           # Alfven Mach Number
     "Kp": 38,               # Kp*10 Index
     "R_Sunspot": 39,        # R Sunspot Number
     "Dst": 40,              # Dst Index, nT
     "AE": 41,               # AE Index, nT
+    "PC": 51,               # Polar Cap (PCN) index from Thule
+    "AL": 52,               # AL Index, nT
+    "AU": 53,               # AU Index, nT
+    "AP": 49,               # AP index, nT
+    "F10.7": 50,            # Solar index F10.7
+    "Lyman_Alpha": 55,      # Lyman Alpha Solar Index, W/m²
     "PFlux_1MeV": 42,       # Proton Flux > 1 MeV
     "PFlux_2MeV": 43,       # Proton Flux > 2 MeV
     "PFlux_4MeV": 44,       # Proton Flux > 4 MeV
@@ -50,17 +56,14 @@ data_mapping = {
     "PFlux_30MeV": 46,      # Proton Flux > 30 MeV
     "PFlux_60MeV": 47,      # Proton Flux > 60 MeV
     "Mag_Flux_Flag": 48,    # Magnetospheric Flux Flag
-    "AE": 49,               # AE index, nT
-    "F10.7": 50,            # Solar index F10.7
-    "PC": 51,               # Polar Cap (PC) index from Thule
-    "AL": 52,               # AL Index, nT
-    "AU": 53                # AU Index, nT
+    "Magnetosonic": 54,     # Magnetosonic Mach Number
+    "Proton_QI": 56         # Proton Quasi-Invariant (QI)
 }
 
 
 def omni(start_date, end_date, params=None):
     r"""
-    Retrieve space weather data from the OMNIWEB database.
+    Retrieve hourly-averaged space weather data from the Low Resolution OMNIWEB (LRO) database.
 
     Parameters
     ----------
@@ -82,9 +85,186 @@ def omni(start_date, end_date, params=None):
 
     Notes
     -----
-    The data is retrieved from the NASA OMNIWEB database and includes various space weather
-    indices, such as Kp, Dst, AE, and solar indices. The function automatically converts the
-    retrieved data into numpy arrays and filters them by the specified date range.
+    - The data is retrieved from the NASA OMNIWEB database and includes various space weather
+      indices, such as Kp, Dst, AE, and solar indices.
+    - The function automatically converts the retrieved data into numpy arrays and filters them
+      by the specified date range.
+    - Data is provided in hourly resolution.
+    - The OMNIWEB service may return missing or fill values for certain periods.
+    - Parameter names are case-sensitive.
+
+    Available Parameters
+    --------------------
+
+    .. list-table::
+       :header-rows: 1
+
+       * - Short Name
+         - OMNIWeb Index
+         - Description
+       * - "BRN"
+         - 3
+         - Bartels Rotation Number
+       * - "IMF_ID"
+         - 4
+         - IMF Spacecraft ID
+       * - "Plasma_ID"
+         - 5
+         - Plasma Spacecraft ID
+       * - "IMF_Fine"
+         - 6
+         - Fine Scale Points in IMF Averages
+       * - "Plasma_Fine"
+         - 7
+         - Fine Scale Points in Plasma Averages
+       * - "IMF_Mag"
+         - 8
+         - IMF Magnitude Average, nT
+       * - "IMF_Vr"
+         - 9
+         - Magnitude, Avg IMF Vr, nT
+       * - "IMF_Lat"
+         - 10
+         - Latitude of Avg. IMF, degrees
+       * - "IMF_Lon"
+         - 11
+         - Longitude of Avg. IMF, degrees
+       * - "Bx_GSE"
+         - 12
+         - Bx component, GSE/GSM, nT
+       * - "By_GSE"
+         - 13
+         - By component, GSE, nT
+       * - "Bz_GSE"
+         - 14
+         - Bz component, GSE, nT
+       * - "By_GSM"
+         - 15
+         - By component, GSM, nT
+       * - "Bz_GSM"
+         - 16
+         - Bz component, GSM, nT
+       * - "Sigma_IMF_Mag"
+         - 17
+         - Sigma in IMF Magnitude Average
+       * - "Sigma_IMF_Vec"
+         - 18
+         - Sigma in IMF Vector Average
+       * - "Sigma_Bx"
+         - 19
+         - Sigma Bx, nT
+       * - "Sigma_By"
+         - 20
+         - Sigma By, nT
+       * - "Sigma_Bz"
+         - 21
+         - Sigma Bz, nT
+       * - "T_p"
+         - 22
+         - Proton Temperature, K
+       * - "N_p"
+         - 23
+         - Proton Density, n/cc
+       * - "V_flow"
+         - 24
+         - Flow Speed, km/sec
+       * - "Flow_Lon"
+         - 25
+         - Flow Longitude, degrees
+       * - "Flow_Lat"
+         - 26
+         - Flow Latitude, degrees
+       * - "Alpha_Proton"
+         - 27
+         - Alpha/Proton Density Ratio
+       * - "Flow_P"
+         - 28
+         - Flow Pressure, nPa
+       * - "Sigma_T"
+         - 29
+         - Sigma-T
+       * - "Sigma_Np"
+         - 30
+         - Sigma-Np
+       * - "Sigma_V"
+         - 31
+         - Sigma-V
+       * - "Sigma_Flow_Lon"
+         - 32
+         - Sigma-Flow-Longitude
+       * - "Sigma_Flow_Lat"
+         - 33
+         - Sigma-Flow-Latitude
+       * - "Sigma_Alpha"
+         - 34
+         - Sigma-Alpha/Proton Ratio
+       * - "Ey"
+         - 35
+         - Electric Field, mV/m
+       * - "Plasma_Beta"
+         - 36
+         - Plasma Beta
+       * - "Alfven"
+         - 37
+         - Alfven Mach Number
+       * - "Kp"
+         - 38
+         - Kp*10 Index (Geomagnetic Activity)
+       * - "R_Sunspot"
+         - 39
+         - R Sunspot Number
+       * - "Dst"
+         - 40
+         - Dst Index, nT (Geomagnetic Storm Index)
+       * - "AE"
+         - 41
+         - AE Index, nT (Auroral Electrojet)
+       * - "PFlux_1MeV"
+         - 42
+         - Proton Flux > 1 MeV
+       * - "PFlux_2MeV"
+         - 43
+         - Proton Flux > 2 MeV
+       * - "PFlux_4MeV"
+         - 44
+         - Proton Flux > 4 MeV
+       * - "PFlux_10MeV"
+         - 45
+         - Proton Flux > 10 MeV
+       * - "PFlux_30MeV"
+         - 46
+         - Proton Flux > 30 MeV
+       * - "PFlux_60MeV"
+         - 47
+         - Proton Flux > 60 MeV
+       * - "Mag_Flux_Flag"
+         - 48
+         - Magnetospheric Flux Flag
+       * - "AP"
+         - 49
+         - AP index, nT
+       * - "F10.7"
+         - 50
+         - Solar Flux Index (F10.7)
+       * - "PC"
+         - 51
+         - Polar Cap Index
+       * - "AL"
+         - 52
+         - AL Index, nT
+       * - "AU"
+         - 53
+         - AU Index, nT
+       * - "Magnetosonic"
+         - 54
+         - Magnetosonic Mach Number
+       * - "Lyman_Alpha"
+         - 55
+         - Lyman Alpha Solar Index, W/m²
+       * - "Proton_QI"
+         - 56
+         - Proton Quasi-Invariant (QI)
+
 
     Example
     -------
@@ -96,7 +276,7 @@ def omni(start_date, end_date, params=None):
 
     References
     ----------
-    NASA OMNIWEB: https://omniweb.gsfc.nasa.gov/
+    NASA LRO OMNIWEB: https://omniweb.gsfc.nasa.gov/form/dx1.html
     """
     if isinstance(start_date, str):
         start_date = dt.datetime.strptime(start_date, "%Y-%m-%d")
@@ -128,13 +308,10 @@ def omni(start_date, end_date, params=None):
 
     lines = response.text.split('\n')
 
-    # Find the start of the data section
+    # Remove HTML headers
     data_start = next((i for i, line in enumerate(lines) if re.match(r'YEAR\s+DOY\s+HR', line)), None)
     if data_start is None:
-        raise ValueError(f"Failed to parse data table from OMNIWEB response: {url}.")
-
-    # Extract headers
-    headers = lines[data_start].split()
+        raise ValueError(f"Failed to parse data table from OMNIWEB response:\n{url}.")
 
     # Extract numerical data
     data_lines = lines[data_start + 1:]
@@ -143,7 +320,8 @@ def omni(start_date, end_date, params=None):
     if not data_lines:
         raise ValueError("No valid data found in the response.")
 
-    data_array = np.genfromtxt(data_lines, dtype=float)
+    # Read data into numpy array
+    data_array = np.loadtxt(data_lines, dtype=float)
 
     # Extract time and requested parameters
     years, doy, hours = data_array[:, 0], data_array[:, 1], data_array[:, 2]
@@ -152,6 +330,6 @@ def omni(start_date, end_date, params=None):
 
     mask = (time >= start_date) & (time <= end_date)
     time = time[mask]
-    filtered_data = [data_array[:, headers.index(label)][mask] for label in headers[3:]]
+    filtered_data = [data_array[:, i][mask] for i in range(3, data_array.shape[1])]
 
     return (time, *filtered_data)

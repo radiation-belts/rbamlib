@@ -17,6 +17,7 @@ Welcome to rbamlib's documentation!
    models
    sim
    utils
+   web
    constants
 
 .. toctree::

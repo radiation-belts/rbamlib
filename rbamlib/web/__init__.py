@@ -1,7 +1,12 @@
 """
-The `web` package provides basic interface to obtain space data from the web.
+The `web` package provides an interface for retrieving data from online sources.
 
-The package can be used to get geomagnetic indexes from various sources, for example ombiweb.
+This package allows users to access geomagnetic indices, solar wind parameters, and other space weather data
+from various providers, such as OMNIWeb.
+
+Interfaces:
+-----------
+- `omni`: Retrieval of OMNIWeb data.
 """
 
 from .omni import omni
