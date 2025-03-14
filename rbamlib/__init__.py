@@ -17,5 +17,6 @@ from rbamlib import (
     conv,
     models,
     utils,
+    web,
     constants
 )
