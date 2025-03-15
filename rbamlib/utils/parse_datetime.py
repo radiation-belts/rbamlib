@@ -31,9 +31,21 @@ def parse_datetime(date_input):
     if isinstance(date_input, dt.datetime):
         return date_input  # Already a datetime object
 
+    # Reordered to put "%Y%m%d" BEFORE "%Y%m%d%H"
     formats = [
-        "%Y%m%d%H", "%Y-%m-%d", "%Y%m%d", "%Y%m%dT%H:%M", "%Y-%m-%dT%H:%M", "%Y-%m-%d %H:%M", "%Y/%m/%d %H:%M",
-        "%Y/%m/%d", "%d-%m-%Y", "%d/%m/%Y", "%d-%m-%Y %H:%M", "%b %d, %Y", "%B %d, %Y",
+        "%Y%m%d",       # 8-digit format: YYYYMMDD
+        "%Y%m%d%H",     # 10-digit format: YYYYMMDDHH
+        "%Y-%m-%d",
+        "%Y%m%dT%H:%M",
+        "%Y-%m-%dT%H:%M",
+        "%Y-%m-%d %H:%M",
+        "%Y/%m/%d %H:%M",
+        "%Y/%m/%d",
+        "%d-%m-%Y",
+        "%d/%m/%Y",
+        "%d-%m-%Y %H:%M",
+        "%b %d, %Y",
+        "%B %d, %Y",
         "%Y-%m-%dT%H:%M:%S"
     ]
 

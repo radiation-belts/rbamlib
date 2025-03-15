@@ -7,6 +7,8 @@ from rbamlib.utils import parse_datetime
 
 
 class TestUtils(unittest.TestCase):
+    # TODO: add test for fixfill
+
     def setUp(self):
         """Set up common test variables."""
         self.arr = np.array([1, 2, 3, 4, 5])
@@ -33,25 +35,27 @@ class TestUtils(unittest.TestCase):
 
     def test_parse_datetime(self):
         """Test parse_datetime function with various formats."""
-        self.assertEqual(parse_datetime("2025010112"), dt.datetime(2025, 1, 1, 12),
+        self.assertEqual(parse_datetime("2023100112"), dt.datetime(2023, 10, 1, 12),
                          "Failed to parse YYYYMMDDHH format.")
-        self.assertEqual(parse_datetime("2025-01-01"), dt.datetime(2025, 1, 1),
+        self.assertEqual(parse_datetime("2023-10-01"), dt.datetime(2023, 10, 1),
                          "Failed to parse YYYY-MM-DD format.")
-        self.assertEqual(parse_datetime("20250101"), dt.datetime(2025, 1, 1),
+        self.assertEqual(parse_datetime("20231001"), dt.datetime(2023, 10, 1),
                          "Failed to parse YYYYMMDD format.")
-        self.assertEqual(parse_datetime("20250101T12:00"), dt.datetime(2025, 1, 1, 12),
+        self.assertEqual(parse_datetime("20231101"), dt.datetime(2023, 11, 1),
+                         "Failed to parse YYYYMMDD format.")
+        self.assertEqual(parse_datetime("20231001T12:00"), dt.datetime(2023, 10, 1, 12),
                          "Failed to parse ISO-like format.")
-        self.assertEqual(parse_datetime("2025-01-01T12:00"), dt.datetime(2025, 1, 1, 12),
+        self.assertEqual(parse_datetime("2023-10-01T12:00"), dt.datetime(2023, 10, 1, 12),
                          "Failed to parse ISO-like format.")
-        self.assertEqual(parse_datetime("2025-01-01 12:30"), dt.datetime(2025, 1, 1, 12, 30),
+        self.assertEqual(parse_datetime("2023-10-01 12:30"), dt.datetime(2023, 10, 1, 12, 30),
                          "Failed to parse standard format.")
-        self.assertEqual(parse_datetime("01-01-2025"), dt.datetime(2025, 1, 1),
+        self.assertEqual(parse_datetime("01-10-2023"), dt.datetime(2023, 10, 1),
                          "Failed to parse European format.")
-        self.assertEqual(parse_datetime("Jan 01, 2025"), dt.datetime(2025, 1, 1),
+        self.assertEqual(parse_datetime("Oct 01, 2023"), dt.datetime(2023, 10, 1),
                          "Failed to parse human-readable format.")
 
         # Test passing a datetime object
-        dt_obj = dt.datetime(2025, 1, 1, 14)
+        dt_obj = dt.datetime(2023, 10, 1, 14)
         self.assertEqual(parse_datetime(dt_obj), dt_obj, "Failed to handle already datetime object.")
 
         # Test invalid format
