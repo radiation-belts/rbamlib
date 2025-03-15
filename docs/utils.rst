@@ -12,3 +12,4 @@ Utilities (Various functions)
 Functions
 =========
 .. autofunction:: idx
+.. autofunction:: parse_datetime

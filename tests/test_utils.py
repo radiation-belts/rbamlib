@@ -1,7 +1,9 @@
 import unittest
 from tests.helpers import TestHelpers
 import numpy as np
+import datetime as dt
 from rbamlib.utils import idx
+from rbamlib.utils import parse_datetime
 
 
 class TestUtils(unittest.TestCase):
@@ -29,6 +31,32 @@ class TestUtils(unittest.TestCase):
         self.assertTrue(np.isnan(idx(self.arr, 0, tol=0.5)),
                         "Index should be NaN when value is out of range with tolerance.")
 
+    def test_parse_datetime(self):
+        """Test parse_datetime function with various formats."""
+        self.assertEqual(parse_datetime("2025010112"), dt.datetime(2025, 1, 1, 12),
+                         "Failed to parse YYYYMMDDHH format.")
+        self.assertEqual(parse_datetime("2025-01-01"), dt.datetime(2025, 1, 1),
+                         "Failed to parse YYYY-MM-DD format.")
+        self.assertEqual(parse_datetime("20250101"), dt.datetime(2025, 1, 1),
+                         "Failed to parse YYYYMMDD format.")
+        self.assertEqual(parse_datetime("20250101T12:00"), dt.datetime(2025, 1, 1, 12),
+                         "Failed to parse ISO-like format.")
+        self.assertEqual(parse_datetime("2025-01-01T12:00"), dt.datetime(2025, 1, 1, 12),
+                         "Failed to parse ISO-like format.")
+        self.assertEqual(parse_datetime("2025-01-01 12:30"), dt.datetime(2025, 1, 1, 12, 30),
+                         "Failed to parse standard format.")
+        self.assertEqual(parse_datetime("01-01-2025"), dt.datetime(2025, 1, 1),
+                         "Failed to parse European format.")
+        self.assertEqual(parse_datetime("Jan 01, 2025"), dt.datetime(2025, 1, 1),
+                         "Failed to parse human-readable format.")
+
+        # Test passing a datetime object
+        dt_obj = dt.datetime(2025, 1, 1, 14)
+        self.assertEqual(parse_datetime(dt_obj), dt_obj, "Failed to handle already datetime object.")
+
+        # Test invalid format
+        with self.assertRaises(ValueError):
+            parse_datetime("invalid-date")
 
 if __name__ == '__main__':
     unittest.main()

@@ -20,7 +20,8 @@ Note, the library is design to allow direct function imports from the package wi
   - **Motion Module (`motion/`)**: Functions related to particle motion.
   - **Empirical Models (`models/`)**: Implementations of empirical models, such as radial diffusion coefficients.
   - **Simulation Support Module (`sim/`)**: Routine tasks for radiation bells models such as VERB code.
-  - **Utilities (Various functions) (`vf/`)**: Helper functions and utilities used across the library.
+  - **Utilities (Various functions) (`utils/`)**: Helper functions and utilities used across the library.
+  - **Web (`web/`)**: Functions for retrieving data from online sources.
 
 **Support for different planets [TBD]**
 - The core components are designed to be ether universal or related to Earth's radiation belts
@@ -44,7 +45,7 @@ When introducing a new empirical model, typically based on a specific research p
 
 ## Naming Conventions
 
-- **Packages**: Use lowercase letters (e.g., `conv`). The name of the packages and sub-packages should be designed to be short and relatable to the content. Use common definitions or abbreviations (e.g., `dll` for radial diffusion coefficent, 'lpp' for plasmapause location) 
+- **Packages**: Use lowercase letters (e.g., `conv`). The name of the packages and sub-packages should be designed to be short and relatable to the content. Use common definitions or abbreviations (e.g., `dll` for radial diffusion coefficent, `lpp` for plasmapause location) 
 - **Functions based on papers**: Use capital letter of the authors names and year of the paper (e.g., `def CA1992()` for Carpenter and Anderson, 1992). Use single capital letter for the paper with many authors (e.g., `def D2017()` for `Drozdov et al., (2017)`). Note, the corresponding Python module (file) must have the same name. The supporting function that related to the same paper can be defined locally within the same file.    
 - **Symbol**: Refer to [symbols.rst](/docs/symbols.rst). Use uppercase only for commonly defined physical variables with capital letters, such as `L` for L-shell, `K` for second adiabatic invariant or `B` for magnetic field. Use lowercase for other commonly defined variables, such as `p` for momentum. Use two or more lowercase letter for other variable to avoid ambiguity or common greek letter, such as `mu` - for first adiabatic invariant `en` - for energy, or `al` - for pitch angle or alpha.     
 - **Convertion Functions**: Use lowercase or uppercase without underscores for general variables to convert from, follow by `2` and general variable to convert to (e.g., `Lal2K` or `enral2mu`). If one of physical variable can be omitted as an input (e.g., common default values) it can be also omitted in the functions name. However, creating an additional alias is preferable in such case. 
