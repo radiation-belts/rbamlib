@@ -134,7 +134,7 @@ resolution_low = {
 resolution_high = {
     "source": "HRO",
     "data_mapping": data_mapping_high,
-    "date_format": "%Y%m%d",
+    "date_format": "%Y%m%d%H",
     "pattern": r'YYYY\s+DOY\s+HR',
     "data_start_idx": 4
 }
@@ -148,7 +148,7 @@ resolution_settings = {
     "5min": {"spacecraft": "omni_5min", **resolution_high},
 }
 
-def omniweb_request(start_date, end_date, params, resolution):
+def omniweb_request(start_date, end_date, params, resolution, show_url=False):
     r"""
     Fetch space weather data from OMNIWEB.
 
@@ -161,8 +161,8 @@ def omniweb_request(start_date, end_date, params, resolution):
         Start date in multiple formats ('YYYY-MM-DD', 'YYYYMMDDHH').
     end_date : str or datetime
         End date matching the format of start_date.
-    params : set
-        Set of parameter names (e.g., {'Kp', 'Dst'}) or corresponding OMNIWEB indices.
+    params : list
+        List of parameter names (e.g., ['Kp', 'Dst']) or corresponding OMNIWEB indices.
     resolution : str
         Specifies the data resolution. Must be one of:
 
@@ -180,31 +180,34 @@ def omniweb_request(start_date, end_date, params, resolution):
 
     settings = resolution_settings[resolution]
     spacecraft = settings["spacecraft"]
-    data_mapping = settings["data_mapping"]
+    # Case insensitive data_mappings
+    data_mapping = {key.lower(): value for key, value in settings["data_mapping"].items()}
     date_format = settings["date_format"]
     pattern = settings["pattern"]
     data_start_idx = settings["data_start_idx"]
 
-
     start_date = parse_datetime(start_date).strftime(date_format)
     end_date = parse_datetime(end_date).strftime(date_format)
 
-    if not params or not isinstance(params, set):
-        raise ValueError("No OMNIWEB data requested. Provide a set of parameter names or numbers.")
+    if not params or not isinstance(params, list):
+        raise ValueError("No OMNIWEB data requested. Provide a list of parameter names or numbers.")
 
-    resolved_params = {}
+    resolved_params = []  # Preserve order
     for param in params:
         if isinstance(param, int):
-            resolved_params[f'Var{param}'] = param
-        elif isinstance(param, str) and param in data_mapping:
-            resolved_params[param] = data_mapping[param]
+            resolved_params.append(param)
+        elif isinstance(param, str) and param.lower() in data_mapping:
+            resolved_params.append(data_mapping[param.lower()])
         else:
             raise ValueError(f"Unknown parameter: {param}")
 
-    vars_query = "".join([f'vars={var}&' for var in resolved_params.values()])
+    vars_query = "".join([f'vars={var}&' for var in resolved_params])
     url = (f'https://omniweb.gsfc.nasa.gov/cgi/nx1.cgi?activity=retrieve&res={resolution}'
            f'&spacecraft={spacecraft}&start_date={start_date}&end_date={end_date}'
            f'&{vars_query}')
+
+    if show_url:
+        print(url)
 
     response = requests.get(url)
     response.raise_for_status()
@@ -242,7 +245,7 @@ def omniweb_request(start_date, end_date, params, resolution):
     return (time, *filtered_data)
 
 
-def omni(start_date, end_date, params=None, resolution='hour'):
+def omni(start_date, end_date, params=None, resolution='hour', show_url=False):
     r"""
     Retrieve space weather data from the OMNIWEB database at various resolutions.
 
@@ -252,8 +255,8 @@ def omni(start_date, end_date, params=None, resolution='hour'):
         Start date in multiple supported formats, such as 'YYYY-MM-DD', or 'YYYYMMDDHH'.
     end_date : str or datetime
         End date in multiple supported formats, matching the start_date format.
-    params : set
-        Set of parameter names (e.g., {'Kp', 'Dst'}) or numbers (e.g., {38, 'Dst'}).
+    params : List
+        List of parameter names (e.g., ['Kp', 'Dst']) or numbers (e.g., [38, 'Dst']).
 
         - If a string is provided, it is mapped to the corresponding OMNIWEB variable number.
         - If a number is provided, it is directly used in the request.
@@ -287,7 +290,6 @@ def omni(start_date, end_date, params=None, resolution='hour'):
         - The function automatically converts the retrieved data into numpy arrays and filters them
           by the specified date range.
         - The OMNIWEB service may return missing or fill values for certain periods.
-        - Parameter names are case-sensitive.
 
     Available Parameters
     --------------------
@@ -625,4 +627,4 @@ def omni(start_date, end_date, params=None, resolution='hour'):
     NASA HRO OMNIWEB: https://omniweb.gsfc.nasa.gov/form/omni_min.html
     """
 
-    return omniweb_request(start_date, end_date, params, resolution)
+    return omniweb_request(start_date, end_date, params, resolution, show_url=show_url)
