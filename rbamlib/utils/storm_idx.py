@@ -110,4 +110,5 @@ def storm_idx(time, Dst, threshold=-40.0, gap_hours=1.0, method='onset'):
             raise ValueError("method must be 'onset' or 'minimum'")
 
     # Sort + unique in case of edge merges or overlaps (unlikely but safe)
-    return sorted(set(results))
+    results = np.unique(results)
+    return results
