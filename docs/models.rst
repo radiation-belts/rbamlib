@@ -12,6 +12,7 @@ Models
    models/lpp
    models/mp
 
+   models/mag
    models/elec
    models/dll
    models/dxx
