@@ -9,6 +9,7 @@ Packages:
     - 'dxx' : Diffusion coefficient scaling models
     - 'dll' : Radial diffusion models
     - 'dip' : Dipole field model
+    - 'mag' : Magnetic field related models (e.g., Tsyganenko coefficeints)
     - 'elec' : Electric field models
     - 'pad' : Pitch-angle distribution models
     - 'ne' : Electron density models
