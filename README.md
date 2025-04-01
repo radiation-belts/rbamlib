@@ -62,7 +62,7 @@ pip install rbamlib
 ## Documentation
 For more information, please see our documentation at: 
 
-https://pyspedas.readthedocs.io/
+https://rbamlib.readthedocs.io/
 
 ## License
 

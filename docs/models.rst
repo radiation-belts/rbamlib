@@ -5,13 +5,14 @@ Models
 .. automodule:: rbamlib.models
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 2
    :caption: Models
 
    models/dip
    models/lpp
    models/mp
 
+   models/mag
    models/elec
    models/dll
    models/dxx

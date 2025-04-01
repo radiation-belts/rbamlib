@@ -7,9 +7,16 @@ separate Python files. Thus, the function is imported directly from the package 
 Please see README.md for more information.
 """
 
+# Importing submodules into the package namespace for easier access.
+# This allows users to access submodules directly via `rbamlib.<module_name>`
+# without needing to import them separately.
+# Example:
+# import rbamlib
+# rbamlib.utils  # Access
 from rbamlib import (
     conv,
     models,
-    vf,
+    utils,
+    web,
     constants
 )
