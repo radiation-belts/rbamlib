@@ -4,10 +4,11 @@ import numpy as np
 import datetime as dt
 from rbamlib.utils import idx
 from rbamlib.utils import parse_datetime
+from rbamlib.utils import storm_idx
+from rbamlib.utils import fixfill
 
 
 class TestUtils(unittest.TestCase):
-    # TODO: add test for fixfill
 
     def setUp(self):
         """Set up common test variables."""
@@ -61,6 +62,42 @@ class TestUtils(unittest.TestCase):
         # Test invalid format
         with self.assertRaises(ValueError):
             parse_datetime("invalid-date")
+
+    def test_storm_idx(self):
+        """Test storm_idx function using minimum nad onset methods."""
+        time = [dt.datetime(2023, 1, 1) + dt.timedelta(hours=i) for i in range(10)]
+        dst = np.array([5, 3, -10, -45, -50, -20, 1, 2, -42, -10])
+        indices = storm_idx(time, dst, threshold=-40, method='minimum', gap_hours=2.0)
+        self.assertEqual(list(indices), [4, 8], "Minimum Dst indices incorrect.")
+
+        dst = np.array([5, 3, -10, -45, -50, -20, 1, 2, -42, -10])
+        indices = storm_idx(time, dst, threshold=-40, method='onset')
+        self.assertEqual(list(indices), [1, 7], "Onset Dst indices incorrect.")
+
+    def test_fixfill_nan(self):
+        """Test fixfill function with NaN replacement."""
+        time = [dt.datetime(2023, 1, 1, 0, 0) + dt.timedelta(minutes=5*i) for i in range(6)]
+        data = np.array([1.0, 2.0, 999, 4.0, 999, 6.0])
+        cleaned = fixfill(time, data, fillval=999, method='nan')
+        expected = np.array([1.0, 2.0, np.nan, 4.0, np.nan, 6.0])
+        np.testing.assert_array_equal(np.isnan(cleaned), np.isnan(expected), "NaN fill values incorrect.")
+
+    def test_fixfill_interp(self):
+        """Test fixfill function with interpolation."""
+        time = [dt.datetime(2023, 1, 1, 0, 0) + dt.timedelta(minutes=5*i) for i in range(6)]
+        data = np.array([1.0, 2.0, 999, 4.0, 999, 6.0])
+        interpolated = fixfill(time, data, fillval=999, method='interp')
+        expected = np.array([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+        np.testing.assert_almost_equal(interpolated, expected, decimal=1, err_msg="Interpolation incorrect.")
+
+    def test_fixfill_nan_fillval_mode(self):
+        """Test fixfill function with NaN replacement."""
+        time = [dt.datetime(2023, 1, 1, 0, 0) + dt.timedelta(minutes=5*i) for i in range(6)]
+        data = np.array([1.0, 2.0, 999, 4.0, 999, 6.0])
+        cleaned = fixfill(time, data, fillval=99, method='nan', fillval_mode='gt')
+        expected = np.array([1.0, 2.0, np.nan, 4.0, np.nan, 6.0])
+        np.testing.assert_array_equal(np.isnan(cleaned), np.isnan(expected), "NaN fill values incorrect.")
+
 
 if __name__ == '__main__':
     unittest.main()
