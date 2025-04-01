@@ -16,19 +16,20 @@ def TS2005_W(time, S, storm_onsets=None, fill_value=np.nan):
         Indices of `time` that mark the beginning of each storm.
         If provided, then for i in [onsets[m]..onsets[m+1]-1], we sum from onsets[m].
         Times before the first onset or after the last are filled with `fill_value`.
-        If None (default), we sum from i=0 (the earliest time).
+        If None (default), we sum from i=0 (the earliest time). Add 0 to storm_onsets
+        array to include the calculation of coefficients before the storm.
     fill_value : float, default=np.nan
         Value for W outside any identified storms. Default is `NaN`.
 
     Returns
     -------
     W : 2D ndarray, shape (N, 6)
-        :math:`W_k(t_i)` for each k and i.
+        6 different :math:`W_k(t_i)` for each k (and i).
 
     Notes
     -----
 
-    Equation (7) in [#]_ can be written (for each k):
+    Equation (7) in Tsyganenko & Sitnov (2005) can be written (for each k):
 
     .. math::
         W_k(t_i) = \frac{r_k}{12} \sum_{j = j_{\mathrm{start}}}^{i}
@@ -36,7 +37,7 @@ def TS2005_W(time, S, storm_onsets=None, fill_value=np.nan):
 
     Here:
       - :math:`(t_j - t_i)` is in **days**,
-      - :math:`r_k` is in :math:`\mathrm{hr}^{-1}`,
+      - :math:`r_k` is provided in :math:`\mathrm{hr}^{-1}`,
       - The factor :math:`\times 24` converts days to hours.
       - :math:`j_{\mathrm{start}}` = 0 if summing from the very first sample, or
         the index of the most recent storm onset (if `storm_onsets` is provided).

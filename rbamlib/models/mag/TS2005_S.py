@@ -3,7 +3,7 @@ import numpy as np
 
 def TS2005_S(Nsw, Vsw, Bz, fillval=None):
     r"""
-    Compute the 6 Tsyganenko & Sitnov (2005) [#]_ source functions :math:`S_k`, per Eq. (8):
+    Compute the Tsyganenko & Sitnov (2005) [#]_ source functions :math:`S_k`, per Eq. (8):
 
     .. math::
         S_k = \left(\frac{N_{\mathrm{sw}}}{5}\right)^{\lambda_k}
@@ -11,7 +11,7 @@ def TS2005_S(Nsw, Vsw, Bz, fillval=None):
               \left(\frac{B_s}{5}\right)^{\gamma_k},
 
     where :math:`B_s = -B_z` if :math:`B_z < 0` else 0, and
-    :math:`(\lambda_k, \beta_k, \gamma_k)` are from the T05 model tables.
+    :math:`(\lambda_k, \beta_k, \gamma_k)` are from the Tsyganenko & Sitnov (2005) model tables.
 
     Parameters
     ----------
@@ -30,7 +30,7 @@ def TS2005_S(Nsw, Vsw, Bz, fillval=None):
     S : 2D ndarray, shape (N, 6)
         6 different :math:`S_k(t)` time series (one column per k).
 
-        References
+    References
     ----------
     .. [#] Tsyganenko, N. A., & Sitnov, M. I. (2005). Modeling the dynamics of the inner magnetosphere during strong geomagnetic storms. Journal of Geophysical Research, 110(A3), 7737. https://doi.org/10.1029/2004JA010798
     """

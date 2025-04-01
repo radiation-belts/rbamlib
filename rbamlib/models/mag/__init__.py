@@ -2,7 +2,7 @@
 The `mag` provides magnetic field related models. Note, dipole field related functions are in the module `dip`.
 
 Models:
-    - None
+    - Tsyganenko & Sitnov (2005) W and S coefficients
 
 """
 

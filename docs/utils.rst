@@ -13,3 +13,5 @@ Functions
 =========
 .. autofunction:: idx
 .. autofunction:: parse_datetime
+.. autofunction:: storm_idx
+.. autofunction:: fixfill
