@@ -2,13 +2,13 @@ from setuptools import setup, find_packages
 
 setup(
     name='rbamlib',
-    version='25.02',
+    version='25.04',
     author='Alexander Drozdov',
     author_email='adrozdov@ucla.edu',
     description='A lightweight, open-source Python library for the analysis and modeling of radiation belts.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='https://github.com/radiation-belts/pyverbplt',
+    url='https://github.com/radiation-belts/rbamlib',
     packages=find_packages(),
     install_requires=open('requirements.txt').read().splitlines(),
     classifiers=[
