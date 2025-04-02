@@ -1,4 +1,4 @@
-import requests
+import urllib.request
 import numpy as np
 import datetime as dt
 import re
@@ -209,15 +209,15 @@ def omniweb_request(start_date, end_date, params, resolution, show_url=False):
     if show_url:
         print(url)
 
-    response = requests.get(url)
-    response.raise_for_status()
+    with urllib.request.urlopen(url) as response:
+        content = response.read().decode("utf-8")
 
-    lines = response.text.split('\n')
+    lines = content.split('\n')
 
     data_start = next((i for i, line in enumerate(lines) if re.match(pattern, line)), None)
     if data_start is None:
-        if "Error" in response.text:
-            error_message = re.search(r'<H2><TT>(.*?)</TT></H2>', response.text)
+        if "Error" in content:
+            error_message = re.search(r'<H2><TT>(.*?)</TT></H2>', content)
             if error_message:
                 raise ValueError(f"OMNIWEB Error: {error_message.group(1)}")
             else:
