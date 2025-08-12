@@ -9,4 +9,5 @@ Functions
 
 .. # Added by generate_rst_files
 
+.. autofunction:: rbamlib.models.ne.D2002
 .. autofunction:: rbamlib.models.ne.D2012
