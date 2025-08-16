@@ -8,5 +8,6 @@ Functions
 =========
 
 .. autofunction:: rbamlib.models.ne.CA1992
+.. autofunction:: rbamlib.models.ne.S2001
 .. autofunction:: rbamlib.models.ne.D2002
 .. autofunction:: rbamlib.models.ne.D2006
