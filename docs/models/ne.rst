@@ -7,7 +7,6 @@ Electron density models
 Functions
 =========
 
-.. # Added by generate_rst_files
-
+.. autofunction:: rbamlib.models.ne.CA1992
 .. autofunction:: rbamlib.models.ne.D2002
-.. autofunction:: rbamlib.models.ne.D2012
+.. autofunction:: rbamlib.models.ne.D2006
