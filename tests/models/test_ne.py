@@ -2,12 +2,12 @@ import unittest
 from tests.helpers import TestHelpers
 from numpy.testing import assert_allclose
 import numpy as np
-from rbamlib.models.ne import D2006
+from rbamlib.models.ne import D2006_plasmasphere
 from rbamlib.models.ne import D2002
 from rbamlib.models.ne import CA1992
-from rbamlib.models.ne.CA1992 import _CA1992_ne_plasmasphere, _CA1992_ne_trough, _CA1992_ne_plasmapause, _CA1992_Lppo_solve
+from rbamlib.models.ne.CA1992 import CA1992_plasmasphere, CA1992_trough, CA1992_plasmapause, _CA1992_Lppo_solve
 from rbamlib.models.ne import S2001
-from rbamlib.models.ne.S2001 import _S2001_trough, _S2001_plasmasphere, _S2001_LT
+from rbamlib.models.ne.S2001 import S2001_trough, S2001_plasmasphere, _S2001_LT
 
 
 class TestNe(unittest.TestCase, TestHelpers):
@@ -104,34 +104,34 @@ class TestNe(unittest.TestCase, TestHelpers):
             D2002(self.r, self.ne_eq)
 
     def test__CA1992_ne_plasmasphere_base(self):
-        """_CA1992_ne_plasmasphere returns CA1992 base plasmasphere values."""
-        ne = _CA1992_ne_plasmasphere(self.L)
+        """CA1992_plasmasphere returns CA1992 base plasmasphere values."""
+        ne = CA1992_plasmasphere(self.L)
         np.testing.assert_allclose(
             ne, self.expected_ne_base, rtol=1e-8, atol=0.0,
-            err_msg="_CA1992_ne_plasmasphere base output does not match expected CA1992 relation."
+            err_msg="CA1992_plasmasphere base output does not match expected CA1992 relation."
         )
 
     def test__CA1992_ne_trough_vectorized(self):
-        ne = _CA1992_ne_trough(self.L, self.MLT)
+        ne = CA1992_trough(self.L, self.MLT)
         np.testing.assert_almost_equal(ne, self.expected_ne_trough, decimal=8,
-                                       err_msg="_CA1992_ne_trough (L×MLT) mismatch.")
+                                       err_msg="CA1992_trough (L×MLT) mismatch.")
 
     def test__CA1992_ne_trough_scalar_mlt(self):
-        ne = _CA1992_ne_trough(self.L, 12.0)
+        ne = CA1992_trough(self.L, 12.0)
         np.testing.assert_almost_equal(ne, self.expected_ne_trough_col12, decimal=8,
-                                       err_msg="_CA1992_ne_trough (scalar MLT) mismatch.")
+                                       err_msg="CA1992_trough (scalar MLT) mismatch.")
 
     def test__CA1992_ne_plasmapause_vectorized(self):
-        ne = _CA1992_ne_plasmapause(self.L, self.Lpp, self.ne_Lpp, self.MLT)
+        ne = CA1992_plasmapause(self.L, self.Lpp, self.ne_Lpp, self.MLT)
         np.testing.assert_almost_equal(ne, self.expected_ne_pp, decimal=10,
-                                       err_msg="_CA1992_ne_plasmapause (L×MLT) mismatch.")
+                                       err_msg="CA1992_plasmapause (L×MLT) mismatch.")
 
     def test__CA1992_ne_plasmapause(self):
         """Precomputed plasmapause density profile."""
-        ne = _CA1992_ne_plasmapause(L=self.L, Lpp = self.L[0], ne_Lpp = 100., MLT=self.MLT[0])
+        ne = CA1992_plasmapause(L=self.L, Lpp = self.L[0], ne_Lpp = 100., MLT=self.MLT[0])
         np.testing.assert_almost_equal(
             ne, self.expected_ne_plasmapause, decimal=6,
-            err_msg="_CA1992_ne_plasmapause output mismatch."
+            err_msg="CA1992_plasmapause output mismatch."
         )
 
     def test__CA1992_Lppo_solve_simple(self):
@@ -180,7 +180,7 @@ class TestNe(unittest.TestCase, TestHelpers):
         assert_allclose(result, self.expected_LT_S2001, rtol=1e-6)
 
     def test__S2001_plasmasphere(self):
-        result = _S2001_plasmasphere(self.L)
+        result = S2001_plasmasphere(self.L)
         assert_allclose(result, self.expected_plasma_S2001, rtol=1e-6)
 
         # Also check main S2001 in plasmasphere mode (Lpp=None)
@@ -188,7 +188,7 @@ class TestNe(unittest.TestCase, TestHelpers):
         assert_allclose(result_main, self.expected_plasma_S2001, rtol=1e-6)
 
     def test__S2001_trough(self):
-        result = _S2001_trough(self.L, self.expected_LT_S2001)
+        result = S2001_trough(self.L, self.expected_LT_S2001)
         assert_allclose(result, self.expected_trough_S2001, rtol=1e-6)
 
         # Also check main S2001 in trough mode (force Lpp < 4)

@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def S2001(L, Lpp=None, kp=0.0, mask_invalid=True):
+def S2001(L, Lpp=None, kp=None, mask_invalid=True):
     r"""
     Equatorial electron density model of the plasmasphere and plasmatrough
     from Sheeley et al. (2001) [#]_.
@@ -15,7 +15,7 @@ def S2001(L, Lpp=None, kp=0.0, mask_invalid=True):
         uses the plasmasphere model and :math:`L > L_{\mathrm{pp}}` uses the trough
         model. If ``None``, all inputs default to the **plasmasphere** model.
     kp : float or ndarray, optional
-        Kp index. User for plasmatrough calculation. Default is 0
+        Kp index. Uses for plasmatrough calculation.
     mask_invalid : bool, optional
         If ``True`` (default), values outside :math:`3 \le L \le 7` are returned
         as ``NaN``. If ``False``, equations are evaluated without restriction.
@@ -52,12 +52,12 @@ def S2001(L, Lpp=None, kp=0.0, mask_invalid=True):
     L = np.asarray(L, dtype=float)
 
     if Lpp is None:
-        ne = _S2001_plasmasphere(L)
+        ne = S2001_plasmasphere(L)
     else:
         Lpp = np.asarray(Lpp, dtype=float)
         use_ps = L <= Lpp
         LT = _S2001_LT(kp)
-        ne = np.where(use_ps, _S2001_plasmasphere(L), _S2001_trough(L, LT))
+        ne = np.where(use_ps, S2001_plasmasphere(L), S2001_trough(L, LT))
 
     if mask_invalid:
         valid = (L >= 3.0) & (L <= 7.0)
@@ -96,6 +96,9 @@ def _S2001_LT(kp):
     ----------
     .. [#] Gallagher, D. L., et al., 1998,
     """
+    if kp is None:
+        return None
+
     kp = np.asarray(kp, dtype=float)
     LT = 0.145 * kp ** 2 - 2.63 * kp + 21.86
 
@@ -105,7 +108,7 @@ def _S2001_LT(kp):
     return LT
 
 
-def _S2001_plasmasphere(L):
+def S2001_plasmasphere(L):
     r"""
     Plasmasphere electron density model (Sheeley et al. 2001, Eq. 6).
 
@@ -117,7 +120,7 @@ def _S2001_plasmasphere(L):
     return 1390.0 * x ** 4.83
 
 
-def _S2001_trough(L, LT):
+def S2001_trough(L, LT=None):
     r"""
     Plasmatrough electron density model (Sheeley et al. 2001, Eq. 7).
 
@@ -128,7 +131,11 @@ def _S2001_trough(L, LT):
         \cos\!\left(\frac{\pi}{12} \,[\mathrm{LT}-(7.7(3/L)^{2}+12)]\right).
     """
     L = np.asarray(L, dtype=float)
-    LT = np.asarray(LT, dtype=float)
     x = 3.0 / L
+    ne_base = 124.0 * x ** 4.0
+    if LT is None:
+        return ne_base
+
+    LT = np.asarray(LT, dtype=float)
     phase = (LT - (7.7 * x ** 2.0 + 12.0)) * (np.pi / 12.0)
-    return 124.0 * x ** 4.0 + 36.0 * x ** 3.5 * np.cos(phase)
+    return ne_base + 36.0 * x ** 3.5 * np.cos(phase)

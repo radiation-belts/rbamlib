@@ -120,14 +120,14 @@ def CA1992(L, doy=None, R13=None, Lpp=None, MLT=None, Lppo=False):
     ----------
     .. [#] Carpenter, D. L., & Anderson, R. R. (1992). An ISEE/Whistler model of equatorial electron density in the magnetosphere. *J. Geophys. Res.*, 97(A2), 1097–1108. https://doi.org/10.1029/91JA01548
     """
-    # Normalize axes
 
+    # Normalize axes
     L = np.atleast_1d(np.asarray(L, dtype=float))
     nL = L.size
 
     # If no Lpp => pure plasmasphere (1D or tiled across MLT)
     if Lpp is None:
-        ne1d = _CA1992_ne_plasmasphere(L, doy=doy, R13=R13)
+        ne1d = CA1992_plasmasphere(L, doy=doy, R13=R13)
         if MLT is None or np.ndim(MLT) == 0:
             return ne1d
         mlt1d = np.atleast_1d(np.asarray(MLT, dtype=float))
@@ -151,7 +151,7 @@ def CA1992(L, doy=None, R13=None, Lpp=None, MLT=None, Lppo=False):
     ne = np.empty((nL, nmlt), dtype=float)
 
     # Precompute plasmasphere along L for reuse
-    ne_ps_L = _CA1992_ne_plasmasphere(L, doy=doy, R13=R13)
+    ne_ps_L = CA1992_plasmasphere(L, doy=doy, R13=R13)
 
     # Column-wise evaluation over MLT
     for j in range(nmlt):
@@ -160,15 +160,15 @@ def CA1992(L, doy=None, R13=None, Lpp=None, MLT=None, Lppo=False):
 
         if not Lppo:
             # Fast mask mode: plasmasphere for L <= Lpp, trough for L > Lpp
-            ne[:, j] = np.where(L <= Lpp_j, ne_ps_L, _CA1992_ne_trough(L, mlt_val))
+            ne[:, j] = np.where(L <= Lpp_j, ne_ps_L, CA1992_trough(L, mlt_val))
             continue
 
         # Full mode: include plasmapause segment and solve Lppo
-        ne_Lpp = _CA1992_ne_plasmasphere(Lpp_j, doy=doy, R13=R13)
+        ne_Lpp = CA1992_plasmasphere(Lpp_j, doy=doy, R13=R13)
         Lppo_j = _CA1992_Lppo_solve(Lpp_j, mlt_val, doy=doy, R13=R13)
 
-        ne_ppseg = _CA1992_ne_plasmapause(L, Lpp_j, ne_Lpp, mlt_val)
-        ne_tr    = _CA1992_ne_trough(L, mlt_val)
+        ne_ppseg = CA1992_plasmapause(L, Lpp_j, ne_Lpp, mlt_val)
+        ne_tr    = CA1992_trough(L, mlt_val)
 
         mask_ps = L <= Lpp_j
         mask_pp = (L > Lpp_j) & (L <= Lppo_j)
@@ -184,7 +184,7 @@ def CA1992(L, doy=None, R13=None, Lpp=None, MLT=None, Lppo=False):
 
 # --------------------------------- Helpers ---------------------------------
 
-def _CA1992_ne_plasmasphere(L, doy=None, R13=None):
+def CA1992_plasmasphere(L, doy=None, R13=None):
     r"""
     Plasmasphere electron density (cm^-3), CA1992 base + optional corrections.
 
@@ -209,7 +209,7 @@ def _CA1992_ne_plasmasphere(L, doy=None, R13=None):
     ne = 10.0 ** log10_ne
     return ne
 
-def _CA1992_ne_trough(L, MLT):
+def CA1992_trough(L, MLT):
     r"""
     Extended plasma trough electron density (cm⁻3), Carpenter & Anderson (1992), Sec. 4.
 
@@ -242,7 +242,7 @@ def _CA1992_ne_trough(L, MLT):
     return ne[:, 0] if t.size == 1 else ne
 
 
-def _CA1992_ne_plasmapause(L, Lpp, ne_Lpp, MLT):
+def CA1992_plasmapause(L, Lpp, ne_Lpp, MLT):
     r"""
     Plasmapause segment (cm⁻3), anchored at :math:`L_{pp}`, with MLT-dependent decade slope.
 
@@ -279,9 +279,9 @@ def _CA1992_Lppo_solve(Lpp, MLT, doy=None, R13=None, Lmax=8.0, ngrid=801):
     Lppo : float
     """
     Lpp = float(Lpp)
-    ne_Lpp = _CA1992_ne_plasmasphere(Lpp, doy=doy, R13=R13)
+    ne_Lpp = CA1992_plasmasphere(Lpp, doy=doy, R13=R13)
     Lg = np.linspace(Lpp, Lmax, int(ngrid))
-    diff = _CA1992_ne_plasmapause(Lg, Lpp, ne_Lpp, MLT) - _CA1992_ne_trough(Lg, MLT)
+    diff = CA1992_plasmapause(Lg, Lpp, ne_Lpp, MLT) - CA1992_trough(Lg, MLT)
     idx = np.where(np.diff(np.sign(diff)) != 0)[0]
     if idx.size:
         i0 = idx[0]
