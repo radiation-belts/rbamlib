@@ -8,5 +8,7 @@ Models:
     - Denton et al., (2006)
 """
 from .CA1992 import CA1992
+from .S2001 import S2001
 from .D2002 import D2002
-from .D2006 import D2006
+from .D2006 import D2006_plasmasphere
+from .D2006 import D2006_trough
