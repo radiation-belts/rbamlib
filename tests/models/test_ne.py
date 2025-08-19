@@ -2,12 +2,16 @@ import unittest
 from tests.helpers import TestHelpers
 from numpy.testing import assert_allclose
 import numpy as np
-from rbamlib.models.ne import D2006_plasmasphere
 from rbamlib.models.ne import D2002
 from rbamlib.models.ne import CA1992
 from rbamlib.models.ne.CA1992 import CA1992_plasmasphere, CA1992_trough, CA1992_plasmapause, _CA1992_Lppo_solve
 from rbamlib.models.ne import S2001
 from rbamlib.models.ne.S2001 import S2001_trough, S2001_plasmasphere, _S2001_LT
+
+from rbamlib.models.ne import D2004
+from rbamlib.models.ne.D2004 import D2004_plasmasphere, D2004_trough
+
+from rbamlib.models.ne import D2006
 
 
 class TestNe(unittest.TestCase, TestHelpers):
@@ -21,6 +25,10 @@ class TestNe(unittest.TestCase, TestHelpers):
         self.MLT = np.array([0.0, 6.0, 12.0, 15.0])
         self.Lpp, self.ne_Lpp = 4.0, 100.0
         self.kp = 2.0  # single Kp index
+
+        self.a_default = (3.78, -0.324, 3.77, -3.45) # (a1, a2, a3, a4)
+        self.R13_default = 13.0
+        self.R13_none = None
 
         self.LT_S2001 = 17.18
 
@@ -69,6 +77,39 @@ class TestNe(unittest.TestCase, TestHelpers):
 
         # Branching case: plasmasphere for L<=4.5, trough for L>4.5
         self.expected_branch_S2001 = np.array([346.386297, 20.935897,  9.844892])
+
+        # ---- Precomputed EXPECTED (all single-line arrays) ----
+        # Plasmasphere, Eq. (5): log10 ne = a1 + a2 L + (0.00127 R13 - 0.0635) * exp(-(L-2)/1.5)
+        # Using default a1,a2 and R13=None (i.e., omit sunspot term)
+        self.expected_plasmasphere_D2004_R13_none = np.array(
+            [304.78949895855994, 144.54397706628906, 68.54882264667571])
+
+        # Plasmasphere with default R13=13.0
+        self.expected_plasmasphere_D2004_R13_13 = np.array([296.2194494842024, 142.44283051418385, 68.03540472271488])
+
+        # Plasmatrough, Eq. (11): ne = a3 * L ** a4, default a3,a4
+        self.expected_trough_D2004_default = np.array([0.03156708217353685, 0.014618231911687338, 0.007793268998202528])
+
+        # Branching (default R13=13.0): L<=Lpp -> plasmasphere, L>Lpp -> trough
+        # For L = [4,5,6], Lpp=4.5 -> [PS(4), TR(5), TR(6)]
+        self.expected_branch_D2004_default = np.array([296.2194494842024, 0.014618231911687338, 0.007793268998202528])
+
+        # Branching with R13=None (omit sunspot term)
+        self.expected_branch_D2004_R13_none = np.array([304.78949895855994, 0.014618231911687338, 0.007793268998202528])
+
+        # Custom coefficients to verify override path
+        self.a_custom = (3.70, -0.300, 4.10, -3.60)
+        # Plasmasphere with custom (a1,a2) and R13=13.0
+        self.expected_plasmasphere_D2004_custom = np.array([307.3360961592984, 156.1854578457947, 78.83788640535525])
+        # Trough with custom (a3,a4)
+        self.expected_trough_D2004_custom = np.array([0.02788481915669601, 0.01248796791022128, 0.006477981944714957])
+
+        # ---- Precomputed expected values ----
+        self.expected_equatorial_D2006 = np.array([
+            [217.17008433, 122.12371302, 217.17008433, 326.26966370],  # L=4
+            [158.05200153,  88.87917199, 158.05200153, 237.45247207],  # L=5
+            [199.89411112, 112.40871935, 199.89411112, 300.31477223],  # L=6
+        ])
 
     # def test_D2006(self):
     #     self.AssertBlank(D2006)
@@ -203,6 +244,66 @@ class TestNe(unittest.TestCase, TestHelpers):
         # Branching case: plasmasphere for L<=Lpp, trough for L>Lpp
         result_branch = S2001(self.L, Lpp=self.Lpp, kp=self.kp)
         assert_allclose(result_branch, self.expected_branch_S2001, rtol=1e-6)
+
+
+    # ------------------ D2004 ------------------
+
+    def test_D2004_plasmasphere_R13_none_helpers_and_main(self):
+        """Eq. (5) without sunspot term (R13=None): helper == main."""
+        a1, a2, _, _ = self.a_default
+        result_helper = D2004_plasmasphere(self.L, a1, a2, self.R13_none)
+        assert_allclose(result_helper, self.expected_plasmasphere_D2004_R13_none, rtol=1e-6)
+
+        result_main = D2004(self.L, Lpp=None, R13=self.R13_none, a=self.a_default)
+        assert_allclose(result_main, self.expected_plasmasphere_D2004_R13_none, rtol=1e-6)
+
+    def test_D2004_plasmasphere_R13_default_helpers_and_main(self):
+        """Eq. (5) with default sunspot term (R13=13.0): helper == main."""
+        a1, a2, _, _ = self.a_default
+        result_helper = D2004_plasmasphere(self.L, a1, a2, self.R13_default)
+        assert_allclose(result_helper, self.expected_plasmasphere_D2004_R13_13, rtol=1e-6)
+
+        result_main = D2004(self.L, Lpp=None, R13=self.R13_default, a=self.a_default)
+        assert_allclose(result_main, self.expected_plasmasphere_D2004_R13_13, rtol=1e-6)
+
+    def test_D2004_trough_helper(self):
+        """Eq. (11) trough helper with default (a3,a4)."""
+        _, _, a3, a4 = self.a_default
+        result_helper = D2004_trough(self.L, a3, a4)
+        assert_allclose(result_helper, self.expected_trough_D2004_default, rtol=1e-6)
+
+    def test_D2004_branch_default(self):
+        """Main D2004 with branching (R13=13.0, Lpp=4.5)."""
+        result = D2004(self.L, Lpp=self.Lpp, R13=self.R13_default, a=self.a_default)
+        assert_allclose(result, self.expected_branch_D2004_default, rtol=1e-6)
+
+    def test_D2004_branch_no_R13(self):
+        """Main D2004 with branching (R13=None, Lpp=4.5)."""
+        result = D2004(self.L, Lpp=self.Lpp, R13=self.R13_none, a=self.a_default)
+        assert_allclose(result, self.expected_branch_D2004_R13_none, rtol=1e-6)
+
+    def test_D2004_custom_coeffs(self):
+        """Custom coefficient override for both plasmasphere and trough."""
+        a1, a2, a3, a4 = self.a_custom
+        # Plasmasphere helper with custom (a1,a2) and R13=13
+        res_ps = D2004_plasmasphere(self.L, a1, a2, self.R13_default)
+        assert_allclose(res_ps, self.expected_plasmasphere_D2004_custom, rtol=1e-6)
+        # Trough helper with custom (a3,a4)
+        res_tr = D2004_trough(self.L, a3, a4)
+        assert_allclose(res_tr, self.expected_trough_D2004_custom, rtol=1e-6)
+
+
+
+    def test_D2006_equatorial_multiMLT(self):
+        """Equatorial density for multiple MLT values."""
+        result = D2006(self.L[:, None], MLT=self.MLT[None, :], r=None)
+        assert_allclose(result, self.expected_equatorial_D2006, rtol=1e-3)
+
+    def test_D2006_with_fieldline_extension(self):
+        """Check D2006 + D2002 field-aligned extension (r=L → same as equatorial)."""
+        # Broadcast L and MLT to grid
+        result = D2006(self.L[:, None], MLT=self.MLT[None, :], r=self.L[:, None])
+        assert_allclose(result, self.expected_equatorial_D2006, rtol=1e-3)
 
 if __name__ == '__main__':
     unittest.main()
