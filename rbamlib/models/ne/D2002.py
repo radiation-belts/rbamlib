@@ -1,8 +1,9 @@
 import numpy as np
 
+
 def D2002(r, ne_eq, L=None, Rmax=None, alpha=None):
     r"""
-    Electron density along a field line following Denton et al. (2002) [#]_ eq. (1, 2, 3, 4).
+    Electron density along a field line by Denton et al. (2002) [#]_ eq. (1, 2, 3, 4).
 
     Parameters
     ----------
@@ -36,7 +37,7 @@ def D2002(r, ne_eq, L=None, Rmax=None, alpha=None):
     .. math::
         n_e(r) = n_{e,eq} \left( \frac{R_{\max}}{r} \right)^{\alpha}
 
-    where :math:`R_{\max}\!\approx L\,R_{Earth}` is the maximum geocentric distance
+    where :math:`R_{\max} \approx L R_{Earth}` is the maximum geocentric distance
     on the field line (near the magnetic equator).
     Denton et al. parameterized the exponent :math:`\alpha` as (eq. 2-4) as:
 
@@ -48,11 +49,11 @@ def D2002(r, ne_eq, L=None, Rmax=None, alpha=None):
     .. math::
         \alpha = 8 - 0.43L - 3\log_{10}(n_{e,eq}) + 0.28[\log_{10}(n_{e,eq})]^2
 
-   Since :math:`r` is expressed in Earth radii, we set :math:`R_{Earth} = 1` in the
-   calculations. Under this convention, the maximum geocentric distance along
-   the field line is simply :math:`R_{\max} = L`. The use of :math:`R_{\max}`
-   reflects the original notation in Denton et al. (2002), but in practice it is
-   equivalent to specifying :math:`L`.
+    Since :math:`r` is expressed in Earth radii, we set :math:`R_{Earth} = 1` in the
+    calculations. Under this convention, the maximum geocentric distance along
+    the field line is simply :math:`R_{\max} = L`. The use of :math:`R_{\max}`
+    reflects the original notation in Denton et al. (2002), but in practice it is
+    equivalent to specifying :math:`L`.
 
     References
     ----------

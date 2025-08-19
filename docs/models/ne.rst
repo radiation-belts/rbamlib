@@ -10,5 +10,5 @@ Functions
 .. autofunction:: rbamlib.models.ne.CA1992
 .. autofunction:: rbamlib.models.ne.S2001
 .. autofunction:: rbamlib.models.ne.D2002
-.. autofunction:: rbamlib.models.ne.D2006_plasmasphere
-.. autofunction:: rbamlib.models.ne.D2006_trough
+.. autofunction:: rbamlib.models.ne.D2004
+.. autofunction:: rbamlib.models.ne.D2006

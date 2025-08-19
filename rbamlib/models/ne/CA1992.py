@@ -5,15 +5,16 @@ def CA1992(L, doy=None, R13=None, Lpp=None, MLT=None, Lppo=False):
     r"""
     Equatorial electron density :math:`n_e` (cm⁻³) by Carpenter & Anderson (1992) [#]_.
 
-    Includes plasmasphere (L < Lpp), *plasmapause segment* (Lpp ≤ L ≤ Lppo), and
-    plasma trough (L ≥ Lppo) regimes, with optional seasonal and solar–cycle
-    corrections. If ``Lpp`` is not supplied the plasmasphere value is returned.
-    If ``Lpp`` is supplied, the result becomes piecewise (by MLT column):
+    Includes *plasmasphere* (L < Lpp), *plasmapause segment* (Lpp < L ≤ Lppo), and
+    *plasma trough* (L ≥ Lpp or Lppo) regimes, with optional seasonal (`doy`) and solar–cycle
+    corrections (`R13`). If ``Lpp`` is not supplied the plasmasphere value is returned.
+    If `MLT` is provided, the resulting array is shaped as ``(len(L), len(MLT))``.
+    `Lppo` is a flag which enables calculation of the plasmapause segment.
 
     - ``Lppo=False``: :math:`L \le L_{pp}` → plasmasphere; :math:`L > L_{pp}` → extended trough.
       (No plasmapause segment; this is a fast mask by :math:`L_{pp}`.)
-    - ``Lppo=True``: solve an outer plasmapause :math:`L_{ppo}(t)` by intersection and add the
-      **plasmapause segment** for :math:`L_{pp}(t) < L \le L_{ppo}(t)`.
+    - ``Lppo=True``: solve an outer plasmapause :math:`L_{ppo}` by intersection and add the
+      plasmapause segment for :math:`L_{pp} < L \le L_{ppo}`.
 
 
     Parameters
@@ -23,98 +24,88 @@ def CA1992(L, doy=None, R13=None, Lpp=None, MLT=None, Lppo=False):
     doy : int or ndarray, optional
         Day of year (1–366). If provided, seasonal terms are added in :math:`\log_{10} n_e`.
     R13 : float or ndarray, optional
-        13-month smoothed sunspot number. If provided, solar–cycle term with
-        L-decay is added in :math:`\log_{10} n_e`.
+        13-month smoothed sunspot number. If provided, solar–cycle term is added in :math:`\log_{10} n_e`.
     Lpp : float or 1D ndarray, optional
         Plasmapause inner limit. If array, it is a function of MLT (one per column).
     MLT : float or 1D ndarray, optional
         Magnetic local time in hours (0–24). If array, the output is 2-D of shape
-        ``(len(L), len(mlt))``. If omitted while ``Lpp`` is given, MLT=0 is assumed.
+        ``(len(L), len(MLT))``. If omitted while ``Lpp`` is given, MLT=0 is assumed.
     Lppo : bool, default=False
-        If True, compute :math:`L_{ppo}(t)` by intersection and include the plasmapause
+        If True, compute :math:`L_{ppo}` by intersection and include the plasmapause
         segment. If False, skip the segment and use a simple plasmasphere/trough mask.
 
     Returns
     -------
     ne : ndarray
         Equatorial electron density (cm⁻³). Shape:
-        - ``(len(L),)`` if `mlt` is None or scalar,
-        - ``(len(L), len(mlt))`` if `mlt` is a 1-D array.
+
+        - ``(len(L),)`` if `MLT` is None or scalar,
+        - ``(len(L), len(MLT))`` if `MLT` is a 1-D array.
 
     Notes
     -----
-    **Base CA92 relation (plasmasphere, equator):**
+
+    ----
+
+    **Plasmasphere** (:math:`L \le L_{pp}`):
 
     .. math::
-        \log_{10} n_e \;=\; -0.3145\,L + 3.9043.
+        \log_{10} n_e = -0.3145L + 3.9043.
 
-    **Optional seasonal terms** (annual with December maximum and
-    semiannual with equinoctial maxima), using day of year :math:`d`:
-
-    .. math::
-        \Delta_{\text{season}}(d) \;=\;
-        0.15\,\cos\!\Bigl(\tfrac{2\pi(d+9)}{365}\Bigr)
-        \;-\; 0.075\,\cos\!\Bigl(\tfrac{4\pi(d+9)}{365}\Bigr).
-
-    **Optional solar–cycle term** using 13-month smoothed sunspot number
-    :math:`\overline{R}`:
+    Optional seasonal terms, using day of year :math:`\text{doy}=d`:
 
     .. math::
-        \Delta_{\text{solar}}(\overline{R}) \;=\; 0.00127\,\overline{R} - 0.0635.
+        \Delta_{\text{season}}(d) = 0.15 \cos\left( \frac{2\pi(d+9)}{365} \right) - 0.075 \cos\left( \frac{4\pi(d+9)}{365} \right).
 
-    The full expression used here is
-
-    .. math::
-        \log_{10} n_e \;=\; -0.3145\,L + 3.9043
-        \;+\; \Delta_{\text{season}}(d)\;[\text{if } d\ \text{given}]
-        \;+\; \Delta_{\text{solar}}(\overline{R})\;[\text{if } \overline{R}\ \text{given}].
-
-    **Extended plasma trough**
+    Optional solar–cycle term using 13-month smoothed sunspot number :math:`\text{R13}=\overline{R}`:
 
     .. math::
-        n_e(L,t) = A(t)\,L^{-4.5} + \big(1 - e^{-(L-2)/10}\big), \qquad
-        A(t) = \begin{cases}
-            5800 + 300\,t, & 0 \le t < 6, \\
-            -800 + 1400\,t, & 6 \le t \le 15.
-        \end{cases}
 
-    **Plasmapause segment** (used only if ``Lppo=True``)
+       \Delta_{\text{solar}}(\overline{R}) = (0.00127 \overline{R} - 0.0635) \exp(-(L-2)/1.5)
+
+    The full expression with :math:`d`: and :math:`\overline{R}`: is
 
     .. math::
-        n_e(L,t) = n_e(L_{pp}) \times 10^{(L - L_{pp}) / s(t)}, \qquad
-        s(t) = \begin{cases}
-            0.10, & 0 \le t < 6, \\
-            0.10 + 0.01\,(t-6), & 6 \le t \le 15.
-        \end{cases}
 
-    **Saturated plasmasphere (equator):**
+       \log_{10} n_e = -0.3145 L + 3.9043 + \Delta_{\text{season}}(d) + \Delta_{\text{solar}}(\overline{R})
 
-    .. math::
-        \log_{10} n_e = -0.3145\,L + 3.9043
-        + 0.15\cos\Big(\tfrac{2\pi(d+9)}{365}\Big)
-        - 0.075\cos\Big(\tfrac{4\pi(d+9)}{365}\Big)
-        + \big(0.00127\,\overline{R} - 0.0635\big) e^{-(L-2)/1.5}.
+    ----
 
-    **Plasmapause segment (Lpp ≤ L ≤ Lppo):** anchored to :math:`n_e(L_{pp})` and
-    increases outward with an MLT‑dependent slope. The paper summarizes this with
-    a decade (base‑10) exponential in :math:`L - L_{pp}`. We implement
+    **Plasma trough** (:math:`L > L_{pp}`)
 
     .. math::
-        n_e(L) = n_e(L_{pp}) \times 10^{\,(L - L_{pp})/s(t)},
 
-    with :math:`s(t) = 0.10` for :math:`0 \le t < 6` MLT, and
-    :math:`s(t) = 0.10 + 0.01\,(t-6)` for :math:`6 \le t \le 15` MLT (linear-in‑t
-    slope consistent with the summary panel). (Outside this range, we clamp to the
-    nearest branch.)
+       n_e(L,MLT) = A(MLT) L^{-4.5} + (1 - \exp(-(L-2)/10)
 
-    **Extended plasma trough (L ≥ Lppo):** eq. (5) style falloff with MLT dependence:
+       A(t) = \begin{cases}
+           5800 + 300 MLT, & 0 \le MLT < 6, \\
+           -800 + 1400 MLT, & 6 \le MLT \le 15
+       \end{cases}
+
+    If :math:`MLT > 15`, it is kept at constant :math:`MLT=15`.
+
+    ----
+
+    **Plasmapause segment** (:math:`L_{pp} < L \le L_{ppo}`, used only if ``Lppo=True``)
+
+    Anchored to :math:`n_e(L_{pp})` with MLT-dependent decade slope.
 
     .. math::
-        n_e = (5800 + 300\,t)\,L^{-4.5} + \big(1 - e^{-(L-2)/10}\big), \quad 0 \le t < 6,\\
-        n_e = (-800 + 1400\,t)\,L^{-4.5} + \big(1 - e^{-(L-2)/10}\big), \quad 6 \le t \le 15.
+
+       n_e(L,MLT) = n_e(L_{pp}) \times 10^{ - (L - L_{pp}) / s(MLT)}
+
+       s(MLT) = \begin{cases}
+           0.10, & 0 \le MLT < 6, \\
+           0.10 + 0.01 (MLT-6), & 6 \le MLT \le 15
+       \end{cases}
+
 
     The outer plasmapause :math:`L_{ppo}` is obtained by solving for the intersection
     between the plasmapause segment and the extended trough at the given MLT.
+
+    If :math:`MLT > 15`, it is kept at constant :math:`MLT=15`.
+
+    ----
 
     References
     ----------
@@ -192,6 +183,15 @@ def CA1992_plasmasphere(L, doy=None, R13=None):
     -------
     ne : ndarray
         Plasmaspheric electron density (cm^-3).
+
+    Notes
+    -----
+
+    .. math::
+
+       \log_{10} n_e = -0.3145 L + 3.9043
+       + 0.15 \cos\left(\frac{2\pi(d+9)}{365}\right) - 0.075 \cos\left(\frac{4\pi(d+9)}{365}\right)
+       + (0.00127 \overline{R} - 0.0635) e^{-(L-2)/1.5}
     """
     L = np.asarray(L, dtype=float)
     log10_ne = -0.3145 * L + 3.9043
@@ -213,21 +213,20 @@ def CA1992_trough(L, MLT):
     r"""
     Extended plasma trough electron density (cm⁻3), Carpenter & Anderson (1992), Sec. 4.
 
-    For magnetic local time :math:`t` (hours), use the paper’s piecewise amplitude
-    and add the soft offset:
-
-    .. math::
-        n_e(L,t) =
-        \begin{cases}
-            (5800 + 300\,t)\,L^{-4.5} + \bigl(1 - e^{-(L-2)/10}\bigr), & 0 \le t < 6,\\[4pt]
-            (-800 + 1400\,t)\,L^{-4.5} + \bigl(1 - e^{-(L-2)/10}\bigr), & 6 \le t \le 15~.
-        \end{cases}
-
     Notes
     -----
+
+    .. math::
+       n_e(L,MLT) = A(MLT) L^{-4.5} + (1 - \exp(-(L-2)/10)
+
+       A(t) = \begin{cases}
+           5800 + 300 MLT, & 0 \le MLT < 6, \\
+           -800 + 1400 MLT, & 6 \le MLT \le 15
+       \end{cases}
+
     - Inputs can be scalars or 1-D arrays. If `MLT` is an array, the output has
       shape ``(len(L), len(MLT))``.
-    - `MLT` is **clipped** into ``[0, 15]`` per the model’s validity.
+    - `MLT` is *clipped* into ``[0, 15]`` per the model’s validity.
 
     """
     L = np.atleast_1d(np.asarray(L, dtype=float))
@@ -246,16 +245,18 @@ def CA1992_plasmapause(L, Lpp, ne_Lpp, MLT):
     r"""
     Plasmapause segment (cm⁻3), anchored at :math:`L_{pp}`, with MLT-dependent decade slope.
 
-    .. math::
-        s(t) = \begin{cases}
-          0.10, & 0 \le t < 6,\\
-          0.10 + 0.01\,(t-6), & 6 \le t \le 15,
-        \end{cases}
-        \qquad
-        n_e(L,t) = n_e(L_{pp}) \times 10^{-\,(L - L_{pp}) / s(t)}.
-
     Notes
     -----
+
+    .. math::
+
+        n_e(L,MLT) = n_e(L_{pp}) \times 10^{ - (L - L_{pp}) / s(MLT)}
+
+        s(MLT) = \begin{cases}
+           0.10, & 0 \le MLT < 6, \\
+           0.10 + 0.01 (MLT-6), & 6 \le MLT \le 15
+        \end{cases}
+
     - Vectorized over ``(L, MLT)``; if `MLT` is an array, output shape is
       ``(len(L), len(MLT))``.
     - `MLT` is **clipped** into ``[0, 15]`` per the model’s validity.
@@ -271,8 +272,7 @@ def CA1992_plasmapause(L, Lpp, ne_Lpp, MLT):
 
 def _CA1992_Lppo_solve(Lpp, MLT, doy=None, R13=None, Lmax=8.0, ngrid=801):
     r"""
-    Solve for outer plasmapause Lppo by intersecting the plasmapause segment
-    with the extended trough at MLT.
+    Solve for outer plasmapause Lppo by intersecting the plasma trough with plasmapause segment.
 
     Returns
     -------
@@ -283,7 +283,7 @@ def _CA1992_Lppo_solve(Lpp, MLT, doy=None, R13=None, Lmax=8.0, ngrid=801):
     Lg = np.linspace(Lpp, Lmax, int(ngrid))
     diff = CA1992_plasmapause(Lg, Lpp, ne_Lpp, MLT) - CA1992_trough(Lg, MLT)
     idx = np.where(np.diff(np.sign(diff)) != 0)[0]
-    if idx.size:
+    if idx.size > 0:
         i0 = idx[0]
         x0, x1 = Lg[i0], Lg[i0 + 1]
         y0, y1 = diff[i0], diff[i0 + 1]
