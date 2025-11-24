@@ -4,7 +4,7 @@ setup(
     name='rbamlib',
     version='25.04',
     author='Alexander Drozdov',
-    author_email='adrozdov@ucla.edu',
+    author_email='alexander.y.drozdov@aero.org',
     description='A lightweight, open-source Python library for the analysis and modeling of radiation belts.',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
