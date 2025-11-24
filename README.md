@@ -66,4 +66,4 @@ https://rbamlib.readthedocs.io/
 
 ## License
 
-`rbamlib` is released under the BSD-License (3-clause version). See the LICENSE file for details.
+`rbamlib` is released under the BSD-License (3-clause version). See the LICENSE and NOTICE files for details.
