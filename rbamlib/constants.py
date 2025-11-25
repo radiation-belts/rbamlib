@@ -13,6 +13,7 @@ Constants:
     - R_Jupiter ≈ 7,149,200,000 : radius of Earth in cm
     - c ≈ 2.9e10 : speed of light in cm/s
     - q ≈ 4.8e-10 : electron charge in CGS
+    - me ≈ 0.91e-21 electrons mass in g in CGS
 
 CGS:
     - Class of constants in CGS
@@ -36,7 +37,7 @@ R_Saturn = 60.268e8  # Saturn radius in cm
 R_Jupiter = 71.492e8  # Jupiter radius in cm
 c = scic.c * 100  # Speed of light in cm/s
 q = 4.803e-10  # charge of electron in CGS
-
+me = 0.91e-27 # Electrons mass in g in CGS
 
 class CGS:
     MC2 = MC2 * 1e6 * scic.eV / scic.erg  # erg (electron rest energy)
@@ -48,6 +49,7 @@ class CGS:
     R_Jupiter = R_Jupiter
     c = c
     q = q
+    me = me
 
 
 class SI:
@@ -58,5 +60,6 @@ class SI:
     R_Earth = CGS.R_Earth * 1e-2  # meters
     R_Saturn = CGS.R_Saturn * 1e-2  # meters
     R_Jupiter = CGS.R_Jupiter * 1e-2  # meters
-    c = scic  # m/s
+    c = scic.c  # m/s
     q = scic.e  # Coulombs
+    me = scic.electron_mass # kg

@@ -16,6 +16,7 @@ Please see README.md for more information.
 from rbamlib import (
     conv,
     models,
+    motion,
     utils,
     web,
     constants
