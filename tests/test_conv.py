@@ -2,7 +2,7 @@ import unittest
 import numpy as np
 from rbamlib.conv import en2pc, pc2en, Jcmu2K, Kmu2Jc, mural2pc, mu2pc, pcral2mu, pc2mu, mural2en, mu2en, enral2mu, en2mu
 from rbamlib.conv import Lal2K, LK2al
-
+#TODO: en2gamma
 
 class TestConv(unittest.TestCase):
 
