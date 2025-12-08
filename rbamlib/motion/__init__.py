@@ -14,3 +14,7 @@ from .gyro import T_gyro
 from .bounce import f_bounce
 from .bounce import omega_bounce
 from .bounce import T_bounce
+
+from .drift import f_drift
+from .drift import omega_drift
+from .drift import T_drift
