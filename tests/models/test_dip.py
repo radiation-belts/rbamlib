@@ -1,4 +1,5 @@
 import unittest
+import warnings
 import numpy as np
 from rbamlib.models.dip import B, B0, T, Y
 
@@ -45,12 +46,11 @@ class TestDip(unittest.TestCase):
 
     def test_Y_values(self):
         """
-        Test the Y. Based on table 1 from Schulz & Lanzerotti (1974). Note, although table 1 provides value for
-        alpha = 0, log(sin(alpha)) is undefined, which results in nan
+        Test the Y. Based on table 1 from Schulz & Lanzerotti (1974).
         """
 
-        al = np.deg2rad([0, 5.34, 34.38, 90])  # Example alpha
-        expected_output = np.array([np.nan, 2.091, 0.756, 0.000])  # Expected Y
+        al = np.deg2rad([5.34, 34.38, 90])  # Example alpha
+        expected_output = np.array([2.091, 0.756, 0.000])  # Expected Y
 
         # Call the Y function
         result = Y(al)
@@ -58,6 +58,38 @@ class TestDip(unittest.TestCase):
         # Assert that the result is as expected
         np.testing.assert_almost_equal(result, expected_output, decimal=3,
                                        err_msg="T did not return expected values.")
+
+    def test_Y_0_values(self):
+        """
+        Test the Y function at alpha=0.
+        Table 1 provides a value for α = 0 even though log(sin(α)) is undefined,
+        with the relation Y(0) = 2T(0).
+        This test checks that:
+          - the output is not NaN,
+          - the output is not 0,
+          - the output satisfies the relationship Y(0)=2T(0).
+        """
+        # α=0 in radians.
+        alpha_zero = [0, 0]
+        
+        # Call Y(0).
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+            result = Y(alpha_zero)
+            self.assertFalse(w, f"Warning '{w}' was triggered")
+        
+        # Verify that the output is not NaN.
+        self.assertFalse(np.isnan(result).any(), "Y(0) returned NaN.")
+        
+        # Verify that the output is not (unexpectedly) 0.
+        self.assertFalse(np.allclose(result, 0),
+                         "Y(0) returned 0, but a nonzero value was expected.")
+
+        # Verify that Y(0) satisfies the relationship Y(0) = 2T(0).
+        np.testing.assert_allclose(Y(0), 2 * T(0), rtol=1e-3,
+                                   err_msg="Y(0) did not equal 2*T(0).")
+
+ 
 
 if __name__ == '__main__':
     unittest.main()
