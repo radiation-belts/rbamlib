@@ -1,9 +1,10 @@
 """
-The 'motion' provides functions for representation of charged particle motion in electric and magnetic field.
+The `motion` provides functions for representation of charged particle motion in electric and magnetic field.
 
 Main Features:
-    - Frequencies (gyro, bounce, and drift) [TBD]
-    - Motion period (gyro, bounce and drift-times) [TBD]
+    - Oscilation frequencies (gyro, bounce, and drift)
+    - Angular Frequencies (gyro, bounce, and drift)
+    - Motion period (gyro, bounce and drift)
     - Drift velocities calculation [TBD]
 """
 

@@ -17,7 +17,7 @@ def f_bounce(L, al, en, planet='Earth', m=rbamlib.constants.me):
     planet : str, optional, Default = 'Earth'.
         Name of the planet.        
     m : float, optional
-        Particle mass, in grams. Default is for electrons.
+        Particle mass, in grams. Default is electrons.
 
     Returns
     -------
@@ -26,10 +26,10 @@ def f_bounce(L, al, en, planet='Earth', m=rbamlib.constants.me):
 
     Notes
     -----
-    The bounce frequency is defined as the inverse of the bounce period. 
+    The bounce frequency is defined as the inverse of the bounce period [#]_. 
 
-        .. math::
-        f_{\mathrm{bounce}} = \\frac{1}{T_{\\mathrm{bounce}}}
+    .. math::
+        f_{bounce} = \frac{1}{T_{bounce}}
 
     References
     ----------
@@ -55,7 +55,7 @@ def omega_bounce(L, al, en, planet='Earth', m=rbamlib.constants.me):
     planet : str, optional, Default = 'Earth'.
         Name of the planet.        
     m : float, optional
-        Particle mass, in grams. Default is for electrons.
+        Particle mass, in grams. Default is electrons.
 
     Returns
     -------
@@ -64,12 +64,12 @@ def omega_bounce(L, al, en, planet='Earth', m=rbamlib.constants.me):
 
     Notes
     -----
-    The angular bounce frequency is obtained by:
+    The angular bounce frequency is obtained by [#]_:
 
     .. math::
-        \\omega_{\\mathrm{bounce}} = \\frac{2\\pi}{T_{\\mathrm{bounce}}}
+        \omega_{bounce} = \frac{2\pi}{T_{bounce}}
 
-    where T is the bounce period calculated by T_bounce.
+    where :math:`T_{bounce}` is the bounce period calculated by T_bounce function.
 
     References
     ----------
@@ -95,7 +95,7 @@ def T_bounce(L, al, en, planet='Earth', m=rbamlib.constants.me):
     planet : str, optional, Default = 'Earth'.
         Name of the planet.        
     m : float, optional
-        Particle mass, in grams. Default is for electrons.
+        Particle mass, in grams. Default is electrons.
 
     Returns
     -------
@@ -103,35 +103,22 @@ def T_bounce(L, al, en, planet='Earth', m=rbamlib.constants.me):
         Bounce period, in seconds (s).
 
     Notes
-    -----
-    See Schulz & Lanzerotti (1974) [#]_.
-    The bounce period is calculated using the following scaling:
+    -----    
+    The bounce period is calculated using the following [#]_:
     
-        T_{bounce} = \\left( \\frac{4r}{v} \\right) T(\\alpha)
-
-    where:
-      - r = L * r₀ with r₀ being the planetary radius,
-      - v is the effective particle velocity computed using the conversion of energy to momentum,
-      - T(\\alpha) is a modulation factor dependent on the equatorial pitch angle 
-        provided by rbamlib.models.dip.T(al).
-
-    The velocity v is computed as:
-
-        v = \\frac{pc}{m\\,\\gamma}
-
-    with pc (momentum times speed of light) obtained from the energy conversion and 
-    \$ \\gamma \$ being the Lorentz factor.
-
-    Math Expressions
-    ----------------
     .. math::
-        r = L \\cdot r_0
+        T_{bounce} = \left( \frac{4r}{v} \right) T(\alpha) \\
+        
+    - `v` is the effective particle velocity computed using the conversion of energy to momentum,
 
     .. math::
-        v = \\frac{pc}{m\\,\\gamma}, \\quad \\text{with} \\quad pc = \\text{en2pc}(en) \\times \\text{MeV-to-erg}
+        v = \frac{pc}{m\gamma}
 
-    .. math::
-        T_{\\mathrm{bounce}} = \\frac{4r}{v} \\, T(\\alpha)
+    .. math::   
+        r = L \cdot r_0
+    
+    - `T(\alpha)` is a factor dependent on the equatorial pitch angle provided by rbamlib.models.dip.T.
+
 
     References
     ----------

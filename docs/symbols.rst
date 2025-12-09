@@ -24,4 +24,6 @@ Pdyn    Dynamic pressure :math:`P_{dyn}`, [nPa]
 Nsw     Solar wind density array, [n/cc]
 Vsw     Solar wind velocity array, [km/sec]
 ne      Electron density, [cm^-3].
+T       Period, [s]
+f       Oscillation frequency, [Hz]
 ======  ===========
