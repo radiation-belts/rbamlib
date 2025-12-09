@@ -11,7 +11,7 @@ def en2gamma(en, mc2=rbamlib.constants.MC2):
     en : float or ndarray
         The kinetic energy or an array of kinetic energies in MeV.
     mc2 : float, optional
-        The rest mass energy (m*c^2) in MeV. Default is provided for electrons (typically 0.511 MeV).
+        The rest mass energy (:math:`mc^2`) in MeV. Default is provided for electrons (typically 0.511 MeV).
 
     Returns
     -------
@@ -28,9 +28,9 @@ def en2gamma(en, mc2=rbamlib.constants.MC2):
     where the Lorentz factor is
 
     .. math::
-        \gamma = \frac{E}{mc^2} = \frac{K}{mc^2} + 1
+        \gamma = \frac{E}{mc^2} = \frac{en}{mc^2} + 1
 
-    Here, K is the kinetic energy.
+    Here, `en` is the kinetic energy.
     """
     gamma = en / mc2 + 1.0
     return gamma

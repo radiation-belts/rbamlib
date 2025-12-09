@@ -7,8 +7,7 @@ def f_gyro(B=None, en=None, L=None, planet='Earth', q=rbamlib.constants.q, m=rba
     r"""
     Calculate the oscillation gyro (cyclotron) frequency for a charged particle.
     
-    This function computes the gyro frequency. It accounts for the relativistic correction when the 
-    particle's kinetic energy is provided.
+    It accounts for the relativistic correction when the particle's kinetic energy is provided.
 
     Parameters
     ----------
@@ -22,9 +21,9 @@ def f_gyro(B=None, en=None, L=None, planet='Earth', q=rbamlib.constants.q, m=rba
     planet : str, optional, default = 'Earth'
         Name of the planet for which the magnetic field is calculated.
     q : float, optional
-        Particle charge, in statcoulombs (SGS units). Defaults is for electrons.
+        Particle charge, in statcoulombs (SGS units). Default is electrons.
     m : float, optional
-        Particle mass, in grams. Defaults is for electrons.
+        Particle mass, in grams. Default is electrons.
 
     Returns
     -------
@@ -41,9 +40,9 @@ def f_gyro(B=None, en=None, L=None, planet='Earth', q=rbamlib.constants.q, m=rba
     For a relativistic particle with kinetic energy (en), the Lorentz factor is
 
     .. math::
-        \gamma = 1 + \frac{m \cdot c^2}
+        \gamma = 1 + \frac{en}{m \cdot c^2}
 
-    and the gyro frequency becomes
+    and the gyro frequency becomes [#]_
 
     .. math::
        f = \frac{|q| B}{2 \pi \gamma m c}
@@ -51,8 +50,8 @@ def f_gyro(B=None, en=None, L=None, planet='Earth', q=rbamlib.constants.q, m=rba
 
     References
     ----------
-    .. [#] Chen, F. F. (1984). Introduction to Plasma Physics and Controlled Fusion, Vol. 1. 
-           Plenum Press.
+    .. [#] Roederer, J. G., & Zhang, H. (2016). Dynamics of magnetically trapped particles. Berlin, Germany: Springer.
+
     """
     # Compute gamma if energy is provided (en is in MeV)
     gamma = 1.0
@@ -107,15 +106,15 @@ def omega_gyro(B=None, en=None, L=None, planet='Earth',  q=rbamlib.constants.q, 
 
     Notes
     -----
-    The angular gyro frequency is calculated from the standard gyro frequency f by:
+    The angular gyro frequency is calculated from the standard gyro frequency f [#]_:
 
     .. math::
         \omega = 2 \pi f
 
     References
     ----------
-    .. [#] Chen, F. F. (1984). Introduction to Plasma Physics and Controlled Fusion, Vol. 1. 
-           Plenum Press.
+    .. [#] Koskinen, H. E. J., & Kilpua, E. K. J. (2022). Physics of earth’s radiation belts. Cham, Switzerland: Springer Nature. https://doi.org/10.1007/978-3-030-82167-8
+
     """
     return 2 * np.pi * f_gyro(B=B, en=en, L=L, planet=planet, q=q, m=m)
 
@@ -148,16 +147,14 @@ def T_gyro(B=None, en=None, L=None, planet='Earth',  q=rbamlib.constants.q, m=rb
 
     Notes
     -----
-    The gyro period is defined as the inverse of the angular gyro frequency:
+    The gyro period is defined as the inverse of the angular gyro frequency [#]_:
 
+    .. math::
         T = \frac{2\pi}{\omega}
-
-    which exactly corresponds to the time taken for one complete gyration of the particle about the magnetic field line.
 
     References
     ----------
-    .. [#] Chen, F. F. (1984). Introduction to Plasma Physics and Controlled Fusion, Vol. 1. 
-           Plenum Press.
+    .. [#] Koskinen, H. E. J., & Kilpua, E. K. J. (2022). Physics of earth’s radiation belts. Cham, Switzerland: Springer Nature. https://doi.org/10.1007/978-3-030-82167-8
     """
     return 2 * np.pi / omega_gyro(B=B, en=en, L=L, planet=planet, q=q, m=m)
 

@@ -10,11 +10,11 @@ def f_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rbamlib
 
     Parameters
     ----------
-    L : float
+    L : float or ndarray
         L-shell parameter.
-    en : float
+    en : float or ndarray
         Particle kinetic energy in MeV.
-    al : float, optional, default=pi/2
+    al : float or ndarray, optional, default=pi/2
         Pitch angle in radians. 
     planet : str, optional, default='Earth'
         Name of the planet. 
@@ -25,23 +25,20 @@ def f_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rbamlib
 
     Returns
     -------
-    float
+    float or ndarray
         Drift frequency in Hertz (Hz).
 
     Notes
     -----
-    The drift frequency is given by the combined equation _[#]:
+    The drift frequency is given by the combined equation [#]_:
 
     .. math::
-       f_{\text{drift}} = \left[ \frac{L}{2\pi} \cdot \frac{3\, m\, c^3}{q\, B_0(1,\, \text{planet})\, r_0^2} \cdot \frac{\gamma^2 - 1}{\gamma} \right]
-       \cdot \frac{6 - \dfrac{\mathrm{dip.Y}(al)}{\mathrm{dip.T}(al)}}{12}
-
-    where:
-      - $ \gamma = \mathrm{en2gamma}(en) $ is the relativistic Lorentz factor,
-      - $ c $ is the speed of light,
-      - $ B_0(1,\, \text{planet}) $ is the magnetic field at $ L = 1 $ for the specified planet,
-      - $ r_0 $ is the planetary radius,
-      - $ \mathrm{dip.Y}(al) $ and $ \mathrm{dip.T}(al) $ are functions from the dipole model.
+       f_{drift} = \left[ \frac{L}{2\pi} \cdot \frac{3 m c^3}{|q| B_0 r_0^2} \cdot \frac{\gamma^2 - 1}{\gamma} \right] \cdot \frac{6 - \frac{Y(\alpha)}{T(\alpha)}}{12}
+    
+    - :math:`\gamma` is the relativistic Lorentz factor,
+    - :math:`B_0` is the magnetic field for the specified planet,
+    - :math:`r_0` is the planetary radius,
+    - :math:`Y(\alpha)` and  :math:`T(\alpha)` are functions from the dipole model.
 
     References
     ----------
@@ -72,7 +69,7 @@ def f_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rbamlib
 
     c = rbamlib.constants.c
     
-    factor = 3 * m * c**3 / (q * dip.B0(1, planet) * r0**2)
+    factor = 3 * m * c**3 / (np.abs(q) * dip.B0(1, planet) * r0**2)
     f =  L * factor * ( (gamma**2 - 1) / gamma ) / (2 * np.pi)
     g = (6 - dip.Y(al)/dip.T(al)) / 12
     return f * g
@@ -84,11 +81,11 @@ def omega_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rba
 
     Parameters
     ----------
-    L : float
+    L : float or ndarray
         L-shell parameter.
-    en : float
+    en : float or ndarray
         Particle kinetic energy in MeV.
-    al : float, optional, default=pi/2
+    al : float or ndarray, optional, default=pi/2
         Pitch angle in radians. 
     planet : str, optional, default='Earth'
         Name of the planet. 
@@ -99,15 +96,15 @@ def omega_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rba
 
     Returns
     -------
-    float
+    float or ndarray
         Angular drift frequency in radians per second (rad/s).
 
     Notes
     -----
-    The angular drift frequency is calculated using:
+    The angular drift frequency is calculated using [#]_:
 
     .. math::
-       \omega_{\text{drift}} = 2\pi\, f_{\text{drift}}
+       \omega_{drift} = 2\pi f_{drift}
 
     References
     ----------
@@ -122,11 +119,11 @@ def T_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rbamlib
 
     Parameters
     ----------
-    L : float
+    L : float or ndarray
         L-shell parameter.
-    en : float
+    en : float or ndarray
         Particle kinetic energy in MeV.
-    al : float, optional, default=pi/2
+    al : float or ndarray, optional, default=pi/2
         Pitch angle in radians. 
     planet : str, optional, default='Earth'
         Name of the planet. 
@@ -137,15 +134,15 @@ def T_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rbamlib
 
     Returns
     -------
-    float
+    float or ndarray
         Drift period in seconds (s).
 
     Notes
     -----
-    The drift period is the reciprocal of the drift frequency:
+    The drift period is the reciprocal of the drift frequency [#]_:
 
     .. math::
-       T_{\text{drift}} = \frac{1}{f_{\text{drift}}}
+       T_{drift} = \frac{1}{f_{drift}}
 
     References
     ----------

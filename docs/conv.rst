@@ -28,6 +28,7 @@ Functions
 
 .. autofunction:: LK2al
 
+.. autofunction:: en2gamma
 
 Aliases
 =======
