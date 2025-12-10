@@ -7,6 +7,11 @@ Electric field model functions
 Functions
 =========
 
-.. # Added by generate_rst_files
-
 .. autofunction:: rbamlib.models.elec.VS1975
+
+Supporting Functions
+====================
+.. autofunction:: rbamlib.models.elec.VS1975.VS1975_Phi_corr
+.. autofunction:: rbamlib.models.elec.VS1975.VS1975_Phi_conv
+.. autofunction:: rbamlib.models.elec.VS1975.VS1975_E_corr
+.. autofunction:: rbamlib.models.elec.VS1975.VS1975_E_conv
