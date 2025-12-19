@@ -17,4 +17,4 @@ Functions
 
 .. autofunction:: f_drift
 .. autofunction:: omega_drift
-.. autofunction:: .T_drift
+.. autofunction:: T_drift

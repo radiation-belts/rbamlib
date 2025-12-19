@@ -113,6 +113,7 @@ def omega_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rba
     """
     return  2 * np.pi * f_drift(L, en, al, planet, m, q)
 
+
 def T_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rbamlib.constants.q):
     r"""
     Calculate the drift period.

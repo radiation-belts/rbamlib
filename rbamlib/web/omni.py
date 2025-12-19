@@ -261,7 +261,7 @@ def omni(start_date, end_date, params=None, resolution='hour', show_url=False):
         - If a string is provided, it is mapped to the corresponding OMNIWEB variable number.
         - If a number is provided, it is directly used in the request.
         - Raises an error if an unknown parameter is included.
-    resolution : str, default= `hour`
+    resolution : str, default='hour'
         The resolution of the data, corresponding to either the Low Resolution OMNI (LRO) or
         High Resolution OMNI (HRO) datasets:
 
@@ -274,7 +274,7 @@ def omni(start_date, end_date, params=None, resolution='hour', show_url=False):
         **High Resolution OMNI (HRO) Data Set:**
             - 'min' (1-minute resolution, source 'omni_min')
             - '5min' (5-minute resolution, source 'omni_5min')
-
+ 
     Returns
     -------
     tuple
@@ -408,7 +408,7 @@ def omni(start_date, end_date, params=None, resolution='hour', show_url=False):
          - Alfven Mach Number
        * - "Kp"
          - 38
-         - Kp*10 Index (Geomagnetic Activity)
+         - Kp\*10 Index (Geomagnetic Activity)
        * - "R_Sunspot"
          - 39
          - R Sunspot Number
