@@ -2,13 +2,14 @@ import unittest
 import numpy as np
 from tests.helpers import TestHelpers
 from rbamlib.models.elec import VS1975
-
+from rbamlib.models.elec.VS1975 import VS1975_Phi_conv, VS1975_Phi_corr, VS1975_E_corr, VS1975_E_conv
 
 
 class TestElec(unittest.TestCase, TestHelpers):
 
-    def test_VS1975(self):
-        """Micro test
+    def test_micto_VS1975(self):
+        """
+            Micro test
         """
         E = VS1975(1, phi=0, C=0, Omega=0)
 
@@ -20,7 +21,31 @@ class TestElec(unittest.TestCase, TestHelpers):
         np.testing.assert_equal(E['r'], np.array([0, 0]))
         np.testing.assert_equal(E['phi'], np.array([0, 0]))
 
+    def test_VS1975_Phi_corr(self):
+        Phi = VS1975_Phi_corr(r=1, phi=0)
 
+        # Potential value is estimated from
+        # Maynard, N. C., and A. J. Chen (1975), Isolated cold plasma regions: Observations and their relation to possible production mechanisms, J. Geophys. Res., 80(7), 1009–1013, doi:10.1029/JA080i007p01009. 
+        self.assertAlmostEqual(Phi, -94.4e3, delta=1e3)
+
+    # def test_VS1975(self):
+    #     E = VS1975(r=1, phi=0)
+
+    #     self.assertEqual(E['r'], 1.5e-3)
+    #     self.assertEqual(E['phi'], 0)
+
+    # def test_VS1975_E_corr(self):
+    #     E = VS1975_E_corr(r=1, phi=0)
+
+    #     self.assertEqual(E['r'], 1.5e-3)
+    #     self.assertEqual(E['phi'], 0)
+
+    # def test_VS1975_E_conv(self):
+    #     E = VS1975_E_conv(r=5, phi=0)
+
+    #     self.assertEqual(E['r'], 1.5e-3)
+    #     self.assertEqual(E['phi'], 0)
+    
 
 if __name__ == '__main__':
     unittest.main()

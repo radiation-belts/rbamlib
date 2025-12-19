@@ -30,7 +30,7 @@ def VS1975_Phi_corr(r, phi=0, theta=np.pi/2, Omega=const.Omega_Earth, B0=const.S
     -----
 
     .. math::   
-        \Phi_{corr} = -\frac{\Omega B_0 R_0 \sin^2(\theta)}{r}
+        \Phi_{corr} = -\frac{\Omega B_0 R_0^2 \sin^2(\theta)}{r}
             
     References
     ----------
@@ -38,7 +38,7 @@ def VS1975_Phi_corr(r, phi=0, theta=np.pi/2, Omega=const.Omega_Earth, B0=const.S
     .. [#] Stern, D. P. (1975). Electric field models in the magnetosphere. Reviews of Geophysics and Space Physics, 13(3), 547–558.
     """
 
-    return -Omega * B0 * R0 * np.sin(theta)**2 / r
+    return -Omega * B0 * R0**2 * np.sin(theta)**2 / r
 
 
 def VS1975_E_corr(r, phi=0, theta=np.pi/2, Omega=const.Omega_Earth, B0=const.SI.B0_Earth, R0=const.SI.R_Earth):
@@ -80,7 +80,7 @@ def VS1975_E_corr(r, phi=0, theta=np.pi/2, Omega=const.Omega_Earth, B0=const.SI.
     """
 
     E_corr = dict(r=None, phi=None)
-    E_corr['r'] = -VS1975_Phi_corr(r, phi, theta, Omega, B0, R0) / r    
+    E_corr['r'] = -VS1975_Phi_corr(r, phi, theta, Omega, B0, R0) / r / R0    
     E_corr['r'] = np.array(E_corr['r'])
     E_corr['phi'] = np.zeros(E_corr['r'].shape)
 
@@ -128,7 +128,7 @@ def VS1975_Phi_conv(r, phi=0, theta=np.pi/2, gamma=2, C=const.E0_Earth):
 
 def VS1975_E_conv(r, phi=0, theta=np.pi/2, gamma=2, C=const.E0_Earth):
     r"""
-    Compute the convective electric field for the Volland‐Stern model.
+    Compute the convective electric field for the Volland‐Stern model (Volland (1973) [#]_ and Stern (1975) [#]_).
 
     Parameters
     ----------
@@ -232,7 +232,7 @@ def VS1975(r, phi=0, theta=np.pi/2, gamma=2, C=const.E0_Earth, Omega=const.Omega
     **Corotational potential:**
 
     .. math::
-       \Phi_{corr} = -\frac{\Omega B_0 R_0 \sin^2(\theta)}{r},
+       \Phi_{corr} = -\frac{\Omega B_0 R_0^2 \sin^2(\theta)}{r},
 
     - :math:`\Omega` is the Earth's angular rotation rate (default is ``const.Omega_Earth``),
     - :math:`B_0` is the reference magnetic field (default is ``const.SI.B0_Earth``),
@@ -242,12 +242,7 @@ def VS1975(r, phi=0, theta=np.pi/2, gamma=2, C=const.E0_Earth, Omega=const.Omega
     component) is computed as
 
     .. math::
-       E_{corr}(r) = -\frac{\Phi_{corr}}{r}
-
-    and there is no corotational azimuthal component:
-
-    .. math::
-       E_{corr}(\phi) = 0.
+       E_{corr}(r) = -\frac{\Phi_{corr}}{r}, \left( E_{corr}(\phi) = 0 \right)
 
     **Total Electric Field:**
 
@@ -259,8 +254,8 @@ def VS1975(r, phi=0, theta=np.pi/2, gamma=2, C=const.E0_Earth, Omega=const.Omega
     dict
         Dictionary with the total electric field components (in V/m) having keys:
           
-            - 'r': Total radial component, which is the sum of the convective and corotational radial fields.
-            - 'phi': Azimuthal component, provided solely by the convective field.
+            - 'r': Total radial component.
+            - 'phi': Azimuthal component.
     
     References
     ----------
