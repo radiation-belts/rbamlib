@@ -3,7 +3,7 @@ import rbamlib.constants
 from rbamlib.conv import en2gamma
 from rbamlib.models.dip import B0
 
-def f_gyro(B=None, en=None, L=None, planet='Earth', q=rbamlib.constants.q, m=rbamlib.constants.me):
+def f_gyro(B=None, L=None, en=None, planet='Earth', q=rbamlib.constants.q, m=rbamlib.constants.me):
     r"""
     Calculate the oscillation gyro (cyclotron) frequency for a charged particle.
     
@@ -13,11 +13,11 @@ def f_gyro(B=None, en=None, L=None, planet='Earth', q=rbamlib.constants.q, m=rba
     ----------
     B : float or ndarray, optional
         Magnetic field strength, in Gauss. Either B or L must be provided.
+    L : float or ndarray, optional
+        McIlwain L-shell parameter (dimensionless). Used to compute B if it is not provided.
     en : float or ndarray, optional
         Kinetic energy of the particle, in MeV. When provided, a relativistic correction via 
         the Lorentz factor is applied.
-    L : float or ndarray, optional
-        McIlwain L-shell parameter (dimensionless). Used to compute B if it is not provided.
     planet : str, optional, default = 'Earth'
         Name of the planet for which the magnetic field is calculated.
     q : float, optional
@@ -79,7 +79,7 @@ def f_gyro(B=None, en=None, L=None, planet='Earth', q=rbamlib.constants.q, m=rba
     return f       
 
 
-def omega_gyro(B=None, en=None, L=None, planet='Earth',  q=rbamlib.constants.q, m=rbamlib.constants.me):
+def omega_gyro(B=None, L=None, en=None, planet='Earth',  q=rbamlib.constants.q, m=rbamlib.constants.me):
     r"""
     Calculate the angular gyro (cyclotron) frequency for a charged particle in a magnetic field.
 
@@ -87,11 +87,11 @@ def omega_gyro(B=None, en=None, L=None, planet='Earth',  q=rbamlib.constants.q, 
     ----------
     B : float or ndarray, optional
         Magnetic field strength, in Gauss. Either B or L must be provided.
+    L : float or ndarray, optional
+        McIlwain L-shell parameter (dimensionless). Used to compute B if it is not provided.
     en : float or ndarray, optional
         Kinetic energy of the particle, in MeV. When provided, a relativistic correction via 
         the Lorentz factor is applied.
-    L : float or ndarray, optional
-        McIlwain L-shell parameter (dimensionless). Used to compute B if it is not provided.
     planet : str, optional, default = 'Earth'
         Name of the planet for which the magnetic field is calculated.
     q : float, optional
@@ -119,7 +119,7 @@ def omega_gyro(B=None, en=None, L=None, planet='Earth',  q=rbamlib.constants.q, 
     return 2 * np.pi * f_gyro(B=B, en=en, L=L, planet=planet, q=q, m=m)
 
 
-def T_gyro(B=None, en=None, L=None, planet='Earth',  q=rbamlib.constants.q, m=rbamlib.constants.me):
+def T_gyro(B=None, L=None, en=None, planet='Earth',  q=rbamlib.constants.q, m=rbamlib.constants.me):
     r"""
     Calculate the gyro period of a charged particle in a magnetic field.
 
@@ -127,11 +127,11 @@ def T_gyro(B=None, en=None, L=None, planet='Earth',  q=rbamlib.constants.q, m=rb
     ----------
     B : float or ndarray, optional
         Magnetic field strength, in Gauss. Either B or L must be provided.
+    L : float or ndarray, optional
+        McIlwain L-shell parameter (dimensionless). Used to compute B if it is not provided.
     en : float or ndarray, optional
         Kinetic energy of the particle, in MeV. When provided, a relativistic correction via 
         the Lorentz factor is applied.
-    L : float or ndarray, optional
-        McIlwain L-shell parameter (dimensionless). Used to compute B if it is not provided.
     planet : str, optional, default = 'Earth'
         Name of the planet for which the magnetic field is calculated.
     q : float, optional
