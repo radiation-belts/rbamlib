@@ -6,7 +6,6 @@ Electric field model functions
 
 Functions
 =========
-
 .. autofunction:: rbamlib.models.elec.VS1975
 
 Supporting Functions

@@ -1,8 +1,8 @@
-.. currentmodule:: rbamlib.models.dxx.emic
+.. currentmodule:: rbamlib.sim.dxx.emic
 
 Models of EMIC waves
 --------------------
-.. automodule:: rbamlib.models.dxx.emic
+.. automodule:: rbamlib.sim.dxx.emic
 
 Functions
 =========

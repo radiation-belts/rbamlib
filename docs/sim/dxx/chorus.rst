@@ -1,8 +1,8 @@
-.. currentmodule:: rbamlib.models.dxx.chorus
+.. currentmodule:: rbamlib.sim.dxx.chorus
 
 Models of chorus waves
 ----------------------
-.. automodule:: rbamlib.models.dxx.chorus
+.. automodule:: rbamlib.sim.dxx.chorus
 
 Functions
 =========

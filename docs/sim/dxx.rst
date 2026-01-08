@@ -1,8 +1,8 @@
-.. currentmodule:: rbamlib.models.dxx
+.. currentmodule:: rbamlib.sim.dxx
 
 Diffusion coefficient scaling models
 ------------------------------------
-.. automodule:: rbamlib.models.dxx
+.. automodule:: rbamlib.sim.dxx
 
 .. toctree::
    :maxdepth: 1

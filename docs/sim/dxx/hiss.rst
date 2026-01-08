@@ -1,8 +1,8 @@
-.. currentmodule:: rbamlib.models.dxx.hiss
+.. currentmodule:: rbamlib.sim.dxx.hiss
 
 Models of hiss waves
 --------------------
-.. automodule:: rbamlib.models.dxx.hiss
+.. automodule:: rbamlib.sim.dxx.hiss
 
 Functions
 =========

@@ -1,8 +1,8 @@
-.. currentmodule:: rbamlib.models.dxx.vlf
+.. currentmodule:: rbamlib.sim.dxx.vlf
 
 Models of anthropogenic VLF transmitters
 ----------------------------------------
-.. automodule:: rbamlib.models.dxx.vlf
+.. automodule:: rbamlib.sim.dxx.vlf
 
 Functions
 =========

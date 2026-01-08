@@ -7,4 +7,7 @@ Main Features:
     - Local diffusion coefficient interpolation [TBD]
     - Characteristics of the boundary and initial conditions [TBD]
     - Adiabatic transformation of boundary scaling factors [TBD]
+
+Packages:
+    - 'dxx' : Diffusion coefficient scaling models
 """

@@ -1,6 +1,6 @@
 import unittest
 from tests.helpers import TestHelpers
-from rbamlib.models.dxx.emic import D2017
+from rbamlib.sim.dxx.emic import D2017
 
 
 class TestEmic(unittest.TestCase, TestHelpers):

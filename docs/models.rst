@@ -15,7 +15,6 @@ Models
    models/mag
    models/elec
    models/dll
-   models/dxx
    models/tau
    models/pad
    models/ne
