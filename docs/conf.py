@@ -22,7 +22,7 @@ print(os.path.abspath(".."))
 print(os.path.abspath("."))
 
 project = 'rbamlib'
-copyright = '2024, Alexander Drozdov'
+copyright = '2024-2026'
 author = 'Alexander Drozdov'
 
 # -- General configuration ---------------------------------------------------
