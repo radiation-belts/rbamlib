@@ -1,6 +1,6 @@
 import unittest
 from tests.helpers import TestHelpers
-from rbamlib.models.dxx.hiss import S2011, Z2019, S2015
+from rbamlib.sim.dxx.hiss import S2011, Z2019, S2015
 
 
 class TestHiss(unittest.TestCase, TestHelpers):

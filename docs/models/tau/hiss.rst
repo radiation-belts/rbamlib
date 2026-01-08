@@ -2,7 +2,6 @@
 
 Lifetime models due to hiss waves
 ---------------------------------
-
 .. automodule:: rbamlib.models.tau.hiss
 
 Functions

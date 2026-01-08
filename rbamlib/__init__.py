@@ -17,6 +17,7 @@ from rbamlib import (
     conv,
     models,
     motion,
+    sim,
     utils,
     web,
     constants

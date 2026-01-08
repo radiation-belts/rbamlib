@@ -1,8 +1,8 @@
-.. currentmodule:: rbamlib.models.dxx.lightning
+.. currentmodule:: rbamlib.sim.dxx.lightning
 
 Models of lightning generated whistlers
 ---------------------------------------
-.. automodule:: rbamlib.models.dxx.lightning
+.. automodule:: rbamlib.sim.dxx.lightning
 
 Functions
 =========
