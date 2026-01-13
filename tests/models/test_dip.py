@@ -1,7 +1,7 @@
 import unittest
 import warnings
 import numpy as np
-from rbamlib.models.dip import B, B0, T, Y
+from rbamlib.models.dip import B, B0, T, Y, al_lc
 
 class TestDip(unittest.TestCase):
     def test_B_values(self):
@@ -89,7 +89,20 @@ class TestDip(unittest.TestCase):
         np.testing.assert_allclose(Y(0), 2 * T(0), rtol=1e-3,
                                    err_msg="Y(0) did not equal 2*T(0).")
 
- 
+    def test_al_lc_single_value(self):
+        """Single L-shell value returns correct angle (float)."""
+        res = al_lc(4.0)  # default planet='Earth'
+        self.assertIsInstance(res, float, "Result should be float for scalar input")
+        self.assertAlmostEqual(res, np.deg2rad(5.341843503512352), places=6,
+                               msg="Single value result mismatch")
+
+    def test_al_lc_array_values(self):
+        """Vectorized L-shell input returns correct ndarray of angles."""
+        res = al_lc(np.array([2.0, 3.0, 4.0, 6.0]))
+        self.assertIsInstance(res, np.ndarray, "Result should be ndarray for array input")
+        np.testing.assert_allclose(res, np.deg2rad(np.array([16.33008612,  8.40853781,  5.34184366,  2.85139895])),
+                                   rtol=0, atol=1e-6,
+                                   err_msg="Array values result mismatch")
 
 if __name__ == '__main__':
     unittest.main()
