@@ -10,3 +10,4 @@ Functions
 .. autofunction:: B0
 .. autofunction:: T
 .. autofunction:: Y
+.. autofunction:: al_lc
