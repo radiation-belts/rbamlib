@@ -18,7 +18,7 @@ def al_lc(L):
 
     Notes
     -----
-    **Deriviation** (based on chapter 3.4 of Roederer and Zhang (2016)[#]_)
+    **Deriviation** (based on chapter 3.4 of Roederer and Zhang (2016) [#]_)
 
     1) Magnetic moment :math:`\mu` conservation:
 

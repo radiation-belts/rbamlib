@@ -23,7 +23,7 @@ def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None):
     m : float, optional
         Particle mass, in grams. Default is electrons.
     al_lc : float or ndarray, optional
-        Equatorial loss-cone angle :math:`\alpha_{\rm LC}` (radians). If not
+        Equatorial loss-cone angle α_lc (radians). If not
         provided, it is computed with :func:`rbamlib.models.dip.al_lc`.
 
     Returns
@@ -35,10 +35,11 @@ def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None):
     -----
 
     The lifetime is calculates as quarter of the the bounce period:
+    
     .. math::
-        \tau_{lc} = \frac{T_{\text{bounce}}}{4},
+        \tau_{lc} = \frac{T_{bounce}}{4},
 
-    where :math:`T_{\text{bounce}}` is computed by :func:`rbamlib.motion.bounce.T_bounce`.
+    where :math:`T_{bounce}` is computed by :func:`rbamlib.motion.bounce.T_bounce`.
     This approximation follows Schulz and Lanzerotti (1974) [#]_ and accounts for relativistic effects.
 
 

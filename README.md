@@ -27,7 +27,7 @@ This design allows for direct function imports from the package, streamlining us
 For example, `pc2en` function from `conv` package is located in `conv/pc2en.py` file. To use it simply import it as follows:
 
 ```python
-import rmamlib.conv.pc2en
+import rbamlib.conv.pc2en
 ```
 
 The primary function that users should utilize is named after the file itself, ensuring intuitive access. If this main
