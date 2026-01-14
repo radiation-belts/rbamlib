@@ -113,6 +113,7 @@ def T(al):
 - **References**: When implementing functions based on specific research papers, include a citation in the **Reference** section, providing full bibliographic details. Use Sphinx directive ` [#]_ ` to define the reference number and `.. [#] ` directive to place the reference. Note, you can use multiple reference in the description of the function. 
 - **Aliases**: For aliases, use only a one line summary (see example in Naming Conventions section). Add See Also section with the original function.  
 - **`__init__.py`**: When describing the package or a sub-package, start with the name of the pacakge using `'`, explanation of its name and what it provides. Add the description and list of the **Main Features**. In the sub-package, include list of models using a short reference to the papers.   
+
 **Examples**
 
 Package:
