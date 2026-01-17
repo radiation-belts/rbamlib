@@ -3,7 +3,7 @@ import rbamlib.constants
 import rbamlib.models.dip as dip
 from rbamlib.motion.bounce import T_bounce
 
-def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None):
+def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None, nan_flag=False):
     r"""
     Calculate the characteristic lifetime (`tau_lc`) of a charged particle in a dipolar magnetic field.
     
@@ -25,11 +25,15 @@ def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None):
     al_lc : float or ndarray, optional
         Equatorial loss-cone angle α_lc (radians). If not
         provided, it is computed with :func:`rbamlib.models.dip.al_lc`.
+    nan_flag: boolean
+        If set to True the output will be `np.nan` outside of the loss cone. 
+        Otherwise the output is `np.inf`.
+
 
     Returns
     -------
     float or ndarray
-        Characteristic lifetime (`tau_lc`) in seconds. Returns NaN for al ≥ al_lc.
+        Characteristic lifetime (`tau_lc`) in seconds. Returns Inf (or NaN) for al ≥ al_lc.
 
     Notes
     -----
@@ -58,8 +62,12 @@ def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None):
     # Valid only for alpha strictly inside the loss cone
     inside = np.array(al) < np.array(al_lc_val)
 
-    # Return tau = T_bounce / 4 for valid inputs; NaN otherwise
-    tau = np.where(inside, T_bounce_seconds / 4.0, np.nan)
+    # Return tau = T_bounce / 4 for valid inputs; inf otherwise
+    if nan_flag:
+        tau = np.where(inside, T_bounce_seconds / 4.0, np.nan)
+    else:
+        tau = np.where(inside, T_bounce_seconds / 4.0, np.inf)
+
 
     # Preserve scalar type when inputs are scalar
     if np.isscalar(L) and np.isscalar(al) and np.isscalar(en) and np.isscalar(al_lc_val):
