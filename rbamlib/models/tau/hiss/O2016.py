@@ -1,15 +1,14 @@
 
 import numpy as np
 
-def O2016(phi, L, en, kp):
+def O2016(mlt, L, en, kp):
    r"""
    Calculates electron lifetime due to hiss waves following Orlova et al. (2016) [#]_ model.
 
    Parameters
    ----------
-   Phi : float or ndarray
-      Magnetic longitude :math:`\Phi` in radians. Used to compute 
-      :math:`{\rm MLT} = (12 \Phi/\pi + 12) \bmod 24`.
+   mlt : float or ndarray
+      Magnetic Local Time in hours.
    L : float or ndarray
       L-shell (McIlwain L), dimensionless. Valid range: :math:`1.5 \le L \le 5.5`.
       Inputs outside this range are clipped to the valid domain.
@@ -63,7 +62,7 @@ def O2016(phi, L, en, kp):
    # ----- Input preparation & clipping (broadcast-friendly) -----
    L = np.clip(np.asarray(L, dtype=float), 1.5, 5.5)
    en = np.clip(np.asarray(en, dtype=float), 1e-3, 10.0)
-   phi = np.asarray(phi, dtype=float)
+   mlt = np.asarray(mlt, dtype=float)
    kp = np.asarray(kp, dtype=float)
 
    # ----- Helper computations -----
@@ -71,10 +70,9 @@ def O2016(phi, L, en, kp):
    log_en = np.log10(en)
    f_L = 0.1328 * L**2 - 2.1463 * L + 3.7857
    valid = log_en >= f_L
-
-   # Magnetic Local Time (hours): MLT = (12 * P / pi + 12) % 24
+   
    # Compute MLT
-   MLT = (phi * 12.0 / np.pi + 12.0) % 24.0
+   MLT = np.mod(mlt, 24.0)
 
 
    # Average lifetime surface tau_ave(L, log10(E))

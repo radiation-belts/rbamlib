@@ -18,7 +18,7 @@ def S1998(theta, Bz, Pdyn):
     -------
     r : ndarray
         Distance to the magnetopause from the Earth's center in :math:`R_E`.
-        The result will be a 2D array of shape (len(Pdyn), len(Phi)).
+        The result will be a 2D array of shape (len(Pdyn), len(theta)).
 
     Notes
     -----

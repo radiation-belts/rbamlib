@@ -296,13 +296,13 @@ class TestNe(unittest.TestCase, TestHelpers):
 
     def test_D2006_equatorial_multiMLT(self):
         """Equatorial density for multiple MLT values."""
-        result = D2006(self.L[:, None], MLT=self.MLT[None, :], r=None)
+        result = D2006(self.L[:, None], mlt=self.MLT[None, :], r=None)
         assert_allclose(result, self.expected_equatorial_D2006, rtol=1e-3)
 
     def test_D2006_with_fieldline_extension(self):
         """Check D2006 + D2002 field-aligned extension (r=L → same as equatorial)."""
         # Broadcast L and MLT to grid
-        result = D2006(self.L[:, None], MLT=self.MLT[None, :], r=self.L[:, None])
+        result = D2006(self.L[:, None], mlt=self.MLT[None, :], r=self.L[:, None])
         assert_allclose(result, self.expected_equatorial_D2006, rtol=1e-3)
 
 if __name__ == '__main__':
