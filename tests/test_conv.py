@@ -2,6 +2,7 @@ import unittest
 import numpy as np
 from rbamlib.conv import en2pc, pc2en, Jcmu2K, Kmu2Jc, mural2pc, mu2pc, pcral2mu, pc2mu, mural2en, mu2en, enral2mu, en2mu
 from rbamlib.conv import Lal2K, LK2al
+from rbamlib.conv import mlt2phi, phi2mlt
 #TODO: en2gamma
 
 class TestConv(unittest.TestCase):
@@ -288,6 +289,21 @@ class TestConv(unittest.TestCase):
     # TODO: Add roundtrip tests for Lal2K/LK2al
 
     # TODO: Add tests for coverage cases of LK2al
+
+    def test_mlt2phi(self):
+        self.assertEqual(mlt2phi(12.0), 0.0)
+        self.assertAlmostEqual(mlt2phi(24.0), np.pi, places=15)
+        self.assertAlmostEqual(mlt2phi(0.0), np.pi, places=15)
+        self.assertAlmostEqual(mlt2phi(18.0), np.pi/2, places=15)
+        self.assertAlmostEqual(mlt2phi(6.0), 3*np.pi/2, places=15)
+
+    def test_phi2mlt(self):
+        self.assertEqual(phi2mlt(0.0), 12.0)
+        self.assertEqual(phi2mlt(np.pi/2), 18.0)
+        self.assertEqual(phi2mlt(np.pi), 0.0)
+        self.assertEqual(phi2mlt(3*np.pi/2), 6.0)
+
+
 
 if __name__ == '__main__':
     unittest.main()
