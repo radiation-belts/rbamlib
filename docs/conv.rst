@@ -30,6 +30,11 @@ Functions
 
 .. autofunction:: en2gamma
 
+.. autofunction:: phi2mlt
+
+.. autofunction:: mlt2phi
+
+
 Aliases
 =======
 

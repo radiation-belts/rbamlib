@@ -27,7 +27,8 @@ Vsw     Solar wind velocity array, [km/sec]
 ne      Electron density, [cm^-3].
 T       Period, [seconds]
 f       Oscillation frequency, [Hz]
-phi     Azimuthal (longitude) angle [radians] (phi=0 is noon)
+phi     Magnetic local time angle [radians] (phi=0 is noon)
+mlt     Magnetic Local Time [hours] (mlt=12 is noon)
 mlat    Magnetic latitude, northwards from the equator [rad]
 q       Particle charge, [statcoulombs] (SGS units)
 m       Particle mass, [grams].
