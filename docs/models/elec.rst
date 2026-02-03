@@ -4,8 +4,9 @@ Electric field model functions
 ------------------------------
 .. automodule:: rbamlib.models.elec
 
-Functions
-=========
+.. rubric:: Functions
+   :heading-level: 2
+
 .. autofunction:: rbamlib.models.elec.VS1975
 
 Supporting Functions

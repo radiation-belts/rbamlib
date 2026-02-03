@@ -9,7 +9,7 @@ def download_unzip(url, target_folder=None, filename_in_zip=None):
     Download a zip file and extract files from it.
 
     Utility for downloading model data files.
-    Used by models that require external data (exception to the rule).
+    Used by models that require external data.
 
     Parameters
     ----------
@@ -34,10 +34,9 @@ def download_unzip(url, target_folder=None, filename_in_zip=None):
 
     >>> from rbamlib.web import download_unzip
     >>> file_path = download_unzip(
-    ...     'https://example.com/data.zip',
+    ...     url='https://example.com/data.zip',
     ...     target_folder='./data',
-    ...     filename_in_zip='model_data.mat'
-    ... )
+    ...     filename_in_zip='model_data.mat')
 
     Extract all files to current directory:
 
@@ -47,8 +46,7 @@ def download_unzip(url, target_folder=None, filename_in_zip=None):
 
     >>> file_paths = download_unzip(
     ...     'https://example.com/data.zip',
-    ...     target_folder='./output'
-    ... )
+    ...     target_folder='./output')
     """
     # Use current directory if target_folder not provided
     if target_folder is None:

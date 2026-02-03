@@ -4,8 +4,8 @@ Particle motion
 ---------------
 .. automodule:: rbamlib.motion
 
-Functions
-=========
+.. rubric:: Functions
+   :heading-level: 2
 
 .. autofunction:: f_gyro
 .. autofunction:: omega_gyro

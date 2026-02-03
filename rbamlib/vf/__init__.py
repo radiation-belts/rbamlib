@@ -1,5 +1,11 @@
 """
 The `vf` (Various Functions) package us been renamed to `utils`.
+
+Main Features:
+- `idx`: Get the index of val from array arr
+- `parse_datetime`: Parses an input from various formats into a datetime
+- `storm_idx`: Identify storms in Dst based
+- `fixfill`: Fix invalid values in array
 """
 
 import warnings

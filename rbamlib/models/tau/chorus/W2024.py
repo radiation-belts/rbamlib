@@ -26,20 +26,20 @@ def W2024(L, en, kp, mlt, method='albert', data_file=None, data_folder=None, aut
         Kinetic energy (MeV). Valid range: 0.001 ≤ en ≤ 2.0.
     kp : float or ndarray
         Kp index (dimensionless). Valid range: 1 ≤ Kp ≤ 6.
-        **Warning**: Model is valid only for Kp ≤ 6. Use caution for Kp > 6.
+            *Warning*: Model is valid only for Kp ≤ 6. Use caution for Kp > 6.
     mlt : float or ndarray
         Magnetic local time in hours (0-24).
     method : str, optional
         Lifetime calculation method:
-        - 'albert' (default): Albert & Shprits (2009)
-        - 'lc': Loss cone method (Shprits et al., 2006)
+            - `albert` (default): Albert & Shprits (2009)
+            - `lc`: Loss cone method (Shprits et al., 2006)
     data_file : str, optional
         Path to data file (absolute, relative, or filename).
-        Default: '2022_002_Wang-et-al_life_time_all_Kp_MLT.mat'
+            Default: `2022_002_Wang-et-al_life_time_all_Kp_MLT.mat`
     data_folder : str, optional
         Folder to search for data file. Default: current working directory.
     auto_download : bool, default=False
-        If True, automatically download the data file from GFZ Data Services if not found.
+        If True, automatically download the data file from GFZ Data Services if data file not found.
 
     Returns
     -------
@@ -53,28 +53,13 @@ def W2024(L, en, kp, mlt, method='albert', data_file=None, data_folder=None, aut
     This model requires: ``2022_002_Wang-et-al_life_time_all_Kp_MLT.mat`` (~16 MB)
 
     Download from:
-    - DOI: https://doi.org/10.5880/GFZ.2.7.2022.002
-    - Direct: https://datapub.gfz.de/download/10.5880.GFZ.2.7.2022.002fwdfs/2022_002_Wang-et-al_Data.zip
+        - DOI: https://doi.org/10.5880/GFZ.2.7.2022.002
+        - Direct: https://datapub.gfz.de/download/10.5880.GFZ.2.7.2022.002fwdfs/2022_002_Wang-et-al_Data.zip
 
     File search order:
-    1. If ``data_file`` provided → try opening
-    2. If not found → search in ``data_folder`` (default: current directory)
-    3. If ``auto_download=True`` → download and extract to data_folder
-
-    **Model Description:**
-
-    Uses bounce-averaged quasi-linear diffusion coefficients from Wang et al. (2019)
-    chorus wave model. The model performs nearest neighbor lookup in the precomputed
-    database. Two methods available:
-
-    - 'albert': Albert & Shprits (2009) equation
-    - 'lc': Loss cone method (Shprits et al., 2006)
-
-    **Valid Ranges:**
-    - L: 3 to 7
-    - Energy: 0.001 to 2 MeV
-    - Kp: 1 to 6
-    - MLT: 0 to 23 hours
+        1. If ``data_file`` provided → try opening
+        2. If not found → search in ``data_folder`` (default: current directory)
+        3. If ``auto_download=True`` → download and extract to data_folder
 
     Examples
     --------

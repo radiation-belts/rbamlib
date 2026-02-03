@@ -4,8 +4,8 @@ Pitch-angle distribution models
 -------------------------------
 .. automodule:: rbamlib.models.pad
 
-Functions
-=========
+.. rubric:: Functions
+   :heading-level: 2
 
 .. # Added by generate_rst_files
 

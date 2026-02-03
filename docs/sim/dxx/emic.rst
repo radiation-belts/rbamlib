@@ -4,6 +4,7 @@ Models of EMIC waves
 --------------------
 .. automodule:: rbamlib.sim.dxx.emic
 
-Functions
-=========
+.. rubric:: Functions
+   :heading-level: 2
+
 .. autofunction:: D2017

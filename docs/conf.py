@@ -285,8 +285,8 @@ def write_rst_file(rst_filename, module_name, imported_functions, dirs, root_pat
 
         # Document each function in the module using autofunction directive
         if imported_functions:
-            rst_file.write("Functions\n")
-            rst_file.write(f"{'=' * len('Functions')}\n\n")
+            rst_file.write(".. rubric:: Functions\n")
+            rst_file.write("   :heading-level: 2\n\n")
             for f in imported_functions:
                 rst_file.write(f".. autofunction:: {module_name}.{f}\n")
 

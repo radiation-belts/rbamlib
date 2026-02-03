@@ -9,8 +9,9 @@ Utilities (Various functions)
 -----------------------------
 .. automodule:: rbamlib.utils
 
-Functions
-=========
+.. rubric:: Functions
+   :heading-level: 2
+
 .. autofunction:: idx
 .. autofunction:: parse_datetime
 .. autofunction:: storm_idx

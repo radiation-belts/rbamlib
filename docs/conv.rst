@@ -5,8 +5,8 @@ Conversion
 
 .. automodule:: rbamlib.conv
 
-Functions
-=========
+.. rubric::  Functions
+    :heading-level: 2
 
 .. autofunction:: en2pc
 
