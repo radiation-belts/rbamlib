@@ -3,7 +3,7 @@ import numpy as np
 from rbamlib.conv import en2pc, pc2en, Jcmu2K, Kmu2Jc, mural2pc, mu2pc, pcral2mu, pc2mu, mural2en, mu2en, enral2mu, en2mu
 from rbamlib.conv import Lal2K, LK2al
 from rbamlib.conv import mlt2phi, phi2mlt
-#TODO: en2gamma
+from rbamlib.conv import en2gamma
 
 class TestConv(unittest.TestCase):
 
@@ -69,6 +69,9 @@ class TestConv(unittest.TestCase):
         self.res_al_1d = np.array([1.1094, 0.3570, 0.2171])
         self.res_al_2d = np.array([[1.4164, 0.9527], [0.3444, 0.1889]])
 
+        self.res_gamma_float = 1.1957
+        self.res_gamma_1d = np.array([1.1957, 2.9570, 4.9139])
+
 
     def assertSingleValue(self, function, input, expected):
         """Assert function works for single float values"""
@@ -126,6 +129,13 @@ class TestConv(unittest.TestCase):
         res1 = func1(input1, input2)
         res2 = func2(res1, input2)
         self.assertAlmostEqual(input1, res2, 9, "Round trip conversion failed")
+
+    # Tests for en2gamma
+    def test_en2gamma_single_value(self):
+        self.assertSingleValue(en2gamma, self.in_float, self.res_gamma_float)
+
+    def test_en2gamma_1D_array(self):
+        self.assert1DArray(en2gamma, self.in_1d, self.res_gamma_1d)
 
     # Tests for en2pc
     def test_en2pc_single_value(self):
