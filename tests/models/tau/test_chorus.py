@@ -1,5 +1,6 @@
 import unittest
 import numpy as np
+import warnings
 from tests.helpers import TestHelpers
 from rbamlib.models.tau.chorus import W2024, G2012
 from rbamlib.models.tau.chorus.G2012 import tau_day_1_10keV, tau_day_10_100keV, tau_day_100_400keV, tau_day_400_2000keV, tau_night_1_10keV, tau_night_10_100keV
@@ -111,8 +112,57 @@ class TestChorusG2012(unittest.TestCase, TestHelpers):
 
 
 
-    def test_W2024(self):
-        self.AssertBlank(W2024)
+
+
+class TestChorusW2024(unittest.TestCase, TestHelpers):
+    """Unit tests for Wang et al. (2024) chorus lifetime model (W2024)."""
+
+    def test_scalar_inputs(self):
+        """Test scalar inputs with manually provided data file (skip if not available)"""
+        # This test requires the data file to be present
+        # Skip if file not found
+        try:
+            tau = W2024(L=5.0, en=1.0, kp=3.0, mlt=12.0)
+            self.assertTrue(np.isscalar(tau))
+            self.assertTrue(np.isfinite(tau) and tau > 0)
+        except FileNotFoundError:
+            self.skipTest("Data file not available")
+
+    def test_array_inputs(self):
+        """Test array broadcasting"""
+        try:
+            L = np.array([4.0, 5.0, 6.0])
+            tau = W2024(L, en=1.0, kp=3.0, mlt=12.0)
+            self.assertEqual(tau.shape, L.shape)
+            self.assertTrue(np.all(np.isfinite(tau) & (tau > 0)))
+        except FileNotFoundError:
+            self.skipTest("Data file not available")
+
+    def test_method_parameter(self):
+        """Test different methods"""
+        try:
+            tau_albert = W2024(L=5.0, en=1.0, kp=3.0, mlt=12.0, method='albert')
+            tau_lc = W2024(L=5.0, en=1.0, kp=3.0, mlt=12.0, method='lc')
+            # Methods should give different but similar results
+            self.assertNotEqual(tau_albert, tau_lc)
+            self.assertTrue(abs(tau_albert - tau_lc) / tau_albert < 2.0)  # Within factor of 2
+        except FileNotFoundError:
+            self.skipTest("Data file not available")
+
+    def test_invalid_method(self):
+        """Test invalid method raises error"""
+        with self.assertRaises(ValueError):
+            W2024(L=5.0, en=1.0, kp=3.0, mlt=12.0, method='invalid')
+
+    def test_kp_warning(self):
+        """Test Kp > 6 issues warning"""
+        try:
+            with warnings.catch_warnings(record=True) as w:
+                warnings.simplefilter("always")
+                W2024(L=5.0, en=1.0, kp=7.0, mlt=12.0)
+                self.assertTrue(any("Kp > 6" in str(warning.message) for warning in w))
+        except FileNotFoundError:
+            self.skipTest("Data file not available")
 
 
 if __name__ == '__main__':

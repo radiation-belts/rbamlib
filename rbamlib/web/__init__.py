@@ -7,6 +7,8 @@ from various providers, such as OMNIWeb.
 Interfaces:
 -----------
 - `omni`: Retrieval of OMNIWeb data.
+- `download_unzip`: Utility for downloading and extracting model data files.
 """
 
 from .omni import omni
+from .download_unzip import download_unzip
