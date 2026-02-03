@@ -330,7 +330,35 @@ class TestConv(unittest.TestCase):
         K2 = Lal2K(L, al)
         self.assertAlmostEqual(K, K2, 9, "Round trip conversion failed")
 
-    # TODO: Add tests for coverage cases of LK2al
+    def test_LK2al_edge_cases(self):
+        """Test LK2al function with edge cases: K=0, large K, boundary L values"""
+        # Test K=0 should return π/2 (equatorial pitch angle)
+        al_K0_L1 = LK2al(1.0, K=0)
+        self.assertAlmostEqual(al_K0_L1, np.pi/2, places=9, msg="K=0 at L=1 should return π/2")
+
+        al_K0_L4 = LK2al(4.0, K=0)
+        self.assertAlmostEqual(al_K0_L4, np.pi/2, places=9, msg="K=0 at L=4 should return π/2")
+
+        al_K0_L10 = LK2al(10.0, K=0)
+        self.assertAlmostEqual(al_K0_L10, np.pi/2, places=9, msg="K=0 at L=10 should return π/2")
+
+        # Test boundary L values with non-zero K
+        # L=1 (close to Earth)
+        al_L1 = LK2al(1.0, K=0.1)
+        self.assertIsInstance(al_L1, float, "Result should be a float")
+        self.assertGreater(al_L1, 0, "Pitch angle should be positive")
+        self.assertLess(al_L1, np.pi/2, "Pitch angle should be less than π/2 for positive K")
+
+        # L=10 (outer radiation belt)
+        al_L10 = LK2al(10.0, K=0.1)
+        self.assertIsInstance(al_L10, float, "Result should be a float")
+        self.assertGreater(al_L10, 0, "Pitch angle should be positive")
+        self.assertLess(al_L10, np.pi/2, "Pitch angle should be less than π/2 for positive K")
+
+        # Test with large K values (should give smaller pitch angles)
+        al_large_K = LK2al(4.0, K=1.0)
+        al_small_K = LK2al(4.0, K=0.01)
+        self.assertLess(al_large_K, al_small_K, "Larger K should result in smaller pitch angle")
 
     def test_mlt2phi(self):
         self.assertEqual(mlt2phi(12.0), 0.0)
