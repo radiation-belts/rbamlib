@@ -4,7 +4,7 @@ from unittest.mock import patch
 import numpy as np
 import os
 
-from rbamlib.web import omni
+from rbamlib.web import omni, download_unzip
 
 if 'RUN_LIVE_TESTS' not in os.environ:
     os.environ['RUN_LIVE_TESTS'] = 'False'
@@ -199,6 +199,107 @@ YYYY DOY HR MN    1     2
             # Verify second call starts from hour 1 (skips hour 0)
             np.testing.assert_array_equal(ae2[:4], np.array([354., 304., 288., 297.]), err_msg="Second call AE values incorrect")
             np.testing.assert_array_equal(symh2[:4], np.array([-45., -43., -41., -40.]), err_msg="Second call SYM_H values incorrect")
+
+    def test_download_unzip_single_file(self):
+        """Test download_unzip extracting a single file from a zip."""
+        with patch('urllib.request.urlretrieve') as mock_retrieve, \
+             patch('zipfile.ZipFile') as mock_zipfile, \
+             patch('tempfile.NamedTemporaryFile') as mock_tempfile, \
+             patch('os.makedirs'), \
+             patch('os.rename'), \
+             patch('os.unlink'):
+
+            # Setup mocks
+            mock_temp = mock_tempfile.return_value.__enter__.return_value
+            mock_temp.name = '/tmp/test.zip'
+
+            mock_zip = mock_zipfile.return_value.__enter__.return_value
+            mock_zip.namelist.return_value = ['data/test_file.mat']
+            mock_zip.extract.return_value = '/target/data/test_file.mat'
+
+            # Call function
+            result = download_unzip(
+                'https://example.com/test.zip',
+                target_folder='/target',
+                filename_in_zip='test_file.mat'
+            )
+
+            # Verify
+            self.assertIsInstance(result, str)
+            self.assertTrue(result.endswith('test_file.mat'))
+
+    def test_download_unzip_all_files(self):
+        """Test download_unzip extracting all files from a zip."""
+        with patch('urllib.request.urlretrieve') as mock_retrieve, \
+             patch('zipfile.ZipFile') as mock_zipfile, \
+             patch('tempfile.NamedTemporaryFile') as mock_tempfile, \
+             patch('os.makedirs'), \
+             patch('os.unlink'):
+
+            # Setup mocks
+            mock_temp = mock_tempfile.return_value.__enter__.return_value
+            mock_temp.name = '/tmp/test.zip'
+
+            mock_zip = mock_zipfile.return_value.__enter__.return_value
+            mock_zip.namelist.return_value = [
+                'file1.txt',
+                'subdir/',
+                'subdir/file2.dat',
+                'file3.csv'
+            ]
+
+            # Call function with no filename_in_zip
+            result = download_unzip(
+                'https://example.com/test.zip',
+                target_folder='/target'
+            )
+
+            # Verify
+            self.assertIsInstance(result, list)
+            self.assertEqual(len(result), 3)  # 3 files, directory excluded
+            mock_zip.extractall.assert_called_once_with('/target')
+
+    def test_download_unzip_default_folder(self):
+        """Test download_unzip with default target folder (cwd)."""
+        with patch('urllib.request.urlretrieve'), \
+             patch('zipfile.ZipFile') as mock_zipfile, \
+             patch('tempfile.NamedTemporaryFile') as mock_tempfile, \
+             patch('os.makedirs'), \
+             patch('os.getcwd', return_value='/current/dir'), \
+             patch('os.unlink'):
+
+            mock_temp = mock_tempfile.return_value.__enter__.return_value
+            mock_temp.name = '/tmp/test.zip'
+
+            mock_zip = mock_zipfile.return_value.__enter__.return_value
+            mock_zip.namelist.return_value = ['file.txt']
+
+            # Call without target_folder
+            result = download_unzip('https://example.com/test.zip')
+
+            # Verify extractall was called with cwd
+            self.assertIsInstance(result, list)
+            mock_zip.extractall.assert_called_once_with('/current/dir')
+
+    def test_download_unzip_url_passed_correctly(self):
+        """Test that download_unzip passes the correct URL to urlretrieve."""
+        with patch('urllib.request.urlretrieve') as mock_retrieve, \
+             patch('zipfile.ZipFile') as mock_zipfile, \
+             patch('tempfile.NamedTemporaryFile') as mock_tempfile, \
+             patch('os.makedirs'), \
+             patch('os.unlink'):
+
+            mock_temp = mock_tempfile.return_value.__enter__.return_value
+            mock_temp.name = '/tmp/test.zip'
+
+            mock_zip = mock_zipfile.return_value.__enter__.return_value
+            mock_zip.namelist.return_value = ['file.txt']
+
+            test_url = 'https://example.com/my_data.zip'
+            download_unzip(test_url, target_folder='/target')
+
+            # Verify urlretrieve was called with the correct URL
+            mock_retrieve.assert_called_once_with(test_url, '/tmp/test.zip')
 
 if __name__ == '__main__':
     unittest.main()
