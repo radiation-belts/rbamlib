@@ -8,19 +8,25 @@ from rbamlib.conv import en2gamma
 class TestConv(unittest.TestCase):
 
     def setUp(self):
-        # Input values
-        self.in_float = 0.1
-        self.in_float_2 = 100.
-        self.in_float_3 = 4.
-        self.in_float_4 = np.pi/4
+        # Input values - generic (context-dependent: en, pc, K, etc.)
+        self.in_float = 0.1  # Generic value (en in MeV, pc in MeV/c, K in G^0.5*Re, etc.)
         self.in_1d = np.array([0.1, 1., 2.])
-        self.in_1d_2 = np.array([100., 1000., 2000.])
-        self.in_1d_3 = np.array([1., 4., 4.5])
-        self.in_1d_4 = np.array([np.pi/3, np.pi/4, np.pi/6])
         self.in_2d = np.array([[0.01, 0.1], [1., 2.]])
-        self.in_2d_2 = np.array([[10., 100.], [1000., 2000.]])
-        self.in_2d_3 = np.array([[1., 4.], [4.5, 6.6]])
-        self.in_2d_4 = np.array([[np.pi/3, np.pi/4], [np.pi/6, np.pi/6]])
+
+        # Input values - mu (first adiabatic invariant)
+        self.in_mu_float = 100.  # Mu (μ) in MeV/G
+        self.in_mu_1d = np.array([100., 1000., 2000.])
+        self.in_mu_2d = np.array([[10., 100.], [1000., 2000.]])
+
+        # Input values - L-shell / radius
+        self.in_L_float = 4.  # L-shell or radius (r) in Earth radii (Re)
+        self.in_L_1d = np.array([1., 4., 4.5])
+        self.in_L_2d = np.array([[1., 4.], [4.5, 6.6]])
+
+        # Input values - pitch angle
+        self.in_al_float = np.pi/4  # Pitch angle (α) in radians
+        self.in_al_1d = np.array([np.pi/3, np.pi/4, np.pi/6])
+        self.in_al_2d = np.array([[np.pi/3, np.pi/4], [np.pi/6, np.pi/6]])
 
         # Expected values
         self.res_pc_float = 0.3350
@@ -165,138 +171,164 @@ class TestConv(unittest.TestCase):
 
     # Tests for Jc2K
     def test_Jcmu2K_single_values(self):
-        self.assertTwoSingleValues(Jcmu2K, self.in_float, self.in_float_2, self.res_K_float)
+        self.assertTwoSingleValues(Jcmu2K, self.in_float, self.in_mu_float, self.res_K_float)
 
     def test_Jcmu2K_1D_arrays(self):
-        self.assertTwo1DArrays(Jcmu2K, self.in_1d, self.in_1d_2, self.res_K_1d)
+        self.assertTwo1DArrays(Jcmu2K, self.in_1d, self.in_mu_1d, self.res_K_1d)
 
     def test_Jcmu2K_2D_arrays(self):
-        self.assertTwo2DArrays(Jcmu2K, self.in_2d, self.in_2d_2, self.res_K_2d)
+        self.assertTwo2DArrays(Jcmu2K, self.in_2d, self.in_mu_2d, self.res_K_2d)
 
     # Tests for K2Jc
     def test_Kmu2Jc_single_values(self):
-        self.assertTwoSingleValues(Kmu2Jc, self.in_float, self.in_float_2, self.res_Jc_float)
+        self.assertTwoSingleValues(Kmu2Jc, self.in_float, self.in_mu_float, self.res_Jc_float)
 
     def test_Kmu2Jc_1D_arrays(self):
-        self.assertTwo1DArrays(Kmu2Jc, self.in_1d, self.in_1d_2, self.res_Jc_1d)
+        self.assertTwo1DArrays(Kmu2Jc, self.in_1d, self.in_mu_1d, self.res_Jc_1d)
 
     def test_Kmu2Jc_2D_arrays(self):
-        self.assertTwo2DArrays(Kmu2Jc, self.in_2d, self.in_2d_2, self.res_Jc_2d)
+        self.assertTwo2DArrays(Kmu2Jc, self.in_2d, self.in_mu_2d, self.res_Jc_2d)
 
     def test_round_trip_Jcmu2K_Kmu2Jc(self):
-        self.assertRoundTrip2(Jcmu2K, Kmu2Jc, self.in_float, self.in_float_2)
+        self.assertRoundTrip2(Jcmu2K, Kmu2Jc, self.in_float, self.in_mu_float)
 
     def test_round_trip_Kmu2Jc_Jcmu2K(self):
-        self.assertRoundTrip2(Kmu2Jc, Jcmu2K, self.in_float, self.in_float_2)
+        self.assertRoundTrip2(Kmu2Jc, Jcmu2K, self.in_float, self.in_mu_float)
 
     # Tests for mural2pc and alias mu2pc
     def test_mural2pc_single_value(self):
-        self.assertTwoSingleValues(mural2pc, self.in_float_2, self.in_float_3, self.res_pc_float_2)
+        self.assertTwoSingleValues(mural2pc, self.in_mu_float, self.in_L_float, self.res_pc_float_2)
 
     def test_mu2pc_single_value(self):
         """ Testing alias"""
-        self.assertTwoSingleValues(mu2pc, self.in_float_2, self.in_float_3, self.res_pc_float_2)
+        self.assertTwoSingleValues(mu2pc, self.in_mu_float, self.in_L_float, self.res_pc_float_2)
 
     def test_mural2pc_1D_arrays(self):
-        self.assertTwo1DArrays(mural2pc, self.in_1d_2, self.in_1d_3, self.res_pc_1d_2)
+        self.assertTwo1DArrays(mural2pc, self.in_mu_1d, self.in_L_1d, self.res_pc_1d_2)
 
     def test_mural2pc_2D_arrays(self):
-        self.assertTwo2DArrays(mural2pc, self.in_2d_2, self.in_2d_3, self.res_pc_2d_2)
+        self.assertTwo2DArrays(mural2pc, self.in_mu_2d, self.in_L_2d, self.res_pc_2d_2)
 
     def test_mural2pc_al_single_value(self):
         """ Testing non-default alpha"""
-        self.assertThreeSingleValues(mural2pc, self.in_float_2, self.in_float_3, self.in_float, self.res_pc_float_3)
+        self.assertThreeSingleValues(mural2pc, self.in_mu_float, self.in_L_float, self.in_float, self.res_pc_float_3)
 
     # Tests for pcral2mu and alias pc2mu
     def test_pcral2mu_single_value(self):
-        self.assertTwoSingleValues(pcral2mu, self.in_float, self.in_float_3, self.res_mu_float)
+        self.assertTwoSingleValues(pcral2mu, self.in_float, self.in_L_float, self.res_mu_float)
 
     def test_pc2mu_single_value(self):
         """ Testing alias"""
-        self.assertTwoSingleValues(pc2mu, self.in_float, self.in_float_3, self.res_mu_float)
+        self.assertTwoSingleValues(pc2mu, self.in_float, self.in_L_float, self.res_mu_float)
 
     def test_pcral2mu_1D_arrays(self):
         """ Testing results large number, hence changed to decimal=1 precision"""
-        self.assertTwo1DArrays(pcral2mu, self.in_1d, self.in_1d_3, self.res_mu_1d_2, decimal=1)
+        self.assertTwo1DArrays(pcral2mu, self.in_1d, self.in_L_1d, self.res_mu_1d_2, decimal=1)
 
     def test_pcral2mu_2D_arrays(self):
         """ Testing results large number, hence changed to decimal=1 precision"""
-        self.assertTwo2DArrays(pcral2mu, self.in_2d, self.in_2d_3, self.res_mu_2d_2, decimal=1)
+        self.assertTwo2DArrays(pcral2mu, self.in_2d, self.in_L_2d, self.res_mu_2d_2, decimal=1)
 
     def test_pcral2mu_al_single_value(self):
         """ Testing non-default alpha"""
-        self.assertThreeSingleValues(pcral2mu, self.in_float, self.in_float_3, self.in_float, self.res_mu_float_2)
+        self.assertThreeSingleValues(pcral2mu, self.in_float, self.in_L_float, self.in_float, self.res_mu_float_2)
 
     # Tests for mural2en and alias mu2en
     def test_mural2en_single_value(self):
-        self.assertTwoSingleValues(mural2en, self.in_float_2, self.in_float_3, self.res_en_float_2)
+        self.assertTwoSingleValues(mural2en, self.in_mu_float, self.in_L_float, self.res_en_float_2)
 
     def test_mu2en_single_value(self):
         """ Testing alias"""
-        self.assertTwoSingleValues(mu2en, self.in_float_2, self.in_float_3, self.res_en_float_2)
+        self.assertTwoSingleValues(mu2en, self.in_mu_float, self.in_L_float, self.res_en_float_2)
 
     def test_mural2en_1D_arrays(self):
-        self.assertTwo1DArrays(mural2en, self.in_1d_2, self.in_1d_3, self.res_en_1d_2)
+        self.assertTwo1DArrays(mural2en, self.in_mu_1d, self.in_L_1d, self.res_en_1d_2)
 
     def test_mural2en_2D_arrays(self):
-        self.assertTwo2DArrays(mural2en, self.in_2d_2, self.in_2d_3, self.res_en_2d_2)
+        self.assertTwo2DArrays(mural2en, self.in_mu_2d, self.in_L_2d, self.res_en_2d_2)
 
     def test_mural2en_al_single_value(self):
         """ Testing non-default alpha"""
-        self.assertThreeSingleValues(mural2en, self.in_float_2, self.in_float_3, self.in_float, self.res_en_float_3)
+        self.assertThreeSingleValues(mural2en, self.in_mu_float, self.in_L_float, self.in_float, self.res_en_float_3)
 
     # Tests for enral2mu and alias en2mu
     def test_enral2mu_single_value(self):
-        self.assertTwoSingleValues(enral2mu, self.in_float, self.in_float_3, self.res_mu_float_3)
+        self.assertTwoSingleValues(enral2mu, self.in_float, self.in_L_float, self.res_mu_float_3)
 
     def test_en2mu_single_value(self):
         """ Testing alias"""
-        self.assertTwoSingleValues(en2mu, self.in_float, self.in_float_3, self.res_mu_float_3)
+        self.assertTwoSingleValues(en2mu, self.in_float, self.in_L_float, self.res_mu_float_3)
 
     def test_enral2mu_1D_arrays(self):
         """ Testing results large number, hence changed to decimal=1 precision"""
-        self.assertTwo1DArrays(enral2mu, self.in_1d, self.in_1d_3, self.res_mu_1d_3, decimal=1)
+        self.assertTwo1DArrays(enral2mu, self.in_1d, self.in_L_1d, self.res_mu_1d_3, decimal=1)
 
     def test_enral2mu_2D_arrays(self):
         """ Testing results large number, hence changed to decimal=1 precision"""
-        self.assertTwo2DArrays(enral2mu, self.in_2d, self.in_2d_3, self.res_mu_2d_3, decimal=1)
+        self.assertTwo2DArrays(enral2mu, self.in_2d, self.in_L_2d, self.res_mu_2d_3, decimal=1)
 
     def test_enral2mu_al_single_value(self):
         """ Testing non-default alpha"""
-        self.assertThreeSingleValues(enral2mu, self.in_float, self.in_float_3, self.in_float, self.res_mu_float_4)
+        self.assertThreeSingleValues(enral2mu, self.in_float, self.in_L_float, self.in_float, self.res_mu_float_4)
 
-    # TODO: Add roundtrip tests for mu2pc/pc2mu mu2en/en2mu
+    def test_round_trip_mu2pc_pc2mu(self):
+        self.assertRoundTrip2(mu2pc, pc2mu, self.in_mu_float, self.in_L_float)
+
+    def test_round_trip_pc2mu_mu2pc(self):
+        self.assertRoundTrip2(pc2mu, mu2pc, self.in_float, self.in_L_float)
+
+    def test_round_trip_mu2en_en2mu(self):
+        self.assertRoundTrip2(mu2en, en2mu, self.in_mu_float, self.in_L_float)
+
+    def test_round_trip_en2mu_mu2en(self):
+        self.assertRoundTrip2(en2mu, mu2en, self.in_float, self.in_L_float)
 
     # Tests for Lal2K
     def test_Lal2K_single_value(self):
-        self.assertSingleValue(Lal2K, self.in_float_3, 0)
+        self.assertSingleValue(Lal2K, self.in_L_float, 0)
 
     def test_Lal2K_1D_arrays(self):
-        self.assert1DArray(Lal2K, self.in_1d_3, np.array([0, 0, 0]))
+        self.assert1DArray(Lal2K, self.in_L_1d, np.array([0, 0, 0]))
 
     def test_Lal2K_al_single_value(self):
-        self.assertTwoSingleValues(Lal2K, self.in_float_3, self.in_float_4, self.res_K_float_2)
+        self.assertTwoSingleValues(Lal2K, self.in_L_float, self.in_al_float, self.res_K_float_2)
 
     def test_Lal2K_al_1D_arrays(self):
-        self.assertTwo1DArrays(Lal2K, self.in_1d_3, self.in_1d_4, self.res_K_1d_2)
+        self.assertTwo1DArrays(Lal2K, self.in_L_1d, self.in_al_1d, self.res_K_1d_2)
 
     def test_Lal2K_al_2D_arrays(self):
-        self.assertTwo2DArrays(Lal2K, self.in_2d_3, self.in_2d_4, self.res_K_2d_2)
+        self.assertTwo2DArrays(Lal2K, self.in_L_2d, self.in_al_2d, self.res_K_2d_2)
 
     # Tests for LK2al
     def test_LK2al_single_value(self):
-        self.assertSingleValue(LK2al, self.in_float_3, np.pi/2)
+        self.assertSingleValue(LK2al, self.in_L_float, np.pi/2)
 
     def test_LK2al_K_single_value(self):
-        self.assertTwoSingleValues(LK2al, self.in_float_3, self.in_float, self.res_al_float)
+        self.assertTwoSingleValues(LK2al, self.in_L_float, self.in_float, self.res_al_float)
 
     def test_LK2al_K_1D_arrays(self):
-        self.assertTwo1DArrays(LK2al, self.in_1d_3, self.in_1d, self.res_al_1d)
+        self.assertTwo1DArrays(LK2al, self.in_L_1d, self.in_1d, self.res_al_1d)
 
     def test_LK2al_K_2D_arrays(self):
-        self.assertTwo2DArrays(LK2al, self.in_2d_3, self.in_2d, self.res_al_2d)
+        self.assertTwo2DArrays(LK2al, self.in_L_2d, self.in_2d, self.res_al_2d)
 
-    # TODO: Add roundtrip tests for Lal2K/LK2al
+    def test_round_trip_Lal2K_LK2al(self):
+        # Roundtrip: al -> K -> al (with L constant)
+        # Lal2K(L, al) = K, then LK2al(L, K) = al
+        L = self.in_L_float
+        al = self.in_al_float
+        K = Lal2K(L, al)
+        al2 = LK2al(L, K)
+        self.assertAlmostEqual(al, al2, 9, "Round trip conversion failed")
+
+    def test_round_trip_LK2al_Lal2K(self):
+        # Roundtrip: K -> al -> K (with L constant)
+        # LK2al(L, K) = al, then Lal2K(L, al) = K
+        L = self.in_L_float
+        K = self.in_float
+        al = LK2al(L, K)
+        K2 = Lal2K(L, al)
+        self.assertAlmostEqual(K, K2, 9, "Round trip conversion failed")
 
     # TODO: Add tests for coverage cases of LK2al
 
