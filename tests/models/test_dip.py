@@ -83,7 +83,23 @@ class TestDip(unittest.TestCase):
         np.testing.assert_almost_equal(result_saturn_mlat, expected_saturn_mlat, decimal=4,
                                        err_msg="B(3, 0.2, Saturn) calculation incorrect")
 
-    # TODO: Add tests for B0 == constant. at r == 1
+    def test_B0_at_r_equals_1(self):
+        """Test B0 returns planetary magnetic field constants at r=1"""
+        # At r=1, B0 should equal the planetary magnetic field constant
+        # Earth: B0_Earth = 0.312 G
+        result_earth = B0(1.0, planet='Earth')
+        np.testing.assert_almost_equal(result_earth, 0.312, decimal=4,
+                                       err_msg="B0(1, Earth) should return 0.312 G")
+
+        # Jupiter: B0_Jupiter = 4.28 G
+        result_jupiter = B0(1.0, planet='Jupiter')
+        np.testing.assert_almost_equal(result_jupiter, 4.28, decimal=4,
+                                       err_msg="B0(1, Jupiter) should return 4.28 G")
+
+        # Saturn: B0_Saturn = 0.215 G
+        result_saturn = B0(1.0, planet='Saturn')
+        np.testing.assert_almost_equal(result_saturn, 0.215, decimal=4,
+                                       err_msg="B0(1, Saturn) should return 0.215 G")
 
     def test_T_values(self):
         """Test the T. Based on table 1 from Schulz & Lanzerotti (1974)"""
