@@ -5,6 +5,8 @@ Conversion
 
 .. automodule:: rbamlib.conv
 
+.. automodsumm:: rbamlib.conv
+
 .. rubric::  Functions
     :heading-level: 2
 

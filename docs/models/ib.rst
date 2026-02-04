@@ -4,6 +4,8 @@ Isotropic boundary models
 -------------------------
 .. automodule:: rbamlib.models.ib
 
+.. automodsumm:: rbamlib.models.ib
+
 .. rubric:: Functions
    :heading-level: 2
 

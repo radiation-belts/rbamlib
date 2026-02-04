@@ -4,6 +4,8 @@ Models of hiss waves
 --------------------
 .. automodule:: rbamlib.sim.dxx.hiss
 
+.. automodsumm:: rbamlib.sim.dxx.hiss
+
 .. rubric:: Functions
    :heading-level: 2
 

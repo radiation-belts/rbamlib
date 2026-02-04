@@ -4,6 +4,8 @@ Magnetic field related models
 -----------------------------
 .. automodule:: rbamlib.models.mag
 
+.. automodsumm:: rbamlib.models.mag
+
 .. rubric:: Functions
    :heading-level: 2
 

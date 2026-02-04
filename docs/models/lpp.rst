@@ -4,6 +4,8 @@ Plasmapause location
 --------------------
 .. automodule:: rbamlib.models.lpp
 
+.. automodsumm:: rbamlib.models.lpp
+
 .. rubric:: Functions
    :heading-level: 2
 

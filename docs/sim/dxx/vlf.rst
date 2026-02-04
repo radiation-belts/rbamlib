@@ -4,6 +4,8 @@ Models of anthropogenic VLF transmitters
 ----------------------------------------
 .. automodule:: rbamlib.sim.dxx.vlf
 
+.. automodsumm:: rbamlib.sim.dxx.vlf
+
 .. rubric:: Functions
    :heading-level: 2
 

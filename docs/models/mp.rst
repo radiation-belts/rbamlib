@@ -4,6 +4,8 @@ Magnetopause location
 ---------------------
 .. automodule:: rbamlib.models.mp
 
+.. automodsumm:: rbamlib.models.mp
+
 .. rubric:: Functions
    :heading-level: 2
 

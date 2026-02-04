@@ -4,6 +4,8 @@ Dipole field model functions
 ----------------------------
 .. automodule:: rbamlib.models.dip
 
+.. automodsumm:: rbamlib.models.dip
+
 .. rubric:: Functions
    :heading-level: 2
 

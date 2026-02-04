@@ -4,6 +4,8 @@ Lifetime models
 ---------------
 .. automodule:: rbamlib.models.tau
 
+.. automodsumm:: rbamlib.models.tau
+
 .. rubric:: Functions
       :heading-level: 2
 

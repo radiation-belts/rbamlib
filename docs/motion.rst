@@ -4,6 +4,8 @@ Particle motion
 ---------------
 .. automodule:: rbamlib.motion
 
+.. automodsumm:: rbamlib.motion
+
 .. rubric:: Functions
    :heading-level: 2
 

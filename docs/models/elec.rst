@@ -4,6 +4,8 @@ Electric field model functions
 ------------------------------
 .. automodule:: rbamlib.models.elec
 
+.. automodsumm:: rbamlib.models.elec
+
 .. rubric:: Functions
    :heading-level: 2
 

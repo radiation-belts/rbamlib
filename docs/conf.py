@@ -33,6 +33,7 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tests']
 
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx_automodapi.automodapi',
     "sphinx.ext.mathjax",
     "sphinx.ext.napoleon",
     "myst_parser",
@@ -271,6 +272,10 @@ def write_rst_file(rst_filename, module_name, imported_functions, dirs, root_pat
 
         # Write the automodule directive
         rst_file.write(f".. automodule:: {module_name}\n\n")
+
+        # Add automodsumm to generate function summary
+        if imported_functions:
+            rst_file.write(f".. automodsumm:: {module_name}\n\n")
 
         # Add a toctree for subpackages
         subpackage_dirs = [d for d in dirs if (root_path / d / '__init__.py').exists()]

@@ -4,6 +4,8 @@ Lifetime models due to chorus waves
 -----------------------------------
 .. automodule:: rbamlib.models.tau.chorus
 
+.. automodsumm:: rbamlib.models.tau.chorus
+
 .. rubric:: Functions
    :heading-level: 2
 

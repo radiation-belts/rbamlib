@@ -188,23 +188,28 @@ We utilize [Sphinx](https://www.sphinx-doc.org/) to generate documentation. This
      .. currentmodule:: rbamlib.your_package_name
      ```
    - Use the `automodule` directive to include description for new sub-packages. This will automatically pull docstring from `__init__.py`.
+   - Use the `automodsumm` directive after `automodule` to automatically generate a summary table of functions at the top of the page.
      ```rst
      Your Package Name
      -----------------
      .. automodule:: rbamlib.your_package_name
+
+     .. automodsumm:: rbamlib.your_package_name
      ```
    - Use the `autofunction` directive for new functions. This will automatically pull in the function's docstring.
+   - Use `.. rubric::` directive for "Functions" headings to avoid creating TOC entries. Use `:heading-level: 2` to match the size of standard h2 headings.
      ```rst
-     Functions
-     =========
-    
+     .. rubric:: Functions
+        :heading-level: 2
+
      .. autofunction:: new_function
-    
+
      Aliases
      =======
-    
-     .. autofunction:: new_function_alias 
+
+     .. autofunction:: new_function_alias
      ```
+     **Note**: Only "Functions" headings use `.. rubric::` with `:heading-level: 2`. Section headings like "Aliases" continue to use the standard `=======` underline to appear in the TOC.
 - **Update the Table of Contents**:
    - If you've added a new `.rst` file (corresponding to your new sub-package), for example into `models` package, ensure it's included in the project's table of contents via `toctree` directive. 
    - Edit the corresponding `rst` file, for example `module.rst`, to include a reference to your new file `your_package_name.rst`:

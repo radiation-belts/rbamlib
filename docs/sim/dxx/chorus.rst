@@ -4,6 +4,8 @@ Models of chorus waves
 ----------------------
 .. automodule:: rbamlib.sim.dxx.chorus
 
+.. automodsumm:: rbamlib.sim.dxx.chorus
+
 .. rubric:: Functions
    :heading-level: 2
 

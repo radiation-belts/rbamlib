@@ -5,6 +5,8 @@ Web
 ---
 .. automodule:: rbamlib.web
 
+.. automodsumm:: rbamlib.web    
+
 .. rubric:: Functions
    :heading-level: 2
 

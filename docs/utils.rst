@@ -9,6 +9,8 @@ Utilities (Various functions)
 -----------------------------
 .. automodule:: rbamlib.utils
 
+.. automodsumm:: rbamlib.utils
+
 .. rubric:: Functions
    :heading-level: 2
 
