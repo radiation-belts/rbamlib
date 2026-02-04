@@ -71,10 +71,9 @@ The **NumPy/SciPy** docstring style should be used. This format ensures automate
 
 **Docstring Style:**
 - **Docstrings**: Use triple double-quoted strings for module, class, and function docstrings. Use `r` strings (denoted by a prefix `r` before the string: `r"""`) to avoid conflicts with backslashes in equations. 
-- **Summary**: A brief description of the function's purpose.
+- **Summary**: A brief description of the function's purpose, with a references to relevant paper.
 - **Parameters**: A list of input parameters with their types, descriptions and units.
 - **Returns**: Details of the output, including type, description and units.
-- **Notes**: A references to relevant paper.
 - **Math Expressions**: Mathematical formulas rendered using LaTeX syntax.
 - **See Also** (optional): Add this section for related functions or in aliases. 
 
@@ -106,7 +105,7 @@ def T(al):
 **Guidelines:**
 - **Input and output**: Use commonly defined physical variables names and units. Refer to [symbols.rst](/docs/symbols.rst). Always define units when applicable.
 - **Mathematical Expressions**: Use LaTeX syntax within the `.. math::` directive to render equations properly in Sphinx-generated documentation in the **Notes** section.
-- **References**: When implementing functions based on specific research papers, include citations using `:cite:p:`key`` [parenthetical] or `:cite:t:`key`` (contextual) format. All references are managed in `docs/bibliography.bib`.
+- **References**: When implementing functions based on specific research papers, include citations using `` :cite:p:`key` `` parenthetical or `` :cite:t:`key` `` contextual or `` :cite:yearpart:`key` `` year only format. All references are managed in `docs/bibliography.bib`.
 - **Aliases**: For aliases, use only a one line summary (see example in Naming Conventions section). Add See Also section with the original function.  
 - **`__init__.py`**: When describing the package or a sub-package, start with the name of the pacakge using `'`, explanation of its name and what it provides. Add the description and list of the **Main Features**. In the sub-package, include list of models using a short reference to the papers.   
 
@@ -183,10 +182,10 @@ When adding a new reference to the documentation:
 
 2. **Citation Key Format**: Use `author:year` (lowercase), e.g., `carpenter:1992`. For multiple papers by the same author in the same year, add a keyword: `gu:2012:correction`.
 
-3. **Cite in Docstring**: Use `:cite:p:`key``, `:cite:t:`key`` or `:cite:yearpar:`key`` citations:
-   - Parenthetical: ":cite:p:`author:2020`" → "[Author 2020]"
-   - Textual: "following :cite:t:`author:2020` showed" → "following Author et al. [2020] showed"
-   - Year only: "Author et al. :cite:yearpar:`author:2020` showed" → "Author et al. [2020] showed"
+3. **Cite in Docstring**: Use `` :cite:p:`key` ``, `` :cite:t:`key` `` or `` :cite:yearpar:`key` `` citations:
+   - Parenthetical: ":cite:p:\`author:2020\` " → "[Author 2020]"
+   - Textual: "following :cite:t:\`author:2020\` showed" → "following Author et al. [2020] showed"
+   - Year only: "Author et al. :cite:yearpar:\`author:2020\` showed" → "Author et al. [2020] showed"
 Use year only style to emphasize the authors of the model directly in docstring. 
 
 ### Sphynx documentation

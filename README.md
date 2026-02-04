@@ -16,7 +16,7 @@ This includes system properties calculations, empirical model collections, and m
 
 ## Planned Key Features
 
-- **System Properties**: Adiabatic invariants transformation, drift velocities, phase space density, and motion periods calculation, adaptable for different planets.
+- **System Properties**: Adiabatic invariants transformation, drift velocities, phase space density, and motion period calculations, adaptable for different planets.
 - **Empirical Models Collection**: Radial diffusion coefficients, lifetimes, plasma densities, and more.
 - **Modeling Support**: Conversion between simulation grids, boundary and initial condition characteristics, adiabatic transformation of boundary scaling factors, local diffusion coefficients scaling.
 
@@ -27,7 +27,7 @@ This design allows for direct function imports from the package, streamlining us
 For example, `pc2en` function from `conv` package is located in `conv/pc2en.py` file. To use it simply import it as follows:
 
 ```python
-import rbamlib.conv.pc2en
+from rbamlib.conv import pc2en
 ```
 
 The primary function that users should utilize is named after the file itself, ensuring intuitive access. If this main
@@ -41,28 +41,34 @@ will be documented, tested with a planned release on Python Package Index (PyPI)
 
 ### How to Contribute
 
-The contributions from the community as welcomed!
-If you're interested in contributing, please see CONTRIBUTING.md.
+The contributions from the community are welcomed!
+If you're interested in contributing, please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Installation and Usage
+## Installation
 
-Instructions on how to install and use `rbamlib` will be provided upon release.
+The package is available on PyPI:
 
-At this moment, you can to install library you can clone the repository:
-
-```bash
-git clone https://github.com/radiation-belts/rbamlib.git
-```
-
-Recently, the package become available to install using PyPI.
 ```bash
 pip install rbamlib
 ```
 
-## Documentation
-For more information, please see our documentation at: 
+Alternatively, you can install from source by cloning the repository:
 
-https://rbamlib.readthedocs.io/
+```bash
+git clone https://github.com/radiation-belts/rbamlib.git
+cd rbamlib
+pip install -e .
+```
+
+## Documentation
+
+Please see documentation at [https://rbamlib.readthedocs.io/](https://rbamlib.readthedocs.io/).
+
+## Acknowledgements
+
+The original development of the library was supported by NASA grant 80NSSC24K0462.
+
+Special thanks to the [PlasmaPy](https://github.com/PlasmaPy/PlasmaPy) for inspiring with their approach to building open-source scientific software. We are also grateful to the Python in Heliophysics Community (PyHC) for their guidance.
 
 ## License
 
