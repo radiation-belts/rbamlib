@@ -44,13 +44,7 @@ def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None, nan_fl
         \tau_{lc} = \frac{T_{bounce}}{4},
 
     where :math:`T_{bounce}` is computed by :func:`rbamlib.motion.bounce.T_bounce`.
-    This approximation follows Schulz and Lanzerotti (1974) [#]_ and accounts for relativistic effects.
-
-
-    References
-    ----------
-    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts.
-           Springer-Verlag Berlin Heidelberg.
+    This approximation follows :cite:t:`schulz:1974` and accounts for relativistic effects.
     """
 
     # Determine the loss-cone angle if not supplied

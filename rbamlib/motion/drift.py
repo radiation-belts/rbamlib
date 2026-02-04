@@ -30,7 +30,7 @@ def f_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rbamlib
 
     Notes
     -----
-    The drift frequency is given by the combined equation [#]_:
+    The drift frequency is given by the combined equation :cite:p:`schulz:1974`:
 
     .. math::
        f_{drift} = \left[ \frac{L}{2\pi} \cdot \frac{3 m c^3}{|q| B_0 r_0^2} \cdot \frac{\gamma^2 - 1}{\gamma} \right] \cdot \frac{6 - \frac{Y(\alpha)}{T(\alpha)}}{12}
@@ -39,11 +39,6 @@ def f_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rbamlib
     - :math:`B_0` is the magnetic field for the specified planet,
     - :math:`r_0` is the planetary radius,
     - :math:`Y(\alpha)` and  :math:`T(\alpha)` are functions from the dipole model.
-
-    References
-    ----------
-    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts.
-           Springer-Verlag Berlin Heidelberg.
     """
 
     # Compute gamma if energy is provided (en is in MeV)
@@ -101,15 +96,10 @@ def omega_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rba
 
     Notes
     -----
-    The angular drift frequency is calculated using [#]_:
+    The angular drift frequency is calculated using :cite:p:`schulz:1974`:
 
     .. math::
        \omega_{drift} = 2\pi f_{drift}
-
-    References
-    ----------
-    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts.
-           Springer-Verlag Berlin Heidelberg.
     """
     return  2 * np.pi * f_drift(L, en, al, planet, m, q)
 
@@ -140,15 +130,10 @@ def T_drift(L, en, al=np.pi/2, planet='Earth', m=rbamlib.constants.me, q=rbamlib
 
     Notes
     -----
-    The drift period is the reciprocal of the drift frequency [#]_:
+    The drift period is the reciprocal of the drift frequency :cite:p:`schulz:1974`:
 
     .. math::
        T_{drift} = \frac{1}{f_{drift}}
-
-    References
-    ----------
-    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts.
-           Springer-Verlag Berlin Heidelberg.
     """
     return 1 / f_drift(L, en, al, planet, m, q)
 

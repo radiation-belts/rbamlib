@@ -3,7 +3,7 @@ import numpy as np
 
 def CA1992(time, kp):
     r"""
-    Calculates plasmapause location Lpp following Carpenter and Anderson (1992) [#]_, eq (7).
+    Calculates plasmapause location Lpp following Carpenter and Anderson :cite:yearpar:`carpenter:1992`, eq (7).
 
     Parameters
     ----------
@@ -25,10 +25,6 @@ def CA1992(time, kp):
         L_{pp} = 5.6 - 0.46 \cdot Kp_{24}
 
     where :math:`Kp_{24}` is the maximum Kp-index value in the last 24 hours.
-
-    References
-    ----------
-    .. [#] Carpenter, D. L., & Anderson, R. R. (1992). An ISEE/whistler model of equatorial electron density in the magnetosphere. Journal of Geophysical Research, [Space Physics], 97(A2), 1097–1108. https://doi.org/10.1029/91JA01548
     """
 
     # Ensure time and index arrays are floats

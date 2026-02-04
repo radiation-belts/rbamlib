@@ -13,7 +13,7 @@ _data_cache = {}
 
 def W2024(L, en, kp, mlt, method='albert', data_file=None, data_folder=None, auto_download=False):
     r"""
-    Calculates electron lifetime due to chorus waves following Wang et al. (2024) [#]_ model.
+    Calculates electron lifetime due to chorus waves following Wang et al. :cite:yearpar:`wang:2024` model.
 
     This model uses nearest neighbor lookup from a precomputed lifetime database as a function
     of L-shell, energy, Kp, and MLT.
@@ -74,14 +74,6 @@ def W2024(L, en, kp, mlt, method='albert', data_file=None, data_folder=None, aut
     >>> import numpy as np
     >>> L = np.array([4.0, 5.0, 6.0])
     >>> tau = W2024(L, en=1.0, kp=3.0, mlt=12.0)
-
-    References
-    ----------
-    .. [#] Wang, D., Shprits, Y. Y., Haas, B., & Drozdov, A. Y. (2024).
-           Improved lifetime model of energetic electrons due to their interactions
-           with chorus waves. Geophysical Research Letters, 51(19), e2023GL107991.
-           https://doi.org/10.1029/2023gl107991
-    .. [#] Wang, Dedong; Shprits, Yuri; Haas, Bernhard (2022): Lifetime of Energetic Electrons due to Interactions with Chorus Waves. V. 1.0. GFZ Data Services. https://doi.org/10.5880/GFZ.2.7.2022.002
     """
 
     # Validate method

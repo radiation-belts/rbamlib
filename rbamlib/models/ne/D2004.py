@@ -2,7 +2,7 @@ import numpy as np
 
 def D2004(L, Lpp=None, R13=13.0, a=None):
     r"""
-    Denton et al. (2004)[#]_ -style plasmaspheric electron density (equatorial or along field line) [#]_.
+    Denton et al. :cite:yearpar:`denton:2004` -style plasmaspheric electron density (equatorial or along field line).
 
     The plasmasphere (``L <= Lpp`` or when no ``Lpp`` is provided) uses
     Denton et al. (2004) equation (5). The plasmatrough (``L > Lpp``) uses a power-law form (eq. 11).
@@ -56,10 +56,6 @@ def D2004(L, Lpp=None, R13=13.0, a=None):
        n_e = a_3 * L ^ {a_4}
 
     ----
-
-    References
-    ----------
-    .. [#] Denton, R. E., Menietti, J. D., Goldstein, J., Young, S. L., & Anderson, R. R. (2004), Electron density in the magnetosphere, J. Geophys. Res., 109, A09215,  https://doi.org/10.1029/2003JA010245
     """
     L = np.asarray(L, dtype=float)
 

@@ -26,15 +26,10 @@ def f_bounce(L, al, en, planet='Earth', m=rbamlib.constants.me):
 
     Notes
     -----
-    The bounce frequency is defined as the inverse of the bounce period [#]_. 
+    The bounce frequency is defined as the inverse of the bounce period :cite:p:`schulz:1974`. 
 
     .. math::
         f_{bounce} = \frac{1}{T_{bounce}}
-
-    References
-    ----------
-    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts.
-           Springer-Verlag Berlin Heidelberg.
     """
 
     T = T_bounce(L, al, en, planet, m)
@@ -64,17 +59,12 @@ def omega_bounce(L, al, en, planet='Earth', m=rbamlib.constants.me):
 
     Notes
     -----
-    The angular bounce frequency is obtained by [#]_:
+    The angular bounce frequency is obtained by :cite:t:`schulz:1974`:
 
     .. math::
         \omega_{bounce} = \frac{2\pi}{T_{bounce}}
 
     where :math:`T_{bounce}` is the bounce period calculated by T_bounce function.
-
-    References
-    ----------
-    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts.
-           Springer-Verlag Berlin Heidelberg.
     """
     T = T_bounce(L, al, en, planet, m)
     return 2 * np.pi / T
@@ -104,7 +94,7 @@ def T_bounce(L, al, en, planet='Earth', m=rbamlib.constants.me):
 
     Notes
     -----    
-    The bounce period is calculated using the following [#]_:
+    The bounce period is calculated using the following :cite:t:`schulz:1974`:
     
     .. math::
         T_{bounce} = \left( \frac{4r}{v} \right) T(\alpha) \\
@@ -118,12 +108,6 @@ def T_bounce(L, al, en, planet='Earth', m=rbamlib.constants.me):
         r = L \cdot r_0
     
     - `T(\alpha)` is a factor dependent on the equatorial pitch angle provided by rbamlib.models.dip.T.
-
-
-    References
-    ----------
-    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts.
-           Springer-Verlag Berlin Heidelberg.
     """
     T = dip.T(al)
 

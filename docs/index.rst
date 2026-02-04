@@ -29,6 +29,7 @@ Welcome to rbamlib's documentation!
    DEVELOPERS_GUIDE.md <DEVELOPERS_GUIDE>
 
    symbols
+   bibliography
 
 Indices and tables
 ==================

@@ -42,16 +42,10 @@ def f_gyro(B=None, L=None, en=None, planet='Earth', q=rbamlib.constants.q, m=rba
     .. math::
         \gamma = 1 + \frac{en}{m \cdot c^2}
 
-    and the gyro frequency becomes [#]_
+    and the gyro frequency becomes :cite:p:`roederer:2016`
 
     .. math::
        f = \frac{|q| B}{2 \pi \gamma m c}
-
-
-    References
-    ----------
-    .. [#] Roederer, J. G., & Zhang, H. (2016). Dynamics of magnetically trapped particles. Berlin, Germany: Springer.
-
     """
     # Compute gamma if energy is provided (en is in MeV)
     gamma = 1.0
@@ -106,15 +100,10 @@ def omega_gyro(B=None, L=None, en=None, planet='Earth',  q=rbamlib.constants.q, 
 
     Notes
     -----
-    The angular gyro frequency is calculated from the standard gyro frequency f [#]_:
+    The angular gyro frequency is calculated from the standard gyro frequency f :cite:p:`koskinen:2022`:
 
     .. math::
         \omega = 2 \pi f
-
-    References
-    ----------
-    .. [#] Koskinen, H. E. J., & Kilpua, E. K. J. (2022). Physics of earth’s radiation belts. Cham, Switzerland: Springer Nature. https://doi.org/10.1007/978-3-030-82167-8
-
     """
     return 2 * np.pi * f_gyro(B=B, en=en, L=L, planet=planet, q=q, m=m)
 
@@ -147,14 +136,10 @@ def T_gyro(B=None, L=None, en=None, planet='Earth',  q=rbamlib.constants.q, m=rb
 
     Notes
     -----
-    The gyro period is defined as the inverse of the angular gyro frequency [#]_:
+    The gyro period is defined as the inverse of the angular gyro frequency :cite:p:`koskinen:2022`:
 
     .. math::
         T = \frac{2\pi}{\omega}
-
-    References
-    ----------
-    .. [#] Koskinen, H. E. J., & Kilpua, E. K. J. (2022). Physics of earth’s radiation belts. Cham, Switzerland: Springer Nature. https://doi.org/10.1007/978-3-030-82167-8
     """
     return 2 * np.pi / omega_gyro(B=B, en=en, L=L, planet=planet, q=q, m=m)
 

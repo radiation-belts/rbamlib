@@ -3,7 +3,7 @@ import numpy as np
 
 def M2002(time, kp):
     r"""
-    Calculates plasmapause location (lpp) following Moldwin et al. (2002) [#]_ eq. (2).
+    Calculates plasmapause location (lpp) following Moldwin et al. :cite:yearpar:`moldwin:2002` eq. (2).
 
     Parameters
     ----------
@@ -25,10 +25,6 @@ def M2002(time, kp):
         L_{pp} = 5.39 - 0.382 \cdot Kp_{12}
 
     where :math:`Kp_{24}` is the maximum Kp-index value in the last 12 hours.
-
-    Notes
-    -----
-    .. [#] Moldwin, M. B., et al. (2002). A new model of the location of the plasmapause: CRRES results, Journal of Geophysical Research, 107(A11), 1339, doi: 10.1029/2001JA009211.
     """
     # Ensure time and index arrays are floats
     time = time.astype(float)

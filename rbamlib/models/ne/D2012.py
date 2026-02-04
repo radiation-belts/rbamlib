@@ -3,7 +3,7 @@ import numpy as np
 
 def D2012():
     r"""
-    Calculates electron density following Denton et al. (2012) [#]_ model.
+    Calculates electron density following Denton et al. :cite:yearpar:`denton:2012` model.
 
     .. warning::
        This function is currently empty. Implementation may be added in the future.
@@ -17,9 +17,5 @@ def D2012():
     Notes
     -----
     .. math::
-
-    References
-    ----------
-    .. [#] Denton, R. E., Wang, Y., Webb, P. A., Tengdin, P. M., Goldstein, J., Redfern, J. A., & Reinisch, B. W. (2012). Magnetospheric electron density long-term (>1 day) refilling rates inferred from passive radio emissions measured by IMAGE RPI during geomagnetically quiet times: MAGNETOSPHERIC ELECTRON DENSITY REFILLING RATES. Journal of Geophysical Research, 117(A3). https://doi.org/10.1029/2011JA017274
     """
     return

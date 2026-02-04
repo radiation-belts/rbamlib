@@ -4,7 +4,7 @@ from rbamlib.models.ne import D2002
 
 def D2006(L, mlt=0.0, r=None):
     r"""
-    Denton et al. (2006) plasmaspheric electron density model with MLT dependence [#]_.
+    Denton et al. :cite:yearpar:`denton:2006` plasmaspheric electron density model with MLT dependence.
 
     Parameters
     ----------
@@ -58,10 +58,6 @@ def D2006(L, mlt=0.0, r=None):
        n_e(r) = n_{e,eq}\left(\frac{R_{\max}}{r}\right)^{\alpha}, R_{\max} \approx L R_E
 
     Densities are in cm⁻³, distances in Earth radii.
-
-    References
-    ----------
-    .. [#] Denton, R. E., Goldstein, J., Lee, D.-H., King, R. A., Dent, Z. C., Gallagher, D. L., et al. (2006). Realistic magnetospheric density model for 29 August 2000. Journal of Atmospheric and Solar-Terrestrial Physics, 68(6), 615–628. https://doi.org/10.1016/j.jastp.2005.11.009
 
     See Also
     --------

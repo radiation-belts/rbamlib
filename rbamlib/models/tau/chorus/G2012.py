@@ -60,8 +60,8 @@ COEFF_TABLE = {
 }
 
 def G2012(mlt, L, en, kp):
-   r"""    
-   Calculates electron lifetime due to chorus waves following Gu et al. (2012) [#]_ model, including correction [#]_.
+   r"""
+   Calculates electron lifetime due to chorus waves following Gu et al. :cite:yearpar:`gu:2012` model, including correction :cite:p:`gu:2012:correction`.
 
    Parameters
    ----------
@@ -101,12 +101,6 @@ def G2012(mlt, L, en, kp):
          4\,\tau \left[2*10^\sqrt{0.73 + 0.91 kp}/{57.6}\right]^{-2}, & Kp \le 2+ \\
          4\,\tau \left[2*10^\sqrt{2.50 + 0.18 kp}/{57.6}\right]^{-2}, & 2+ < Kp \le 6
       \end{cases}
-      
-
-   References
-   ----------
-   .. [#] Gu, X., Shprits, Y. Y., & Ni, B. (2012). Parameterized lifetime of radiation belt electrons interacting with lower-band and upper-band oblique chorus waves. Geophysical Research Letters, 39(15), L15102. https://doi.org/10.1029/2012GL052519
-   .. [#] Gu, X., Y. Y. Shprits, and B. Ni (2012), Correction to "Parameterized lifetime of radiation belt electrons interacting with lower-band and upper-band oblique chorus wave", Geophys. Res. Lett., 39, L17199, doi:10.1029/2012GL053568.
    """
 
    # ----------------------------

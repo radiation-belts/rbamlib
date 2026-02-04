@@ -3,7 +3,7 @@ import numpy as np
 
 def O2016(mlt, L, en, kp):
    r"""
-   Calculates electron lifetime due to hiss waves following Orlova et al. (2016) [#]_ model.
+   Calculates electron lifetime due to hiss waves following Orlova et al. :cite:yearpar:`orlova:2016` model.
 
    Parameters
    ----------
@@ -51,13 +51,6 @@ def O2016(mlt, L, en, kp):
       \tau = \frac{\tau_{\rm av}}{g(\mathrm{MLT})\,h(\mathrm{kp})}.
 
    Extremely large :math:`\log_{10}\tau_{\rm av} > 10` is treated as ``inf``.
-
-   References
-   ----------
-   .. [#] Orlova, K., Shprits, Y., & Spasojevic, M. (2016).
-         New global loss model of energetic and relativistic electrons based on Van Allen Probes measurements.
-         Journal of Geophysical Research: Space Physics, 121(2), 1308–1314.
-         https://doi.org/10.1002/2015JA021878
    """
    # ----- Input preparation & clipping (broadcast-friendly) -----
    L = np.clip(np.asarray(L, dtype=float), 1.5, 5.5)

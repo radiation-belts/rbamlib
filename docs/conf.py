@@ -38,8 +38,14 @@ extensions = [
     "sphinx.ext.napoleon",
     "myst_parser",
     "md_alert_to_admonition",
-    "md_link_adjust"
+    "md_link_adjust",
+    "sphinxcontrib.bibtex"
 ]
+
+# Bibliography configuration (sphinxcontrib-bibtex)
+bibtex_bibfiles = ['bibliography.bib']
+bibtex_default_style = 'unsrt'
+bibtex_reference_style = 'author_year'
 
 # List of documents where the md_alert_to_admonition should apply
 md_alert_to_admonition_affected_docs = ["README"]
