@@ -71,10 +71,9 @@ The **NumPy/SciPy** docstring style should be used. This format ensures automate
 
 **Docstring Style:**
 - **Docstrings**: Use triple double-quoted strings for module, class, and function docstrings. Use `r` strings (denoted by a prefix `r` before the string: `r"""`) to avoid conflicts with backslashes in equations. 
-- **Summary**: A brief description of the function's purpose.
+- **Summary**: A brief description of the function's purpose, with a references to relevant paper.
 - **Parameters**: A list of input parameters with their types, descriptions and units.
 - **Returns**: Details of the output, including type, description and units.
-- **Notes**: A references to relevant paper.
 - **Math Expressions**: Mathematical formulas rendered using LaTeX syntax.
 - **See Also** (optional): Add this section for related functions or in aliases. 
 
@@ -96,23 +95,20 @@ def T(al):
 
     Notes
     -----
-    See Schulz & Lanzerotti (1974) [#]_.
+    See Schulz & Lanzerotti :cite:p:`schulz:1974`.
 
     .. math::
         T( \\alpha ) \\approx T_0 - \\frac{1}{2}(T_0 - T_1) \\cdot \\left( \\sin( \\alpha ) + \\sin( \\alpha)^1/2 \\right)
-        
-    Reference
-    ---------
-    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts (Vol. 7). Springer-Verlag Berlin Heidelberg. Retrieved from http://www.springer.com/physics/book/978-3-642-65677-4
     """
 ```
 
 **Guidelines:**
-- **Input and output**: Use commonly defined physical variables names and units. Refer to [symbols.rst](/docs/symbols.rst). Always define units when applicable. 
+- **Input and output**: Use commonly defined physical variables names and units. Refer to [symbols.rst](/docs/symbols.rst). Always define units when applicable.
 - **Mathematical Expressions**: Use LaTeX syntax within the `.. math::` directive to render equations properly in Sphinx-generated documentation in the **Notes** section.
-- **References**: When implementing functions based on specific research papers, include a citation in the **Reference** section, providing full bibliographic details. Use Sphinx directive ` [#]_ ` to define the reference number and `.. [#] ` directive to place the reference. Note, you can use multiple reference in the description of the function. 
+- **References**: When implementing functions based on specific research papers, include citations using `` :cite:p:`key` `` parenthetical or `` :cite:t:`key` `` contextual or `` :cite:yearpart:`key` `` year only format. All references are managed in `docs/bibliography.bib`.
 - **Aliases**: For aliases, use only a one line summary (see example in Naming Conventions section). Add See Also section with the original function.  
 - **`__init__.py`**: When describing the package or a sub-package, start with the name of the pacakge using `'`, explanation of its name and what it provides. Add the description and list of the **Main Features**. In the sub-package, include list of models using a short reference to the papers.   
+
 **Examples**
 
 Package:
@@ -148,7 +144,7 @@ import numpy as np
 
 def D2017():
     r"""
-    Calculates the EMIC wave trigger following Drozdov et al. (2017) [#]_ model.
+    Calculates the EMIC wave trigger following Drozdov et al. :cite:p:`drozdov:2017` model.
 
     Parameters
     ----------
@@ -159,16 +155,38 @@ def D2017():
     Notes
     -----
     .. math::
-
-    References
-    ----------
-    .. [#] Drozdov, A. Y., Shprits, Y. Y., Usanova, M. E., Aseev, N. A., Kellerman, A. C., & Zhu, H. (2017). EMIC wave parameterization in the long-term VERB code simulation. Journal of Geophysical Research, [Space Physics], 122(8), 2017JA024389. https://doi.org/10.1002/2017JA024389
     """
-    
+
     # Function code
-    
+
     return
 ```
+
+### Adding New References
+
+When adding a new reference to the documentation:
+
+1. **Add to Bibliography Database**: Add the BibTeX entry to `docs/bibliography.bib`:
+   ```bibtex
+   @article{author:year,
+      title = {{Paper Title}},
+      author = {First Author and Second Author},
+      year = 2020,
+      journal = {Journal Name},
+      volume = 10,
+      number = 5,
+      pages = {100--110},
+      doi = {10.xxxx/xxxxx}
+   }
+   ```
+
+2. **Citation Key Format**: Use `author:year` (lowercase), e.g., `carpenter:1992`. For multiple papers by the same author in the same year, add a keyword: `gu:2012:correction`.
+
+3. **Cite in Docstring**: Use `` :cite:p:`key` ``, `` :cite:t:`key` `` or `` :cite:yearpar:`key` `` citations:
+   - Parenthetical: ":cite:p:\`author:2020\` " → "[Author 2020]"
+   - Textual: "following :cite:t:\`author:2020\` showed" → "following Author et al. [2020] showed"
+   - Year only: "Author et al. :cite:yearpar:\`author:2020\` showed" → "Author et al. [2020] showed"
+Use year only style to emphasize the authors of the model directly in docstring. 
 
 ### Sphynx documentation
 We utilize [Sphinx](https://www.sphinx-doc.org/) to generate documentation. This allows the automatic inclusion of docstrings from the code and synchronize documentation with the source code.
@@ -187,23 +205,28 @@ We utilize [Sphinx](https://www.sphinx-doc.org/) to generate documentation. This
      .. currentmodule:: rbamlib.your_package_name
      ```
    - Use the `automodule` directive to include description for new sub-packages. This will automatically pull docstring from `__init__.py`.
+   - Use the `automodsumm` directive after `automodule` to automatically generate a summary table of functions at the top of the page.
      ```rst
      Your Package Name
      -----------------
      .. automodule:: rbamlib.your_package_name
+
+     .. automodsumm:: rbamlib.your_package_name
      ```
    - Use the `autofunction` directive for new functions. This will automatically pull in the function's docstring.
+   - Use `.. rubric::` directive for "Functions" headings to avoid creating TOC entries. Use `:heading-level: 2` to match the size of standard h2 headings.
      ```rst
-     Functions
-     =========
-    
+     .. rubric:: Functions
+        :heading-level: 2
+
      .. autofunction:: new_function
-    
+
      Aliases
      =======
-    
-     .. autofunction:: new_function_alias 
+
+     .. autofunction:: new_function_alias
      ```
+     **Note**: Only "Functions" headings use `.. rubric::` with `:heading-level: 2`. Section headings like "Aliases" continue to use the standard `=======` underline to appear in the TOC.
 - **Update the Table of Contents**:
    - If you've added a new `.rst` file (corresponding to your new sub-package), for example into `models` package, ensure it's included in the project's table of contents via `toctree` directive. 
    - Edit the corresponding `rst` file, for example `module.rst`, to include a reference to your new file `your_package_name.rst`:

@@ -3,7 +3,7 @@ import numpy as np
 
 def S1998(theta, Bz, Pdyn):
     r"""
-    Calculates the magnetopause location following Shue et al. (1998) [#]_.
+    Calculates the magnetopause location following Shue et al. :cite:yearpar:`shue:1998`.
 
     Parameters
     ----------
@@ -18,7 +18,7 @@ def S1998(theta, Bz, Pdyn):
     -------
     r : ndarray
         Distance to the magnetopause from the Earth's center in :math:`R_E`.
-        The result will be a 2D array of shape (len(Pdyn), len(Phi)).
+        The result will be a 2D array of shape (len(Pdyn), len(theta)).
 
     Notes
     -----
@@ -37,10 +37,6 @@ def S1998(theta, Bz, Pdyn):
 
     .. math::
         \alpha = (0.58 - 0.010 \cdot B_z) \cdot (1 + 0.010 \cdot P_{dyn})
-
-    References
-    ----------
-    .. [#] Shue, J.-H., Song, P., Russell, C. T., Steinberg, J. T., Chao, J. K., Zastenker, G., et al. (1998). Magnetopause location under extreme solar wind conditions. Journal of Geophysical Research, 103(A8), 17691–17700. https://doi.org/10.1029/98JA01103
     """
 
     # Ensure Bz and Pdyn are the same size

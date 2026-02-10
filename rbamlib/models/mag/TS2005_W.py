@@ -3,7 +3,7 @@ import numpy as np
 
 def TS2005_W(time, S, storm_onsets=None, fill_value=np.nan):
     r"""
-    Compute Tsyganenko & Sitnov (2005) [#]_ :math:`W_k(t_i)`, per Eq. (7) with optional "storm-by-storm" resets.
+    Compute Tsyganenko & Sitnov (2005) :cite:yearpar:`tsyganenko:2005` :math:`W_k(t_i)`, per Eq. (7) with optional "storm-by-storm" resets.
 
     Parameters
     ----------
@@ -41,10 +41,6 @@ def TS2005_W(time, S, storm_onsets=None, fill_value=np.nan):
       - The factor :math:`\times 24` converts days to hours.
       - :math:`j_{\mathrm{start}}` = 0 if summing from the very first sample, or
         the index of the most recent storm onset (if `storm_onsets` is provided).
-
-    References
-    ----------
-    .. [#] Tsyganenko, N. A., & Sitnov, M. I. (2005). Modeling the dynamics of the inner magnetosphere during strong geomagnetic storms. Journal of Geophysical Research, 110(A3), 7737. https://doi.org/10.1029/2004JA010798
     """
     # Relaxation rates (hours^-1) for the 6 T05 coefficients
     r_vals = np.array([0.39, 0.70, 0.031, 0.58, 1.15, 0.88])

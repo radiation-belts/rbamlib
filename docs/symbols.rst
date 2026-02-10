@@ -19,8 +19,17 @@ en      Energy, [MeV]
 pc      Momentum times speed of light, [MeV]
 Jc      2nd adiabatic invariant K times speed of light, [MeV/G]
 kp      Kp-index
+B       Magnetic field strength, [Gauss]
 Bz      IMF :math:`B_z`, [nT]
 Pdyn    Dynamic pressure :math:`P_{dyn}`, [nPa]
 Nsw     Solar wind density array, [n/cc]
 Vsw     Solar wind velocity array, [km/sec]
+ne      Electron density, [cm^-3].
+T       Period, [seconds]
+f       Oscillation frequency, [Hz]
+phi     Magnetic local time angle [radians] (phi=0 is noon)
+mlt     Magnetic Local Time [hours] (mlt=12 is noon)
+mlat    Magnetic latitude, northwards from the equator [rad]
+q       Particle charge, [statcoulombs] (SGS units)
+m       Particle mass, [grams].
 ======  ===========

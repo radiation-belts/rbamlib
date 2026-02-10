@@ -4,6 +4,9 @@ Magnetopause location
 ---------------------
 .. automodule:: rbamlib.models.mp
 
-Functions
-=========
+.. automodsumm:: rbamlib.models.mp
+
+.. rubric:: Functions
+   :heading-level: 2
+
 .. autofunction:: S1998

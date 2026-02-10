@@ -3,7 +3,7 @@ import numpy as np
 
 def A2016(L, kp, dll_type='M'):
     r"""
-    Calculate radial diffusion coefficient following Ali et al. (2016) [#]_ model.
+    Calculate radial diffusion coefficient following Ali et al. :cite:yearpar:`ali:2016` model.
 
     Parameters
     ----------
@@ -42,10 +42,6 @@ def A2016(L, kp, dll_type='M'):
 
     .. math::
         a_1 = -16.253, \quad b_1 = 0.224, \quad  a_2 = -16.951, \quad b_2 = 0.181, \quad c_2 = 1.982
-
-    References
-    ----------
-    .. [#] Ali, A. F., Malaspina, D. M., Elkington, S. R., Jaynes, A. N., Chan, A. A., Wygant, J., & Kletzing, C. A. (2016). Electric and magnetic radial diffusion coefficients using the Van Allen probes data. Journal of Geophysical Research, [Space Physics], 121(10), 2016JA023002. https://doi.org/10.1002/2016JA023002
     """
     dllb, dlle = None, None
 

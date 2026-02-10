@@ -22,7 +22,7 @@ print(os.path.abspath(".."))
 print(os.path.abspath("."))
 
 project = 'rbamlib'
-copyright = '2024, Alexander Drozdov'
+copyright = '2024-2026'
 author = 'Alexander Drozdov'
 
 # -- General configuration ---------------------------------------------------
@@ -33,12 +33,19 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'tests']
 
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx_automodapi.automodapi',
     "sphinx.ext.mathjax",
     "sphinx.ext.napoleon",
     "myst_parser",
     "md_alert_to_admonition",
-    "md_link_adjust"
+    "md_link_adjust",
+    "sphinxcontrib.bibtex"
 ]
+
+# Bibliography configuration (sphinxcontrib-bibtex)
+bibtex_bibfiles = ['bibliography.bib']
+bibtex_default_style = 'unsrt'
+bibtex_reference_style = 'author_year'
 
 # List of documents where the md_alert_to_admonition should apply
 md_alert_to_admonition_affected_docs = ["README"]
@@ -272,6 +279,10 @@ def write_rst_file(rst_filename, module_name, imported_functions, dirs, root_pat
         # Write the automodule directive
         rst_file.write(f".. automodule:: {module_name}\n\n")
 
+        # Add automodsumm to generate function summary
+        if imported_functions:
+            rst_file.write(f".. automodsumm:: {module_name}\n\n")
+
         # Add a toctree for subpackages
         subpackage_dirs = [d for d in dirs if (root_path / d / '__init__.py').exists()]
         if subpackage_dirs:
@@ -285,8 +296,8 @@ def write_rst_file(rst_filename, module_name, imported_functions, dirs, root_pat
 
         # Document each function in the module using autofunction directive
         if imported_functions:
-            rst_file.write("Functions\n")
-            rst_file.write(f"{'=' * len('Functions')}\n\n")
+            rst_file.write(".. rubric:: Functions\n")
+            rst_file.write("   :heading-level: 2\n\n")
             for f in imported_functions:
                 rst_file.write(f".. autofunction:: {module_name}.{f}\n")
 

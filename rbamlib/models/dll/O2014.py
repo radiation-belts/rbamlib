@@ -2,7 +2,7 @@ import numpy as np
 
 def O2014(L, kp, dll_type='E'):
     r"""
-    Calculate radial diffusion coefficient following Ozeke et al. (2014) [#]_ model.
+    Calculate radial diffusion coefficient following Ozeke et al. :cite:yearpar:`ozeke:2014` model.
 
     Parameters
     ----------
@@ -37,10 +37,6 @@ def O2014(L, kp, dll_type='E'):
 
     .. math::
         D^{E}_{LL} = 2.16 \times 10^{-8} \cdot L^6 \cdot 10^{0.217 L + 0.461 Kp}
-
-    References
-    ----------
-    .. [#] Ozeke, L. G., Mann, I. R., Murphy, K. R., Jonathan Rae, I., & Milling, D. K. (2014). Analytic expressions for ULF wave radiation belt radial diffusion coefficients. Journal of Geophysical Research, [Space Physics], 119(3), 1587–1605. https://doi.org/10.1002/2013JA019204
     """
     dllb, dlle = None, None
 

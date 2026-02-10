@@ -32,3 +32,7 @@ from .enral2mu import en2mu
 from .Lal2K import Lal2K
 from .LK2al import LK2al
 
+from .en2gamma import en2gamma
+
+from .phi2mlt import phi2mlt
+from .mlt2phi import mlt2phi

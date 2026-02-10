@@ -9,10 +9,15 @@ Constants:
     - T0 ≈ 1.3802 : approximate value of T(0)
     - T1 ≈ 0.7405 : approximate value of T(1)
     - R_Earth ≈ 637,800,000 : radius of Earth in cm
-    - R_Saturn ≈ 6,026,800,000 : radius of Earth in cm
-    - R_Jupiter ≈ 7,149,200,000 : radius of Earth in cm
+    - R_Saturn ≈ 6,026,800,000 : radius of Saturn in cm
+    - R_Jupiter ≈ 7,149,200,000 : radius of Jupiter in cm
+    - Omega_Earth ≈ 7.43e-5 : Earth rotation frequency in 1/s
+    - Omega_Saturn ≈ 1.62e-4 : Saturn rotation frequency in 1/s
+    - E0_Earth ≈ 7.05e-7 : electric field at Earth's equator in V/m
+    - E0_Saturn ≈ 0.3e-3 : electric field at Saturn's equator in V/m
     - c ≈ 2.9e10 : speed of light in cm/s
     - q ≈ 4.8e-10 : electron charge in CGS
+    - me ≈ 9.1e-28 : electron mass in g in CGS
 
 CGS:
     - Class of constants in CGS
@@ -30,12 +35,19 @@ B0_Jupiter = 4.28  # mean value of the Jupiter's surface magnetic field in Gauss
 T0 = 1.3802  # Approximate value of T(0)
 T1 = 0.7405  # Approximate value of T(1)
 
+Omega_Earth = 7.43e-5 # Earth rotation frequency, 1/s 
+Omega_Saturn = 1.62e-4 # Saturn rotation frequency, 1/s 
+
+E0_Earth = 4.5 / 6.378e6 # V/m
+E0_Saturn = 0.3E-3 # V/m
+
 # Based on NASA Planetary Fact Sheet: https://nssdc.gsfc.nasa.gov/planetary/factsheet/
 R_Earth = 6.378e8  # Earth radius in cm
 R_Saturn = 60.268e8  # Saturn radius in cm
 R_Jupiter = 71.492e8  # Jupiter radius in cm
 c = scic.c * 100  # Speed of light in cm/s
 q = 4.803e-10  # charge of electron in CGS
+me = 0.91e-27 # Electrons mass in g in CGS
 
 
 class CGS:
@@ -48,6 +60,7 @@ class CGS:
     R_Jupiter = R_Jupiter
     c = c
     q = q
+    me = me
 
 
 class SI:
@@ -58,5 +71,6 @@ class SI:
     R_Earth = CGS.R_Earth * 1e-2  # meters
     R_Saturn = CGS.R_Saturn * 1e-2  # meters
     R_Jupiter = CGS.R_Jupiter * 1e-2  # meters
-    c = scic  # m/s
+    c = scic.c  # m/s
     q = scic.e  # Coulombs
+    me = scic.electron_mass # kg

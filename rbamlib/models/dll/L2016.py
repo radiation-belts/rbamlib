@@ -3,7 +3,7 @@ import numpy as np
 
 def L2016(L, kp, mu, dll_type='E'):
     r"""
-    Calculate radial diffusion coefficient following Liu et al. (2016) [#]_ model.
+    Calculate radial diffusion coefficient following Liu et al. :cite:yearpar:`liu:2016` model.
 
     Parameters
     ----------
@@ -27,10 +27,6 @@ def L2016(L, kp, mu, dll_type='E'):
 
     .. math::
         D^{E}_{LL} = 1.115 \times 10^{-6} \cdot 10^{0.281 \cdot Kp} \cdot L^{8.184} \cdot \mu^{-0.608}
-
-    References
-    ----------
-    .. [#] Liu, Y., Zong, Q.-G., Zhou, X.-Z., Foster, J. C., & Rankin, R. (2016). Structure and evolution of electron “zebra stripes” in the inner radiation belt. Journal of Geophysical Research, [Space Physics], 121(5), 4145–4157. https://doi.org/10.1002/2015ja022077
     """
     if dll_type not in {'E', 'e'}:
         raise ValueError("This function only computes electric radial diffusion (dll_type='E').")
