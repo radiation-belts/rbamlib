@@ -24,9 +24,10 @@ Welcome to rbamlib's documentation!
    :maxdepth: 3
    :caption: See also
 
-   README.md <README>
+   README.md <README>   
    CONTRIBUTING.md <CONTRIBUTING>
    DEVELOPERS_GUIDE.md <DEVELOPERS_GUIDE>
+   CHANGELOG.md <CHANGELOG>
 
    symbols
    bibliography
