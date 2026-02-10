@@ -7,6 +7,7 @@ import shutil
 import scipy.io
 from tests.helpers import TestHelpers
 from rbamlib.models.tau.chorus import W2024, G2012
+from rbamlib.models.tau.chorus.W2024 import DEFAULT_FILENAME  # We test agest the actual data file name
 from rbamlib.models.tau.chorus.G2012 import tau_day_1_10keV, tau_day_10_100keV, tau_day_100_400keV, tau_day_400_2000keV, tau_night_1_10keV, tau_night_10_100keV
 
 if 'RUN_LIVE_TESTS' not in os.environ:
@@ -221,51 +222,79 @@ class TestChorusW2024(unittest.TestCase, TestHelpers):
     @unittest.skipUnless(os.getenv('RUN_LIVE_TESTS', 'False').lower() == 'true',
                          "Skipping live test unless enabled.")
     def test_download_data_live(self):
-        """Test that W2024 can find/use data with auto_download enabled."""
-        # This test verifies the auto_download mechanism works
-        # If data exists in working directory or temp directory, it should be found
-        # If not, it should be downloaded
-        tau = W2024(L=5.0, en=1.0, kp=3.0, mlt=12.0,
-                   data_folder=self.temp_dir, auto_download=True)
+        """Test that W2024 can forcefully download data with auto_download enabled."""
+        from unittest.mock import patch
 
-        # Verify tau is valid (proves data was found/downloaded and used)
-        self.assertTrue(np.isfinite(tau) and tau > 0,
-                       "W2024 with auto_download should produce valid lifetime")
+        # Store original isfile
+        original_isfile = os.path.isfile
 
-        # Verify that W2024 works correctly with the available data
-        tau2 = W2024(L=6.0, en=0.5, kp=4.0, mlt=6.0,
-                    data_folder=self.temp_dir, auto_download=True)
-        self.assertTrue(np.isfinite(tau2) and tau2 > 0,
-                       "W2024 should work for multiple calls with auto_download")
+        # Mock to only allow files in temp_dir
+        def mock_isfile(path):
+            # Only return True for files actually in temp_dir
+            if os.path.dirname(os.path.abspath(path)) == os.path.abspath(self.temp_dir):
+                return original_isfile(path)
+            # Return False for everything else to force download
+            return False
+
+        with patch('os.path.isfile', side_effect=mock_isfile):
+            tau = W2024(L=5.0, en=1.0, kp=3.0, mlt=12.0,
+                       data_folder=self.temp_dir, auto_download=True)
+
+            # Verify tau is valid (proves data was found/downloaded and used)
+            self.assertTrue(np.isfinite(tau) and tau > 0,
+                           "W2024 with auto_download should produce valid lifetime")
+
+            # Verify data was actually downloaded to temp_dir
+            expected_file = os.path.join(self.temp_dir, DEFAULT_FILENAME)
+            self.assertTrue(os.path.exists(expected_file),
+                           "Data file should have been downloaded to temp directory")
+
+            # Verify that W2024 works correctly with the available data
+            tau2 = W2024(L=6.0, en=0.5, kp=4.0, mlt=6.0,
+                        data_folder=self.temp_dir, auto_download=True)
+            self.assertTrue(np.isfinite(tau2) and tau2 > 0,
+                           "W2024 should work for multiple calls with auto_download")
 
     @unittest.skipUnless(os.getenv('RUN_LIVE_TESTS', 'False').lower() == 'true',
                          "Skipping live test unless enabled.")
     def test_data_points_live(self):
-        """Test W2024 model output against known reference values using real data."""
+        """Test W2024 model output using forcefully downloaded real data."""
+        from unittest.mock import patch
+
         # Use en=50keV (0.05 MeV) and kp=5 for all tests
         en = 0.05  # 50 keV
         kp = 5
 
-        # Ensure real data is downloaded (only once, first call)
-        W2024(5.0, en, kp, 12.0, method='albert',
-              data_folder=self.temp_dir, auto_download=True)
+        # Store original isfile
+        original_isfile = os.path.isfile
 
-        # Test point 1: At mlt=12, tau should decrease with L for both models
-        tau_mlt12_L4_albert = W2024(4.0, en, kp, 12.0, method='albert', data_folder=self.temp_dir)
-        tau_mlt12_L6_albert = W2024(6.0, en, kp, 12.0, method='albert', data_folder=self.temp_dir)
-        self.assertGreater(tau_mlt12_L4_albert, tau_mlt12_L6_albert,
-                          "Real data: At MLT=12, tau should decrease with increasing L (albert)")
+        # Mock to only allow files in temp_dir
+        def mock_isfile(path):
+            if os.path.dirname(os.path.abspath(path)) == os.path.abspath(self.temp_dir):
+                return original_isfile(path)
+            return False
 
-        tau_mlt12_L4_lc = W2024(4.0, en, kp, 12.0, method='lc', data_folder=self.temp_dir)
-        tau_mlt12_L6_lc = W2024(6.0, en, kp, 12.0, method='lc', data_folder=self.temp_dir)
-        self.assertGreater(tau_mlt12_L4_lc, tau_mlt12_L6_lc,
-                          "Real data: At MLT=12, tau should decrease with increasing L (lc)")
+        with patch('os.path.isfile', side_effect=mock_isfile):
+            # Ensure real data is downloaded (only once, first call)
+            W2024(5.0, en, kp, 12.0, method='albert',
+                  data_folder=self.temp_dir, auto_download=True)
 
-        # Test point 2: At mlt=6, L=5, lc should be smaller than albert
-        tau_mlt6_L5_albert = W2024(5.0, en, kp, 6.0, method='albert', data_folder=self.temp_dir)
-        tau_mlt6_L5_lc = W2024(5.0, en, kp, 6.0, method='lc', data_folder=self.temp_dir)
-        self.assertGreater(tau_mlt6_L5_albert, tau_mlt6_L5_lc,
-                          "Real data: At MLT=6, L=5, albert should be greater than lc")
+            # Test point 1: At mlt=12, tau should decrease with L for both models
+            tau_mlt12_L4_albert = W2024(4.0, en, kp, 12.0, method='albert', data_folder=self.temp_dir)
+            tau_mlt12_L6_albert = W2024(6.0, en, kp, 12.0, method='albert', data_folder=self.temp_dir)
+            self.assertGreater(tau_mlt12_L4_albert, tau_mlt12_L6_albert,
+                              "Real data: At MLT=12, tau should decrease with increasing L (albert)")
+
+            tau_mlt12_L4_lc = W2024(4.0, en, kp, 12.0, method='lc', data_folder=self.temp_dir)
+            tau_mlt12_L6_lc = W2024(6.0, en, kp, 12.0, method='lc', data_folder=self.temp_dir)
+            self.assertGreater(tau_mlt12_L4_lc, tau_mlt12_L6_lc,
+                              "Real data: At MLT=12, tau should decrease with increasing L (lc)")
+
+            # Test point 2: At mlt=6, L=5, lc should be smaller than albert
+            tau_mlt6_L5_albert = W2024(5.0, en, kp, 6.0, method='albert', data_folder=self.temp_dir)
+            tau_mlt6_L5_lc = W2024(5.0, en, kp, 6.0, method='lc', data_folder=self.temp_dir)
+            self.assertGreater(tau_mlt6_L5_albert, tau_mlt6_L5_lc,
+                              "Real data: At MLT=6, L=5, albert should be greater than lc")
 
 
 if __name__ == '__main__':

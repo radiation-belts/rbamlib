@@ -5,8 +5,10 @@ import warnings
 import os
 
 # Constants
-DEFAULT_FILENAME = '2022_002_Wang-et-al_life_time_all_Kp_MLT.mat'
-DOWNLOAD_URL = 'https://datapub.gfz.de/download/10.5880.GFZ.2.7.2022.002fwdfs/2022_002_Wang-et-al_Data.zip'
+#DEFAULT_FILENAME = '2022_002_Wang-et-al_life_time_all_Kp_MLT.mat'
+DEFAULT_FILENAME = 'life_time_all_Kp_MLT_calculated_from_matrix.mat'
+#DOWNLOAD_URL = 'https://datapub.gfz.de/download/10.5880.GFZ.2.7.2022.002fwdfs/2022_002_Wang-et-al_Data.zip'
+DOWNLOAD_URL = 'https://nextcloud.gfz.de/public.php/dav/files/yQaKw8CnK7cd5B5/life_time_all_Kp_MLT_calculated_from_matrix_mat.zip'
 
 # Module-level cache for data and KDTree (simple performance optimization)
 _data_cache = {}
@@ -142,26 +144,25 @@ def W2024(L, en, kp, mlt, method='albert', data_file=None, data_folder=None, aut
 def _locate_data_file(filename, data_folder, auto_download):
     """File location logic with optional download."""
 
-    # Try as-is (absolute or relative path)
-    if os.path.isfile(filename):
-        return filename
-
     # Try in data_folder
     path_in_folder = os.path.join(data_folder, filename)
     if os.path.isfile(path_in_folder):
         return path_in_folder
+    
+    # Try as-is (absolute or relative path)
+    if os.path.isfile(filename):
+        return filename
 
     # Auto-download if enabled
     if auto_download:
         from rbamlib.web import download_unzip
-        print(f"Downloading {filename} from GFZ Data Services...")
+        print(f"Downloading {filename} from {DOWNLOAD_URL.split('/')[2]}...")
         return download_unzip(DOWNLOAD_URL, data_folder, filename)
 
     # Not found
     raise FileNotFoundError(
-        f"Data file '{filename}' not found. "
-        f"Download from https://doi.org/10.5880/GFZ.2.7.2022.002 "
-        f"or set auto_download=True"
+        f"Data file '{filename}' not found in {data_folder}. "
+        f"Download from {DOWNLOAD_URL} or set auto_download=True"
     )
 
 
