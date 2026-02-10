@@ -4,8 +4,11 @@ Radial diffusion models
 -----------------------
 .. automodule:: rbamlib.models.dll
 
-Functions
-=========
+.. automodsumm:: rbamlib.models.dll
+
+.. rubric:: Functions
+   :heading-level: 2
+
 .. autofunction:: BA2000
 .. autofunction:: O2014
 .. autofunction:: L2016

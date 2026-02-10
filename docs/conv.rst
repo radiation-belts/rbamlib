@@ -5,8 +5,10 @@ Conversion
 
 .. automodule:: rbamlib.conv
 
-Functions
-=========
+.. automodsumm:: rbamlib.conv
+
+.. rubric::  Functions
+    :heading-level: 2
 
 .. autofunction:: en2pc
 
@@ -29,6 +31,11 @@ Functions
 .. autofunction:: LK2al
 
 .. autofunction:: en2gamma
+
+.. autofunction:: phi2mlt
+
+.. autofunction:: mlt2phi
+
 
 Aliases
 =======

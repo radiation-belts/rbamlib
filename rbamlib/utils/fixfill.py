@@ -17,12 +17,10 @@ def fixfill(time, data, fillval, method='nan', fillval_mode='eq'):
         1D array of numerical values corresponding to `time`.
     fillval : float
         The fill value or threshold to identify missing data.
-    method : {'nan', 'interp'}, default='nan'
-
+    method : str, optional
         - 'nan': Replace missing values with NaN.
         - 'interp': Replace and linearly interpolate missing values.
-    fillval_mode : {'eq', 'gt', 'lt'}, default='equal'
-
+    fillval_mode : str, optional
         - 'eq':    treat `fillval` as an exact match, equal.
         - 'gt':    treat all `data >= fillval` as missing.
         - 'lt':    treat all `data <= fillval` as missing.
@@ -35,13 +33,15 @@ def fixfill(time, data, fillval, method='nan', fillval_mode='eq'):
     Examples
     --------
     >>> time = [datetime(2023,1,1,0,0) + timedelta(minutes=5*i) for i in range(6)]
-    >>> data = np.array([1.0, 2.0, 999, 4.0, 999, 6.0])
-
+    >>> data = np.array([1.0, 2.0, 999, 4.0, 999, 6.0])        
+    
     Mark fill values as NaN:
+    
     >>> fixfill(time, data, fillval=999, method='nan', fillval_mode='equal')
-    array([ 1.,  2., nan,  4., nan,  6.])
-
+    array([ 1.,  2., nan,  4., nan,  6.])    
+    
     Replace fill values and interpolate linearly:
+    
     >>> fixfill(time, data, fillval=999, method='interp', fillval_mode='equal')
     array([1., 2., 3., 4., 5., 6.])
     """

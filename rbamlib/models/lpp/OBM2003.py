@@ -3,7 +3,7 @@ import numpy as np
 
 def OBM2003(time, index, index_type):
     r"""
-    Calculates plasmapause location (lpp) following O’Brien and Moldwin (2003) [#]_ eq. (1).
+    Calculates plasmapause location (lpp) following O'Brien and Moldwin :cite:yearpar:`obrien:2003` eq. (1).
 
     Parameters
     ----------
@@ -34,10 +34,6 @@ def OBM2003(time, index, index_type):
        Q_{Dst} = \log_{10} \left| \min_{-24,0} Dst \right|
 
     When using Kp index, the first value will always be np.nan because maximum Kp is calculated between -36 and -2 hours prior current time
-
-    References
-    ----------
-    .. [#] O'Brien, T. P., & Moldwin, M. B. (2003). Empirical plasmapause models from magnetic indices. Geophysical Research Letters, 30(4), 1152. https://doi.org/10.1029/2002GL016007
     """
 
     # Convert the index type to lowercase

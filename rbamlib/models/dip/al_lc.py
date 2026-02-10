@@ -18,7 +18,7 @@ def al_lc(L):
 
     Notes
     -----
-    **Deriviation** (based on chapter 3.4 of Roederer and Zhang (2016)[#]_)
+    **Deriviation** (based on chapter 3.4 of :cite:t:`roederer:2016`)
 
     1) Magnetic moment :math:`\mu` conservation:
 
@@ -59,10 +59,6 @@ def al_lc(L):
     --------
     >>> np.rad2deg(al_lc(4.0))
     5.34184...
-
-    References
-    ----------
-    .. [#] Roederer, J. G., & Zhang, H. (2016). Dynamics of Magnetically Trapped Particles. Springer.
     """
     L = np.asarray(L, dtype=np.float64)
   

@@ -9,11 +9,15 @@ Constants:
     - T0 ≈ 1.3802 : approximate value of T(0)
     - T1 ≈ 0.7405 : approximate value of T(1)
     - R_Earth ≈ 637,800,000 : radius of Earth in cm
-    - R_Saturn ≈ 6,026,800,000 : radius of Earth in cm
-    - R_Jupiter ≈ 7,149,200,000 : radius of Earth in cm
+    - R_Saturn ≈ 6,026,800,000 : radius of Saturn in cm
+    - R_Jupiter ≈ 7,149,200,000 : radius of Jupiter in cm
+    - Omega_Earth ≈ 7.43e-5 : Earth rotation frequency in 1/s
+    - Omega_Saturn ≈ 1.62e-4 : Saturn rotation frequency in 1/s
+    - E0_Earth ≈ 7.05e-7 : electric field at Earth's equator in V/m
+    - E0_Saturn ≈ 0.3e-3 : electric field at Saturn's equator in V/m
     - c ≈ 2.9e10 : speed of light in cm/s
     - q ≈ 4.8e-10 : electron charge in CGS
-    - me ≈ 0.91e-21 electrons mass in g in CGS
+    - me ≈ 9.1e-28 : electron mass in g in CGS
 
 CGS:
     - Class of constants in CGS

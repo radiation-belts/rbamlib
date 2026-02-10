@@ -4,8 +4,10 @@ Electron density models
 -----------------------
 .. automodule:: rbamlib.models.ne
 
-Functions
-=========
+.. automodsumm:: rbamlib.models.ne
+
+.. rubric:: Functions
+   :heading-level: 2
 
 .. autofunction:: rbamlib.models.ne.CA1992
 .. autofunction:: rbamlib.models.ne.S2001

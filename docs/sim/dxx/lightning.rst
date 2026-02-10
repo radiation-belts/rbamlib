@@ -4,6 +4,9 @@ Models of lightning generated whistlers
 ---------------------------------------
 .. automodule:: rbamlib.sim.dxx.lightning
 
-Functions
-=========
+.. automodsumm:: rbamlib.sim.dxx.lightning
+
+.. rubric:: Functions
+   :heading-level: 2
+
 .. autofunction:: S2011

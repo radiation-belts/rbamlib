@@ -34,3 +34,5 @@ from .LK2al import LK2al
 
 from .en2gamma import en2gamma
 
+from .phi2mlt import phi2mlt
+from .mlt2phi import mlt2phi

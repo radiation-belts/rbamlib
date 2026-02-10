@@ -4,13 +4,15 @@ Lifetime models
 ---------------
 .. automodule:: rbamlib.models.tau
 
-Functions
-=========
+.. automodsumm:: rbamlib.models.tau
+
+.. rubric:: Functions
+      :heading-level: 2
+
 .. autofunction:: rbamlib.models.tau.tau_lc
 
-
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
    :caption: Specific wave-particle interaction
 
    tau/chorus

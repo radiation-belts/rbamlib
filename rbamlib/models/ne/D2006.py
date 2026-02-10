@@ -2,15 +2,15 @@ import numpy as np
 from rbamlib.models.ne import D2002
 
 
-def D2006(L, MLT=0.0, r=None):
+def D2006(L, mlt=0.0, r=None):
     r"""
-    Denton et al. (2006) plasmaspheric electron density model with MLT dependence [#]_.
+    Denton et al. :cite:yearpar:`denton:2006` plasmaspheric electron density model with MLT dependence.
 
     Parameters
     ----------
     L : float or ndarray
         McIlwain :math:`L`-shell (dimensionless).
-    MLT : float or ndarray, optional
+    mlt : float or ndarray, optional
         Magnetic local time in hours (0–24). Default is 0.
     r : float or ndarray, optional
         Geocentric distance along the field line in Earth radii. If provided,
@@ -59,19 +59,15 @@ def D2006(L, MLT=0.0, r=None):
 
     Densities are in cm⁻³, distances in Earth radii.
 
-    References
-    ----------
-    .. [#] Denton, R. E., Goldstein, J., Lee, D.-H., King, R. A., Dent, Z. C., Gallagher, D. L., et al. (2006). Realistic magnetospheric density model for 29 August 2000. Journal of Atmospheric and Solar-Terrestrial Physics, 68(6), 615–628. https://doi.org/10.1016/j.jastp.2005.11.009
-
     See Also
     --------
     D2002 : Denton field-aligned power law used when ``r`` is provided.
     """
     L = np.asarray(L, dtype=float)
-    MLT = np.asarray(MLT, dtype=float)
+    mlt = np.asarray(mlt, dtype=float)
 
     # broadcast
-    Lb, MLTb = np.broadcast_arrays(L, MLT)
+    Lb, MLTb = np.broadcast_arrays(L, mlt)
 
     phi = 2.0 * np.pi * (MLTb - 18.0) / 24.0
     log10_ne = np.empty_like(Lb, dtype=float)

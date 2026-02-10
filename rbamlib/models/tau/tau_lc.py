@@ -3,7 +3,7 @@ import rbamlib.constants
 import rbamlib.models.dip as dip
 from rbamlib.motion.bounce import T_bounce
 
-def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None):
+def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None, nan_flag=False):
     r"""
     Calculate the characteristic lifetime (`tau_lc`) of a charged particle in a dipolar magnetic field.
     
@@ -23,29 +23,28 @@ def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None):
     m : float, optional
         Particle mass, in grams. Default is electrons.
     al_lc : float or ndarray, optional
-        Equatorial loss-cone angle :math:`\alpha_{\rm LC}` (radians). If not
+        Equatorial loss-cone angle α_lc (radians). If not
         provided, it is computed with :func:`rbamlib.models.dip.al_lc`.
+    nan_flag: boolean
+        If set to True the output will be `np.nan` outside of the loss cone. 
+        Otherwise the output is `np.inf`.
+
 
     Returns
     -------
     float or ndarray
-        Characteristic lifetime (`tau_lc`) in seconds. Returns NaN for al ≥ al_lc.
+        Characteristic lifetime (`tau_lc`) in seconds. Returns Inf (or NaN) for al ≥ al_lc.
 
     Notes
     -----
 
     The lifetime is calculates as quarter of the the bounce period:
+    
     .. math::
-        \tau_{lc} = \frac{T_{\text{bounce}}}{4},
+        \tau_{lc} = \frac{T_{bounce}}{4},
 
-    where :math:`T_{\text{bounce}}` is computed by :func:`rbamlib.motion.bounce.T_bounce`.
-    This approximation follows Schulz and Lanzerotti (1974) [#]_ and accounts for relativistic effects.
-
-
-    References
-    ----------
-    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts.
-           Springer-Verlag Berlin Heidelberg.
+    where :math:`T_{bounce}` is computed by :func:`rbamlib.motion.bounce.T_bounce`.
+    This approximation follows :cite:t:`schulz:1974` and accounts for relativistic effects.
     """
 
     # Determine the loss-cone angle if not supplied
@@ -57,8 +56,12 @@ def tau_lc(L, al, en, planet='Earth', m=rbamlib.constants.me, al_lc=None):
     # Valid only for alpha strictly inside the loss cone
     inside = np.array(al) < np.array(al_lc_val)
 
-    # Return tau = T_bounce / 4 for valid inputs; NaN otherwise
-    tau = np.where(inside, T_bounce_seconds / 4.0, np.nan)
+    # Return tau = T_bounce / 4 for valid inputs; inf otherwise
+    if nan_flag:
+        tau = np.where(inside, T_bounce_seconds / 4.0, np.nan)
+    else:
+        tau = np.where(inside, T_bounce_seconds / 4.0, np.inf)
+
 
     # Preserve scalar type when inputs are scalar
     if np.isscalar(L) and np.isscalar(al) and np.isscalar(en) and np.isscalar(al_lc_val):

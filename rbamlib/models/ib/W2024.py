@@ -3,7 +3,7 @@ import numpy as np
 
 def W2024():
     r"""
-    Isotropic boundary following Wilkins et al. (2024) [#]_ model.
+    Isotropic boundary following Wilkins et al. :cite:yearpar:`wilkins:2024` model.
 
     .. warning::
        This function is currently empty. Implementation will be added soon.
@@ -17,9 +17,5 @@ def W2024():
     Notes
     -----
     .. math::
-
-    References
-    ----------
-    .. [#] Wilkins et al. (2024), in preparation
     """
     return

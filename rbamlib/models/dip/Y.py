@@ -19,16 +19,11 @@ def Y(al):
 
     Notes
     -----
-        See Schulz & Lanzerotti (1974) [#]_.
+        See :cite:t:`schulz:1974`.
 
     .. math::
         Y( \\alpha ) \\approx 2(1 - \\sin( \\alpha ))T_0 + (T_0 - T_1) \\cdot \\left( \\sin( \\alpha ) \\cdot \\ln( \\sin( \\alpha ) ) + 2 \\sin( \\alpha ) - 2 \\sqrt{ \\sin( \\alpha ) } \\right)
         Y(0) = 2 \\cdot T(0)
-        
-
-    References
-    ----------
-    .. [#] Schulz, M., & Lanzerotti, L. J. (1974). Particle Diffusion in the Radiation Belts (Vol. 7). Springer-Verlag Berlin Heidelberg. Retrieved from http://www.springer.com/physics/book/978-3-642-65677-4
     """
     T0 = rbamlib.constants.T0
     T1 = rbamlib.constants.T1

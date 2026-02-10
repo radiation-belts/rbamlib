@@ -6,34 +6,18 @@ def storm_idx(time, Dst, threshold=-40.0, gap_hours=1.0, method='onset'):
     Identify storms in Dst based on a threshold, then either return their
     "onset" or "minimum Dst" index.
 
-    Steps
-    -----
-    1. Find all times where Dst < threshold.
-    2. Group those indices into contiguous "storm regions" separated by
-       at least `gap_hours`.
-    3. For each storm region:
-
-       - If ``method='onset'``:
-         a) Take the earliest index in that region (the threshold crossing),
-         b) Backtrack to where Dst >= 0 or index=0.  That is the final "onset."
-       - If ``method='minimum'``:
-         Return the index in that region where Dst is minimum.
-         Double dips remain in the same region, so only one min is reported
-         per region.
-
     Parameters
     ----------
     time : 1D array-like of datetime.datetime
         Strictly increasing times.
     Dst : 1D array-like of float
         Dst index at the same times as `time`.
-    threshold : float, default=-40.0
+    threshold : float, optional
         Storm threshold. Values below are considered "in a storm".
-    gap_hours : float, default=1.0
+    gap_hours : float, optional
         If the time difference to the previous storm point is less than this,
         we treat it as the **same** storm. Otherwise, we start a new storm region.
-    method : {'onset', 'minimum'}, default='onset'
-
+    method : str, optional
         - 'onset': Return the "start index" for each storm region (after backtracking).
         - 'minimum': Return the single index at which Dst is minimal within each region.
 
@@ -42,6 +26,24 @@ def storm_idx(time, Dst, threshold=-40.0, gap_hours=1.0, method='onset'):
     storm_indices : list of int
         Indices in `time` (and `Dst`), one per identified storm, either onset or min.
 
+    
+    Steps
+    -----
+    1. Find all times where Dst < threshold.
+    2. Group those indices into contiguous "storm regions" separated by
+       at least `gap_hours`.
+    3. For each storm region:
+
+       - If ``method='onset'``:
+       
+         - Take the earliest index in that region (the threshold crossing),
+         - Backtrack to where Dst >= 0 or index=0.  That is the final "onset."
+       
+       - If ``method='minimum'``:
+         Return the index in that region where Dst is minimum.
+         Double dips remain in the same region, so only one min is reported
+         per region.
+        
     Examples
     --------
     >>> import datetime

@@ -3,7 +3,7 @@ import numpy as np
 
 def S2001(L, Lpp=None, kp=None, mask_invalid=True):
     r"""
-    Equatorial electron density model of the plasmasphere and plasmatrough by Sheeley et al. (2001) [#]_.
+    Equatorial electron density model of the plasmasphere and plasmatrough by Sheeley et al. :cite:yearpar:`sheeley:2001`.
 
     Parameters
     ----------
@@ -47,7 +47,7 @@ def S2001(L, Lpp=None, kp=None, mask_invalid=True):
 
         n_e(L,\mathrm{LT}) = 124 \left(\frac{3}{L}\right)^{4.0}
 
-    Plasmatrough density accounting for  Gallagher et al. (1998) [#]_ local time of maximum density.
+    Plasmatrough density accounting for  Gallagher et al. (1998) :cite:p:`gallagher:1998` local time of maximum density.
 
     .. math::
 
@@ -61,11 +61,6 @@ def S2001(L, Lpp=None, kp=None, mask_invalid=True):
         \mathrm{LT} = 0.145 K_p^2 - 2.63 K_p + 21.86
 
     ----
-
-    References
-    ----------
-    .. [#] Sheeley, B. W., Moldwin, M. B., Rassoul, H. K., & Anderson, R. R. (2001). An empirical plasmasphere and trough density model: CRRES observations. Journal of Geophysical Research, [Space Physics], 106(A11), 25631–25641. https://doi.org/10.1029/2000JA000286
-    .. [#] Gallagher, D. L., P. D. Craven, and R. H. Comfort, A  simple model of  magnetospheric trough total density, J. Geophys. Res., 103, 9293,  1998.
     """
     L = np.asarray(L, dtype=float)
 

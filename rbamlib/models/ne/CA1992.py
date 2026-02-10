@@ -3,7 +3,7 @@ import numpy as np
 
 def CA1992(L, doy=None, R13=None, Lpp=None, MLT=None, Lppo=False):
     r"""
-    Equatorial electron density :math:`n_e` (cm⁻³) by Carpenter & Anderson (1992) [#]_.
+    Equatorial electron density :math:`n_e` (cm⁻³) by Carpenter & Anderson :cite:yearpar:`carpenter:1992`.
 
     Includes *plasmasphere* (L < Lpp), *plasmapause segment* (Lpp < L ≤ Lppo), and
     *plasma trough* (L ≥ Lpp or Lppo) regimes, with optional seasonal (`doy`) and solar–cycle
@@ -106,10 +106,6 @@ def CA1992(L, doy=None, R13=None, Lpp=None, MLT=None, Lppo=False):
     If :math:`MLT > 15`, it is kept at constant :math:`MLT=15`.
 
     ----
-
-    References
-    ----------
-    .. [#] Carpenter, D. L., & Anderson, R. R. (1992). An ISEE/Whistler model of equatorial electron density in the magnetosphere. *J. Geophys. Res.*, 97(A2), 1097–1108. https://doi.org/10.1029/91JA01548
     """
 
     # Normalize axes

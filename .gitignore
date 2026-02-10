@@ -163,3 +163,7 @@ cython_debug/
 
 # VS Code
 .vscode/
+
+# Avoid any data files
+*.mat
+*.zip
