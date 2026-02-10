@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='rbamlib',
-    version='25.04',
+    version='26.02',
     author='Alexander Drozdov',
     author_email='alexander.y.drozdov@aero.org',
     description='A lightweight, open-source Python library for the analysis and modeling of radiation belts.',
