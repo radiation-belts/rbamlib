@@ -42,7 +42,7 @@ will be documented, tested with a planned release on Python Package Index (PyPI)
 ### How to Contribute
 
 The contributions from the community are welcomed!
-If you're interested in contributing, please see [CONTRIBUTING.md](CONTRIBUTING.md).
+If you're interested in contributing, please see [CONTRIBUTING.md](../CONTRIBUTING).
 
 ## Installation
 
