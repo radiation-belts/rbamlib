@@ -37,7 +37,7 @@ def W2024(L, en, kp, mlt, method='albert', data_file=None, data_folder=None, aut
             - `lc`: Loss cone method (Shprits et al., 2006)
     data_file : str, optional
         Path to data file (absolute, relative, or filename).
-            Default: `2022_002_Wang-et-al_life_time_all_Kp_MLT.mat`
+            Default: `life_time_all_Kp_MLT_calculated_from_matrix.mat`
     data_folder : str, optional
         Folder to search for data file. Default: current working directory.
     auto_download : bool, default=False
@@ -52,11 +52,16 @@ def W2024(L, en, kp, mlt, method='albert', data_file=None, data_folder=None, aut
     -----
     **Data File Requirements:**
 
-    This model requires: ``2022_002_Wang-et-al_life_time_all_Kp_MLT.mat`` (~16 MB)
+    This model requires: ``life_time_all_Kp_MLT_calculated_from_matrix.mat`` (~35 MB)
 
     Download from:
-        - DOI: https://doi.org/10.5880/GFZ.2.7.2022.002
-        - Direct: https://datapub.gfz.de/download/10.5880.GFZ.2.7.2022.002fwdfs/2022_002_Wang-et-al_Data.zip
+        - Direct (auto_download): https://nextcloud.gfz.de/public.php/dav/files/yQaKw8CnK7cd5B5/life_time_all_Kp_MLT_calculated_from_matrix_mat.zip
+        - Original DOI: https://doi.org/10.5880/GFZ.2.7.2022.002
+
+    .. note::
+       The original paper references data files at DOI 10.5880/GFZ.2.7.2022.002, but the
+       ``auto_download`` feature uses an updated version of the dataset hosted on GFZ Nextcloud
+       with filename ``life_time_all_Kp_MLT_calculated_from_matrix.mat``.
 
     File search order:
         1. If ``data_file`` provided → try opening
