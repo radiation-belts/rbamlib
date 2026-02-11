@@ -9,7 +9,7 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/radiation-belts/rbamlib',
-    packages=find_packages(),
+    packages=find_packages(exclude=["tests", "tests.*"]),
     install_requires=open('requirements.txt').read().splitlines(),
     classifiers=[
         'Programming Language :: Python :: 3',
